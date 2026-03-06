@@ -11,3 +11,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 require __DIR__.'/settings.php';
 
 Route::livewire('/admin/categories', 'admin.categories')->name('admin.categories');
+Route::livewire('/admin/brands', 'admin.brands')->name('admin.brands');

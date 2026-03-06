@@ -17,9 +17,14 @@
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
-            <flux:sidebar.item icon="tag" href="{{ route('admin.categories') }}">
-                {{ __('Repository') }}
-            </flux:sidebar.item>
+
+            <flux:sidebar.nav>
+                <flux:sidebar.group :heading="__('Catalog')" class="grid">
+                    <flux:sidebar.item icon="tag" href="{{ route('admin.categories') }}">{{ __('Categories') }}</flux:sidebar.item>
+                    <flux:sidebar.item icon="tag" href="{{ route('admin.brands') }}">{{ __('Brands') }}</flux:sidebar.item>
+                </flux:sidebar.group>
+            </flux:sidebar.nav>
+            
 
             <flux:spacer />
 
