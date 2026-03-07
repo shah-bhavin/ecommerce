@@ -12,3 +12,4 @@ require __DIR__.'/settings.php';
 
 Route::livewire('/admin/categories', 'admin.categories')->name('admin.categories');
 Route::livewire('/admin/brands', 'admin.brands')->name('admin.brands');
+Route::livewire('/admin/products', 'admin.products')->name('admin.products');

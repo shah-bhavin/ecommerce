@@ -17,26 +17,16 @@
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
-
+            
+            <flux:spacer />
+            
             <flux:sidebar.nav>
                 <flux:sidebar.group :heading="__('Catalog')" class="grid">
                     <flux:sidebar.item icon="tag" href="{{ route('admin.categories') }}">{{ __('Categories') }}</flux:sidebar.item>
                     <flux:sidebar.item icon="tag" href="{{ route('admin.brands') }}">{{ __('Brands') }}</flux:sidebar.item>
+                    <flux:sidebar.item icon="tag" href="{{ route('admin.products') }}">{{ __('Products') }}</flux:sidebar.item>
                 </flux:sidebar.group>
-            </flux:sidebar.nav>
-            
-
-            <flux:spacer />
-
-            <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
-                </flux:sidebar.item>
-            </flux:sidebar.nav>
+            </flux:sidebar.nav>            
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
