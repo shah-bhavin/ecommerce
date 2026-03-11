@@ -23,7 +23,10 @@ new class extends Component
 ?>
 
 <div>
-    <flux:input wire:model.live="search" icon="magnifying-glass" placeholder="Search customers..." class="mb-6" />
+    <div class="flex justify-between items-center mb-6">
+        <flux:heading size="xl">Users</flux:heading>
+        <flux:button wire:click="create" variant="primary" icon="plus">Add User</flux:button>
+    </div>
 
     <flux:table :paginate="$this->users()">
         <flux:table.columns>
@@ -38,12 +41,17 @@ new class extends Component
                         <div class="font-medium">{{ $user->name }}</div>
                         <div class="text-xs text-zinc-500">{{ $user->email }}</div>
                     </flux:table.cell>
+
                     <flux:table.cell>
+                        <div class="font-medium">{{ $user->role }}</div>
+                    </flux:table.cell>
+
+                    {{-- <flux:table.cell>
                         <flux:select wire:change="changeRole({{ $user->id }}, $event.target.value)" size="sm">
                             <option value="customer" @selected($user->role == 'customer')>Customer</option>
                             <option value="admin" @selected($user->role == 'admin')>Admin</option>
                         </flux:select>
-                    </flux:table.cell>
+                    </flux:table.cell> --}}
                     <flux:table.cell>
                         <flux:switch wire:click="toggleActive({{ $user->id }})" :checked="$user->is_active" />
                     </flux:table.cell>
