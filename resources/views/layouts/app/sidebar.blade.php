@@ -21,10 +21,13 @@
             <flux:spacer />
             
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Catalog')" class="grid">
-                    <flux:sidebar.item icon="tag" href="{{ route('admin.categories') }}">{{ __('Categories') }}</flux:sidebar.item>
-                    <flux:sidebar.item icon="tag" href="{{ route('admin.brands') }}">{{ __('Brands') }}</flux:sidebar.item>
-                    <flux:sidebar.item icon="tag" href="{{ route('admin.products') }}">{{ __('Products') }}</flux:sidebar.item>
+                <flux:sidebar.group expandable :heading="__('settings')" class="grid" icon="cog-6-tooth">
+                    <flux:sidebar.item href="{{ route('admin.categories') }}"  wire:navigate lazy>{{ __('Categories') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.brands') }}"  wire:navigate lazy>{{ __('Brands') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.products') }}"  wire:navigate lazy>{{ __('Products') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.coupons') }}"  wire:navigate lazy>{{ __('Coupons') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.users') }}"  wire:navigate lazy>{{ __('Users') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.addresses') }}"  wire:navigate lazy>{{ __('Addresses') }}</flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>            
 

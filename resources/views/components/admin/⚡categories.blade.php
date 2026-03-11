@@ -38,7 +38,7 @@ new class extends Component
     }
 
     public function create() {
-        $this->resetForm();
+        $this->reset();
         $this->showModal = true;
     }
 
@@ -91,7 +91,7 @@ new class extends Component
             $category->update(['image' => $path]);
         }
 
-        $this->resetForm();
+        $this->reset();
         session()->flash('status', 'Category Updated successfully!');
         session()->flash('variant', 'success'); 
         $this->categories();
@@ -118,7 +118,7 @@ new class extends Component
     }
 
     private function resetForm(){
-         $this->reset(['name', 'description', 'parent_id', 'image', 'is_active', 'is_featured', 'editingId','meta_title','meta_description', 'showModal']);
+        $this->reset(['name', 'description', 'parent_id', 'image', 'is_active', 'is_featured', 'editingId','meta_title','meta_description', 'showModal']);
     }
 
 }
@@ -142,7 +142,7 @@ new class extends Component
         </flux:callout>
     @endif
 
-    <flux:table :paginate="$this->categories">
+    <flux:table :paginate="$this->categories()">
         <flux:table.columns sticky class="bg-white dark:bg-zinc-900">
             <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection" wire:click="sort('name')">Name</flux:table.column>
             <flux:table.column>Featured</flux:table.column>
@@ -170,7 +170,7 @@ new class extends Component
                     <flux:table.cell>{{ $category->parent?->name ?? 'None' }}</flux:table.cell>   
                     <flux:table.cell>
                         <flux:button.group>
-                            <flux:button wire:click="edit({{ $category->id }})" wire:loading.attr="disabled" size="sm" icon="pencil" />
+                            <flux:button wire:click="edit({{ $category->id }})" wire:loading.attr="disabled" size="sm" icon="pencil-square" />
                             <flux:button wire:click="confirmDelete({{ $category->id }})" wire:loading.attr="disabled" size="sm" variant="danger" icon="trash" />                                
                         </flux:button.group>
                     </flux:table.cell>

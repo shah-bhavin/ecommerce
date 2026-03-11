@@ -146,7 +146,7 @@ new class extends Component {
 };
 ?>
 
-<div class="p-6">
+<div>
     <div class="flex justify-between mb-6">
         <flux:heading size="xl">Product Catalog</flux:heading>
         <flux:button wire:click="openCreateModal" variant="primary">Add Product</flux:button>
