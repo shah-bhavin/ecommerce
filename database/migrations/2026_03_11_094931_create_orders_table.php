@@ -30,9 +30,9 @@ return new class extends Migration
             $table->string('status')->default('pending'); // pending, processing, shipped, delivered, cancelled
             $table->string('payment_status')->default('unpaid'); // unpaid, paid, failed, refunded
             $table->string('payment_method')->nullable(); // COD, Razorpay, Stripe
-            
             $table->text('notes')->nullable();
-
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }

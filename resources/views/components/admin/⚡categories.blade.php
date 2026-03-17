@@ -69,9 +69,14 @@ new class extends Component
     }
 
     public function save() {
-        $this->validate(['name' => 'required|min:3', 'image' => 'nullable|image|max:1024']);
+        $this->validate([
+            'name' => 'required|min:3', 
+            'image' => 'nullable|image|max:1024'
+        ]);
 
-        $category = Category::updateOrCreate(['id' => $this->editingId], [
+        $category = Category::updateOrCreate
+        (['id' => $this->editingId], 
+        [
             'name' => $this->name,
             'slug' => Str::slug($this->name),
             'description' => $this->description,
@@ -92,8 +97,10 @@ new class extends Component
         }
 
         $this->reset();
-        session()->flash('status', 'Category Updated successfully!');
-        session()->flash('variant', 'success'); 
+        $this->dispatch('toast', 
+            type: 'success', 
+            text: 'Category saved Successfully!'
+        );
         $this->categories();
     }
 
@@ -113,6 +120,10 @@ new class extends Component
 
             $category->delete();
             $this->reset('deletingId', 'showDeleteModal');
+            $this->dispatch('toast', 
+                type: 'error', 
+                text: 'Category Deleted Successfully!'
+            );
             $this->categories();
         }
     }
@@ -132,15 +143,9 @@ new class extends Component
         <flux:button wire:click="create" variant="primary" icon="plus">Add Category</flux:button>
     </div>
 
-    <div class="flex gap-2 mb-4">
+    <!-- <div class="flex gap-2 mb-4">
         <flux:input icon:trailing="magnifying-glass" placeholder="Search Category..." wire:model.live="search" />
-    </div>
-    
-    @if (session()->has('status'))
-        <flux:callout :variant="session('variant', 'primary')" icon="check-circle" dismissible class="mb-4">
-            {{ session('status') }}
-        </flux:callout>
-    @endif
+    </div> -->
 
     <flux:table :paginate="$this->categories()">
         <flux:table.columns sticky class="bg-white dark:bg-zinc-900">

@@ -28,6 +28,7 @@ return new class extends Migration
             // Type & Status
             $table->enum('type', ['home', 'office', 'other'])->default('home');
             $table->boolean('is_default')->default(false); // To mark primary address
+            $table->softDeletes();
             $table->timestamps();
         });
     }

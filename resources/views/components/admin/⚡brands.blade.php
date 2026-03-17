@@ -75,7 +75,6 @@ new class extends Component
         ]);
 
         if ($this->logo) {
-            // Delete the file first
             if ($brand->logo) {
                 Storage::disk('public')->delete($brand->logo);
             }
@@ -84,8 +83,10 @@ new class extends Component
         }
 
         $this->resetForm();
-        session()->flash('status', 'Brand Updated successfully!');
-        session()->flash('variant', 'success'); 
+        $this->dispatch('toast', 
+            type: 'success', 
+            text: 'Brand saved succesfully!'
+        );
         $this->brands();
     }
 
@@ -98,14 +99,17 @@ new class extends Component
         if ($this->deletingId) {
             $brand = Brand::find($this->deletingId);
         
-            // Delete the file first
             if ($brand->image) {
                 Storage::disk('public')->delete($brand->image);
             }
 
             $brand->delete();
             $this->reset('deletingId', 'showDeleteModal');
-            $this->categories();
+            $this->dispatch('toast', 
+                type: 'error', 
+                text: 'Brand Deleted Successfully!'
+            );
+            $this->brands();
         }
     }
 
@@ -122,9 +126,9 @@ new class extends Component
         <flux:button wire:click="create" variant="primary" icon="plus">Add Brands</flux:button>
     </div>
 
-    <div class="flex gap-2 mb-4">
+    <!-- <div class="flex gap-2 mb-4">
         <flux:input icon:trailing="magnifying-glass" placeholder="Search Brands..." wire:model.live="search" />
-    </div>
+    </div> -->
     
     @if (session()->has('status'))
         <flux:callout :variant="session('variant', 'primary')" icon="check-circle" dismissible class="mb-4">
@@ -206,7 +210,7 @@ new class extends Component
             <div>
                 <flux:heading size="lg">Are you sure?</flux:heading>
                 <flux:subheading>
-                    Are you sure you want to delete this category?
+                    Are you sure you want to delete this Brand?
                 </flux:subheading>
             </div>
 

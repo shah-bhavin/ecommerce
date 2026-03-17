@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    public $fillable = ['name','category_id','brand_id', 'slug', 'description', 'base_image','base_price','gst_percentage', 'is_active', 'is_featured', 'status'];
+    use SoftDeletes;
+    protected $fillable = ['name', 'slug', 'description', 'price', 'category', 'skin_type', 'stock', 'image', 'meta_title', 'meta_description'];
 
+    protected function casts(): array {
+        return [ 'price' => 'decimal:2' ];
+    }
     public function variants()
     {
         return $this->hasMany(ProductVariant::class);
@@ -26,6 +31,14 @@ class Product extends Model
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class);
+    }
+
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
+    public function averageRating() {
+        return round($this->reviews()->where('is_active', true)->avg('rating'), 1);
     }
 
 }

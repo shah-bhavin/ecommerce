@@ -15,27 +15,32 @@
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid" icon="home" expandable>
+                
                     <flux:sidebar.item :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+                                
+                <flux:sidebar.group expandable :heading="__('Marketing & Orders')" class="grid" icon="arrow-trending-up">
+                    <flux:sidebar.item href="{{ route('admin.coupons') }}"  wire:navigate lazy>{{ __('Coupons') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.orders') }}"  wire:navigate lazy>{{ __('Orders') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.wishlist') }}"  wire:navigate lazy>{{ __('Product Wishlist') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.reviews') }}"  wire:navigate lazy>{{ __('Product Reviews') }}</flux:sidebar.item>
+                </flux:sidebar.group>
+                <flux:sidebar.group expandable :heading="__('Users')" class="grid" icon="user">
+                    <flux:sidebar.item href="{{ route('admin.users') }}"  wire:navigate lazy>{{ __('Users') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.addresses') }}"  wire:navigate lazy>{{ __('User Addresses') }}</flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
             
             <flux:spacer />
-            
+
             <flux:sidebar.nav>
-                <flux:sidebar.group expandable :heading="__('settings')" class="grid" icon="cog-6-tooth">
+                <flux:sidebar.group expandable :heading="__('Catalogue')" class="grid" icon="squares-plus">
                     <flux:sidebar.item href="{{ route('admin.categories') }}"  wire:navigate lazy>{{ __('Categories') }}</flux:sidebar.item>
                     <flux:sidebar.item href="{{ route('admin.brands') }}"  wire:navigate lazy>{{ __('Brands') }}</flux:sidebar.item>
                     <flux:sidebar.item href="{{ route('admin.products') }}"  wire:navigate lazy>{{ __('Products') }}</flux:sidebar.item>
-                    <flux:sidebar.item href="{{ route('admin.coupons') }}"  wire:navigate lazy>{{ __('Coupons') }}</flux:sidebar.item>
-                    <flux:sidebar.item href="{{ route('admin.users') }}"  wire:navigate lazy>{{ __('Users') }}</flux:sidebar.item>
-                    <flux:sidebar.item href="{{ route('admin.addresses') }}"  wire:navigate lazy>{{ __('User Addresses') }}</flux:sidebar.item>
-                    <flux:sidebar.item href="{{ route('admin.orders') }}"  wire:navigate lazy>{{ __('User Orders') }}</flux:sidebar.item>
-                    <flux:sidebar.item href="{{ route('admin.wishlist') }}"  wire:navigate lazy>{{ __('User Wishlist') }}</flux:sidebar.item>
                 </flux:sidebar.group>
-            </flux:sidebar.nav>            
+            </flux:sidebar.nav>           
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar >
@@ -98,5 +103,6 @@
         {{ $slot }}
 
         @fluxScripts
+        <x-toast />
     </body>
 </html>

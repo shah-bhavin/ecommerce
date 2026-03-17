@@ -4,11 +4,11 @@ use Livewire\Component;
 
 new class extends Component
 {
-    //
+    
 };
 ?>
 
-<div class="p-6">
+<div>
     <flux:heading size="xl" class="mb-6">Most Wishlisted Products</flux:heading>
 
     <flux:table>

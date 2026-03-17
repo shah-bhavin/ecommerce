@@ -30,8 +30,12 @@ new class extends Component
             'is_active' => $this->is_active,
         ]);
 
-        $this->showModal = false;
         $this->reset();
+        $this->dispatch('toast', 
+            type: 'success', 
+            text: 'Coupon created!'
+        );
+        $this->coupons();
     }
 
     public function edit($id) {
@@ -64,7 +68,11 @@ new class extends Component
 
             $coupon->delete();
             $this->reset('deletingId', 'showDeleteModal');
-            $this->categories();
+            $this->dispatch('toast', 
+                type: 'error', 
+                text: 'Coupon Removed Successfully!'
+            );
+            $this->coupons();
         }
     }
 };
@@ -125,7 +133,7 @@ new class extends Component
             <div>
                 <flux:heading size="lg">Are you sure?</flux:heading>
                 <flux:subheading>
-                    Are you sure you want to delete this category?
+                    Are you sure you want to delete this coupon?
                 </flux:subheading>
             </div>
 

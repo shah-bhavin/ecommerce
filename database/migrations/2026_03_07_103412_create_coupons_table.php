@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('used_count')->default(0);
             $table->date('expiry_date')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

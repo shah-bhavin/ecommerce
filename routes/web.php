@@ -10,12 +10,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/settings.php';
 
-Route::livewire('/admin/categories', 'admin.categories')->name('admin.categories');
-Route::livewire('/admin/brands', 'admin.brands')->name('admin.brands');
-Route::livewire('/admin/products', 'admin.products')->name('admin.products');
-Route::livewire('/admin/coupons', 'admin.coupons')->name('admin.coupons');
-Route::livewire('/admin/users', 'admin.users')->name('admin.users');
-Route::livewire('/admin/addresses', 'admin.addresses')->name('admin.addresses');
-Route::livewire('/admin/orders', 'admin.orders')->name('admin.orders');
-Route::livewire('/admin/wishlist', 'admin.wishlist')->name('admin.wishlist');
+Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
+    Route::livewire('/categories', 'admin.categories')->name('admin.categories');
+    Route::livewire('/brands', 'admin.brands')->name('admin.brands');
+    Route::livewire('/products', 'admin.products')->name('admin.products');
+    Route::livewire('/coupons', 'admin.coupons')->name('admin.coupons');
+    Route::livewire('/users', 'admin.users')->name('admin.users');
+    Route::livewire('/addresses', 'admin.addresses')->name('admin.addresses');
+    Route::livewire('/orders', 'admin.orders')->name('admin.orders');
+    Route::livewire('/wishlists', 'admin.wishlist')->name('admin.wishlist');
+    Route::livewire('/reviews', 'admin.reviews')->name('admin.reviews');
+});
 

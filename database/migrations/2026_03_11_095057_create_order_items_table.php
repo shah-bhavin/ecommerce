@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price_at_purchase', 12, 2); // Snapshot of price
             
+            $table->softDeletes();
             $table->timestamps();
         });
     }

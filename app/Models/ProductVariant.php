@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductVariant extends Model
 {
+    use SoftDeletes;
     public $fillable = ['sku', 'size', 'color', 'price_modifier', 'stock_quantity', 'variant_image'];
 
     public function product()

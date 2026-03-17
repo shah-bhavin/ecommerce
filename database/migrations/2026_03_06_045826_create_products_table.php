@@ -14,21 +14,17 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('brand_id')->constrained()->cascadeOnDelete();
-
             $table->string('name');
             $table->string('slug')->unique();
-            $table->longText('description')->nullable();
-            $table->string('base_image')->nullable();
-
-            $table->decimal('base_price', 12, 2);
-            $table->integer('gst_percentage')->default(5);
-
-            $table->boolean('is_active')->default(true);
-            $table->boolean('is_featured')->default(false);
-            $table->enum('status', ['draft', 'published', 'out_of_stock'])->default('draft');
-
+            $table->text('description')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->string('category'); // Cream, Lotion, Gel
+            $table->string('skin_type'); // Oily, Dry, All
+            $table->integer('stock')->default(0);
+            $table->string('image')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wishlists', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            
-            // Link to user and product
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             
-            // Ensure a user can't add the same product twice
-            $table->unique(['user_id', 'product_id']);
+            // Review Content
+            $table->integer('rating'); // 1 to 5
+            $table->string('title')->nullable();
+            $table->text('comment')->nullable();
+            
+            // Meta Data
+            $table->boolean('is_active')->default(true); // For moderation
+            $table->boolean('is_verified_purchase')->default(false);
             
             $table->softDeletes();
             $table->timestamps();
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wishlists');
+        Schema::dropIfExists('reviews');
     }
 };
