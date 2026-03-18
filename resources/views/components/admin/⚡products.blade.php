@@ -76,6 +76,7 @@ new class extends Component {
             $product->update(['image' => $path]);
         }
 
+
         $this->showModal = false;
         $this->dispatch('toast', 
             type: 'success', 
