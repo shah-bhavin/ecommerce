@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['user_id', 'address_id', 'order_number', 'subtotal', 'total_amount', 'status', 'payment_status'];
+    protected $fillable = ['user_id', 'address_id', 'order_number', 'subtotal', 'total', 'status', 'payment_status', 'coupon_code', 'discount_amount'];
 
     public function items() {
         return $this->hasMany(OrderItem::class);

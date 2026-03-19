@@ -1,8 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//Route::view('/', 'welcome')->name('home');
 
-Route::view('/', 'welcome')->name('home');
+// Route::livewire('/', 'store.home')->name('home');
+// Route::livewire('/shop', 'store.shop-index')->name('shop');
+// Route::livewire('/product/{slug}', 'store.product-show')->name('product.show');
+
+// Frontend Routes (All pointing to Livewire SFCs)
+Route::livewire('/', 'store.home')->name('home');
+Route::livewire('/shop', 'store.shop')->name('shop');
+Route::livewire('/product/{slug}', 'store.product-detail')->name('product.show');
+Route::livewire('/cart', 'store.cart')->name('cart');
+Route::livewire('/checkout', 'store.checkout')->name('checkout');
+Route::livewire('/search', 'store.search')->name('search');
+Route::livewire('/thank-you', 'store.thank-you')->name('thank-you');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');

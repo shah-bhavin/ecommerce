@@ -13,32 +13,33 @@ class Product extends Model
     protected function casts(): array {
         return [ 'price' => 'decimal:2' ];
     }
-    public function variants()
-    {
-        return $this->hasMany(ProductVariant::class);
-    }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    // public function variants()
+    // {
+    //     return $this->hasMany(ProductVariant::class);
+    // }
 
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
+    // public function category()
+    // {
+    //     return $this->belongsTo(Category::class);
+    // }
 
-    public function wishlists()
-    {
-        return $this->hasMany(Wishlist::class);
-    }
+    // public function brand()
+    // {
+    //     return $this->belongsTo(Brand::class);
+    // }
+
+    // public function wishlists()
+    // {
+    //     return $this->hasMany(Wishlist::class);
+    // }
 
     public function reviews() {
         return $this->hasMany(Review::class);
     }
 
-    public function averageRating() {
-        return round($this->reviews()->where('is_active', true)->avg('rating'), 1);
-    }
+    // public function averageRating() {
+    //     return round($this->reviews()->where('is_active', true)->avg('rating'), 1);
+    // }
 
 }

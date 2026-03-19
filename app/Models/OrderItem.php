@@ -13,7 +13,7 @@ class OrderItem extends Model
         'product_id',
         'product_variant_id',        
         'quantity',
-        'price_at_purchase'
+        'price'
     ];
 
     public function product()

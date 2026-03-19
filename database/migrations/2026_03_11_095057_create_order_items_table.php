@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('product_variant_id')->constrained();
             
             $table->integer('quantity');
-            $table->decimal('price_at_purchase', 12, 2); // Snapshot of price
+            $table->decimal('price', 12, 2); // Snapshot of price
             
             $table->softDeletes();
             $table->timestamps();
