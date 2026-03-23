@@ -16,6 +16,14 @@ Route::livewire('/checkout', 'store.checkout')->name('checkout');
 Route::livewire('/search', 'store.search')->name('search');
 Route::livewire('/thank-you', 'store.thank-you')->name('thank-you');
 
+// --- AUTH CUSTOMERS ---
+Route::middleware('auth')->group(function () {
+    Route::livewire('/account', 'store.account.dashboard');
+    Route::livewire('/account/orders', 'store.account.orders');
+    Route::livewire('/account/orders/{id}', 'store.account.track-order'); // Track Order
+    Route::livewire('/account/profile', 'store.account.profile');
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
 });
