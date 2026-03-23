@@ -16,6 +16,16 @@ Route::livewire('/checkout', 'store.checkout')->name('checkout');
 Route::livewire('/search', 'store.search')->name('search');
 Route::livewire('/thank-you', 'store.thank-you')->name('thank-you');
 
+Route::middleware('guest')->group(function () {
+    Route::livewire('/login', 'store.auth.login')->name('login');
+    Route::livewire('/register', 'store.auth.register')->name('register');
+});
+
+Route::post('/logout', function () {
+    auth()->logout();
+    return redirect('/');
+})->name('logout');
+
 // --- AUTH CUSTOMERS ---
 Route::middleware('auth')->group(function () {
     Route::livewire('/account', 'store.account.dashboard');

@@ -4,13 +4,12 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 new class extends Component {
-    #[Layout('layouts.store')] 
+    #[Layout('layouts.store')] // Force it to use your luxury layout
 
     public $email = '';
     public $password = '';
 
-    public function login()
-    {
+    public function login() {
         $credentials = $this->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -18,38 +17,54 @@ new class extends Component {
 
         if (Auth::attempt($credentials)) {
             session()->regenerate();
-            return redirect()->intended('/account');
+            
+            // Redirect based on role
+            return Auth::user()->isAdmin() 
+                ? redirect()->intended('/dashboard') 
+                : redirect()->intended('/account');
         }
 
         $this->addError('email', 'These credentials do not match our records.');
     }
 }; ?>
 
-<div class="max-w-md mx-auto py-32 px-6">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-serif italic uppercase tracking-tighter">Sign In</h1>
-        <p class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mt-2">Access your Lumiskin Account</p>
+<div class="min-h-screen grid lg:grid-cols-2">
+    <div class="hidden lg:block bg-zinc-100 relative overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1974&auto=format&fit=crop" 
+             class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" alt="Lumiskin Interior">
+        <div class="absolute bottom-12 left-12 text-white">
+            <h2 class="text-4xl font-serif italic italic">The Science of Glow</h2>
+            <p class="text-xs uppercase tracking-[0.3em] mt-2">Molecular Skincare Collective</p>
+        </div>
     </div>
 
-    <form wire:submit="login" class="space-y-6">
-        <flux:input wire:model="email" label="Email" type="email" viewable class="rounded-none h-12 border-zinc-200" />
-        
-        <div class="space-y-1">
-            <flux:input wire:model="password" label="Password" type="password" viewable class="rounded-none h-12 border-zinc-200" />
-            <div class="flex justify-end">
-                <a href="#" class="text-[9px] uppercase tracking-widest text-zinc-400 hover:text-black underline">Forgot?</a>
+    <div class="flex items-center justify-center px-12 py-24 bg-white">
+        <div class="w-full max-w-sm space-y-12">
+            <div class="text-center space-y-4">
+                <h1 class="text-4xl font-serif italic tracking-tight">Welcome Back</h1>
+                <p class="text-[10px] text-zinc-400 uppercase tracking-widest">Sign in to your Lumiskin account</p>
+            </div>
+
+            <form wire:submit="login" class="space-y-8">
+                <flux:input wire:model="email" label="Email Address" class="rounded-none border-zinc-200 h-12" />
+                <div class="space-y-1">
+                    <flux:input wire:model="password" type="password" label="Password" class="rounded-none border-zinc-200 h-12" />
+                    <div class="flex justify-end">
+                        <a href="#" class="text-[9px] uppercase tracking-widest text-zinc-400 underline italic">Forgot Password?</a>
+                    </div>
+                </div>
+
+                <flux:button type="submit" class="w-full bg-black text-white h-16 rounded-none uppercase text-xs tracking-[0.4em] hover:bg-zinc-800 transition-colors">
+                    Sign In
+                </flux:button>
+            </form>
+
+            <div class="pt-12 border-t border-zinc-100 text-center">
+                <p class="text-xs text-zinc-500 font-light mb-6">New to the collective?</p>
+                <flux:button href="/register" variant="ghost" class="w-full border border-black rounded-none h-14 uppercase text-[10px] tracking-widest">
+                    Create an Account
+                </flux:button>
             </div>
         </div>
-
-        <flux:button type="submit" class="w-full bg-black text-white h-14 rounded-none uppercase text-xs tracking-[0.3em] hover:bg-zinc-800 transition-colors">
-            Login
-        </flux:button>
-    </form>
-
-    <div class="mt-12 pt-8 border-t border-zinc-100 text-center">
-        <p class="text-sm text-zinc-500 font-light mb-4">New to Lumiskin?</p>
-        <flux:button href="/register" variant="ghost" class="w-full border border-black rounded-none h-14 uppercase text-xs tracking-widest">
-            Create Account
-        </flux:button>
     </div>
 </div>
