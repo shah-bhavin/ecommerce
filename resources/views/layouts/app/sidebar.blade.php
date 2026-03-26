@@ -25,6 +25,7 @@
                     <flux:sidebar.item href="{{ route('admin.orders') }}"  wire:navigate lazy>{{ __('Orders') }}</flux:sidebar.item>
                     <flux:sidebar.item href="{{ route('admin.wishlist') }}"  wire:navigate lazy>{{ __('Product Wishlist') }}</flux:sidebar.item>
                     <flux:sidebar.item href="{{ route('admin.reviews') }}"  wire:navigate lazy>{{ __('Product Reviews') }}</flux:sidebar.item>
+                    <flux:sidebar.item href="{{ route('admin.carousel') }}"  wire:navigate lazy>{{ __('Home Carousel') }}</flux:sidebar.item>
                 </flux:sidebar.group>
                 <flux:sidebar.group expandable :heading="__('Users')" class="grid" icon="user">
                     <flux:sidebar.item href="{{ route('admin.users') }}"  wire:navigate lazy>{{ __('Users') }}</flux:sidebar.item>

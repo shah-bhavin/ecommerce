@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Luxury Styles */
+
+/********************************************Custom CSS**********************************************/
+
+:root {
+  --primary-color: #660c3a; /* Global variable declaration */
+  --border-color: #929292;
+}
+
+.top-advertisement{
+    background-color: var(--primary-color);
+}
+
+.logo{
+    height: 50px !important;
+}
+
+.input{
+    border: 1px solid var(--border-color) !important;
+    border-radius: 3px !important;
+    label{
+        background-color: #660c3a;
+    }
+}
+
+.carousel-button{
+    border: 1px solid var(--primary-color) !important;
+    padding: 10px;
+    border-radius: 4px !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: raleway;
+}
+
+.carousel h3{
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 1;
+}
+body{
+    font-family: raleway;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+/********************************************Custom CSS**********************************************/

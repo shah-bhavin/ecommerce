@@ -28,27 +28,18 @@ new class extends Component {
     }
 }; ?>
 
-<div class="min-h-screen grid lg:grid-cols-2">
-    <div class="hidden lg:block bg-zinc-100 relative overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1974&auto=format&fit=crop" 
-             class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" alt="Lumiskin Interior">
-        <div class="absolute bottom-12 left-12 text-white">
-            <h2 class="text-4xl font-serif italic italic">The Science of Glow</h2>
-            <p class="text-xs uppercase tracking-[0.3em] mt-2">Molecular Skincare Collective</p>
-        </div>
-    </div>
-
-    <div class="flex items-center justify-center px-12 py-24 bg-white">
-        <div class="w-full max-w-sm space-y-12">
+<div class="min-h-screen grid">
+    <div class="flex items-center justify-center px-12 py-12 bg-white">
+        <div class="w-full max-w-sm space-y-4">
             <div class="text-center space-y-4">
-                <h1 class="text-4xl font-serif italic tracking-tight">Welcome Back</h1>
+                <h1 class="text-4xl font-serif italic tracking-tight">Login</h1>
                 <p class="text-[10px] text-zinc-400 uppercase tracking-widest">Sign in to your Lumiskin account</p>
             </div>
 
-            <form wire:submit="login" class="space-y-8">
-                <flux:input wire:model="email" label="Email Address" class="rounded-none border-zinc-200 h-12" />
+            <form wire:submit="login" class="space-y-4">
+                <flux:input wire:model="email" label="Email Address" class="input"/>
                 <div class="space-y-1">
-                    <flux:input wire:model="password" type="password" label="Password" class="rounded-none border-zinc-200 h-12" />
+                    <flux:input wire:model="password" type="password" label="Password" class="input" />
                     <div class="flex justify-end">
                         <a href="#" class="text-[9px] uppercase tracking-widest text-zinc-400 underline italic">Forgot Password?</a>
                     </div>

@@ -143,10 +143,6 @@ new class extends Component
         <flux:button wire:click="create" variant="primary" icon="plus">Add Category</flux:button>
     </div>
 
-    <!-- <div class="flex gap-2 mb-4">
-        <flux:input icon:trailing="magnifying-glass" placeholder="Search Category..." wire:model.live="search" />
-    </div> -->
-
     <flux:table :paginate="$this->categories()">
         <flux:table.columns sticky class="bg-white dark:bg-zinc-900">
             <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection" wire:click="sort('name')">Name</flux:table.column>

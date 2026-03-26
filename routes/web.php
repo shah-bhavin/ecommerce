@@ -15,6 +15,7 @@ Route::livewire('/cart', 'store.cart')->name('cart');
 Route::livewire('/checkout', 'store.checkout')->name('checkout');
 Route::livewire('/search', 'store.search')->name('search');
 Route::livewire('/thank-you', 'store.thank-you')->name('thank-you');
+//Route::livewire('/wishlist', 'shop.wishlist')->name('wishlist');
 
 Route::middleware('guest')->group(function () {
     Route::livewire('/login', 'store.auth.login')->name('login');
@@ -50,5 +51,6 @@ Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
     Route::livewire('/orders', 'admin.orders')->name('admin.orders');
     Route::livewire('/wishlists', 'admin.wishlist')->name('admin.wishlist');
     Route::livewire('/reviews', 'admin.reviews')->name('admin.reviews');
+    Route::livewire('/carousel', 'admin.carousel')->name('admin.carousel');
 });
 
