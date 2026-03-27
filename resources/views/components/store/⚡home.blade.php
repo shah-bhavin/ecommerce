@@ -1,5 +1,6 @@
 <?php
 use App\Models\Carousel;
+use App\Models\Category;
 use App\Models\Product;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -11,7 +12,8 @@ new class extends Component
     #[Layout('layouts.store')]
     public function with() {
         return [
-            'featured' => Product::get(),
+            'products' => Product::get(),
+            'categories' => Category::get(),
             'carousels' => Carousel::get()
         ];
     }
@@ -20,5 +22,6 @@ new class extends Component
 
 <div>
     <x-store.slider :carousels="$carousels"/>
-    <x-store.featured :featured="$featured"/>
+    <x-store.categories :categories="$categories"/>
+    <x-store.featured :products="$products"/>
 </div>

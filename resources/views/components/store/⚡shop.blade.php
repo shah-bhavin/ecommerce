@@ -39,44 +39,52 @@ new class extends Component
         ];
     }
 
-    public function addToBag($productId) {
-        $product = Product::find($productId);
-        $cart = session()->get('cart', []);
-        $cartKey = $product->id . '-base';
+    // public function addToBag($productId) {
+    //     $product = Product::find($productId);
+    //     $cart = session()->get('cart', []);
+    //     $cartKey = $product->id . '-base';
 
-        if(isset($cart[$cartKey])) {
-            $cart[$cartKey]['quantity']++;
-        } else {
-            $cart[$cartKey] = [
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => $product->price,
-                'image' => $product->image,
-                'quantity' => 1,
-                'variant_id' => null,
-                'variant_name' => 'Standard'
-            ];
-        }
+    //     if(isset($cart[$cartKey])) {
+    //         $cart[$cartKey]['quantity']++;
+    //     } else {
+    //         $cart[$cartKey] = [
+    //             'id' => $product->id,
+    //             'name' => $product->name,
+    //             'price' => $product->price,
+    //             'image' => $product->image,
+    //             'quantity' => 1,
+    //             'variant_id' => null,
+    //             'variant_name' => 'Standard'
+    //         ];
+    //     }
 
-        session()->put('cart', $cart);
-        CartItem::updateOrCreate(
-            ['user_id' => Auth::id(), 'product_id' => $productId],
-            ['quantity' => DB::raw('quantity + 1')]
-        );
+    //     session()->put('cart', $cart);
+    //     CartItem::updateOrCreate(
+    //         ['user_id' => Auth::id(), 'product_id' => $productId],
+    //         ['quantity' => DB::raw('quantity + 1')]
+    //     );
         
-        $this->dispatch('cart-updated');
-        $this->dispatch('toast', type: 'success', text: 'Added to bag');
-    }
+    //     // $this->dispatch('cart-updated');
+    //     // $this->dispatch('toast', type: 'success', text: 'Added to bag');
+    //     $this->dispatch('toast', 
+    //         type: 'success', 
+    //         text: 'Wishlist updated'
+    //     );
+    // }
 
-    public function toggleWishlist($productId) {
-        if (!auth()->check()) return redirect()->route('login');
+    // public function toggleWishlist($productId) {
+    //     if (!auth()->check()) return redirect()->route('login');
         
-        $exists = Wishlist::where('user_id', auth()->id())->where('product_id', $productId)->first();
-        if ($exists) { $exists->delete(); } 
-        else { Wishlist::create(['user_id' => auth()->id(), 'product_id' => $productId]); }
+    //     $exists = Wishlist::where('user_id', auth()->id())->where('product_id', $productId)->first();
+    //     if ($exists) { $exists->delete(); } 
+    //     else { Wishlist::create(['user_id' => auth()->id(), 'product_id' => $productId]); }
         
-        $this->dispatch('toast', text: 'Wishlist updated');
-    }
+    //     //$this->dispatch('toast', text: 'Wishlist updated');
+    //     $this->dispatch('toast', 
+    //         type: 'success', 
+    //         text: 'Wishlist updated'
+    //     );
+    // }
 };
 ?>
 
@@ -86,12 +94,12 @@ new class extends Component
         <nav class="text-[10px] uppercase tracking-[0.2em] text-zinc-400 mb-4">
             <a href="/">Home</a> / <span class="text-zinc-900">Shop All</span>
         </nav>
-        <h1 class="text-5xl font-serif italic tracking-tight">Molecular Collections</h1>
+        <h1 class="text-3xl font-serif tracking-tight uppercase">Shop</h1>
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-12">
+    <div class="flex flex-col lg:flex-row! gap-12">
         {{-- Sidebar Filters --}}
-        <aside class="w-full lg:w-64 space-y-10 shrink-0">
+        <aside class="w-full md:w-64! space-y-10 shrink-0">
             <div>
                 <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-6 border-b border-zinc-100 pb-2">Category</h4>
                 <div class="flex flex-col gap-3">
@@ -142,8 +150,8 @@ new class extends Component
             </div>
 
             {{-- Grid View --}}
-            @if($viewMode == 'grid')
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-16">
+            <!-- @if($viewMode == 'grid') -->
+                <div class="grid grid-cols-1 md:grid-cols-3! gap-x-8 gap-y-16">
                     @foreach($products as $product)
                         <div class="group relative">
                             <button wire:click="toggleWishlist({{ $product->id }})" class="absolute top-4 right-4 z-10 p-2 bg-white/80 backdrop-blur rounded-full hover:scale-110 transition-transform">
@@ -168,7 +176,7 @@ new class extends Component
                         </div>
                     @endforeach
                 </div>
-            @else
+            <!-- @else
                 {{-- List View --}}
                 <div class="flex flex-col gap-12">
                     @foreach($products as $product)
@@ -187,7 +195,7 @@ new class extends Component
                         </div>
                     @endforeach
                 </div>
-            @endif
+            @endif -->
         </div>
     </div>
 </div>

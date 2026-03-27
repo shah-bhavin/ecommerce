@@ -18,8 +18,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             
-            // Ensure a user can't add the same product twice
-            $table->unique(['user_id', 'product_id']);
             
             $table->softDeletes();
             $table->timestamps();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ?? 'LUMISKIN | Molecular Skincare' }}</title>
+    <title>{{ $title ?? 'Abrari | ' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/store.css'])
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +15,7 @@
 <body class="bg-white text-zinc-900 antialiased font-sans">
     <x-store.top-navigation />
     <main>{{ $slot }}</main>
+    <x-store.footer />
     <x-toast />  
     <x-store.modal />
     @fluxScripts    

@@ -10,7 +10,7 @@
 
                 <!-- <div class="absolute inset-0 bg-black/40"></div> -->
 
-                <div class="absolute inset-0 flex flex-col justify-center px-8 pl-8 w-1/2 gap-4">
+                <div class="absolute inset-0 flex flex-col justify-center px-8 pl-20 w-1/2 gap-4">
                     <h3 class="mb-4 uppercase">{{ $carousel->title }}</h3>
                     <p>{{ $carousel->subtitle }}</p>
                     <a href="{{ $carousel->link }}" class="carousel-button self-start">Shop Now</a>
@@ -31,14 +31,12 @@
 
 
         <!-- 🔹 Controls -->
-        <button type="button" data-carousel-prev><flux:icon.academic-cap />
-            
+        <button type="button" data-carousel-prev class="absolute top-1/2 left-4 z-30 control-button">
+            <flux:icon.chevron-double-left />
         </button>
 
-        <button type="button"
-            class="absolute top-1/2 right-4 -translate-y-1/2 z-30 text-white text-3xl"
-            data-carousel-next>
-            ›
+        <button type="button" class="absolute top-1/2 right-4 z-30 control-button" data-carousel-next>
+            <flux:icon.chevron-double-right />
         </button>
 
     </section>

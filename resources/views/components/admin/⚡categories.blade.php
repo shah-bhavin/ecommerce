@@ -11,7 +11,7 @@ new class extends Component
     use WithFileUploads;
 
     public $categories;
-    public $name, $parent_id, $description, $meta_title, $meta_description;
+    public $name, $description, $meta_title, $meta_description;
     public $editingId, $deletingId;
 
     public $sortBy = 'id';
@@ -28,7 +28,7 @@ new class extends Component
     
 
     public function categories() {
-        return Category::query()->with(['parent'])
+        return Category::query()
         ->tap(fn ($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)
         ->when($this->search, function ($query) {
             $query->where('name', 'like', '%' . $this->search . '%')
@@ -59,7 +59,6 @@ new class extends Component
         $this->editingId = $id;
         $this->name = $category->name;
         $this->description = $category->description;
-        $this->parent_id = $category->parent_id;        
         $this->is_active = $is_active;
         $this->is_featured = $is_featured;
         $this->existingImage = $category->image;
@@ -80,7 +79,6 @@ new class extends Component
             'name' => $this->name,
             'slug' => Str::slug($this->name),
             'description' => $this->description,
-            'parent_id' => $this->parent_id ?: null,
             'is_active' => $this->is_active,
             'is_featured' => $this->is_featured,
             'meta_title' => $this->meta_title,
@@ -129,7 +127,7 @@ new class extends Component
     }
 
     private function resetForm(){
-        $this->reset(['name', 'description', 'parent_id', 'image', 'is_active', 'is_featured', 'editingId','meta_title','meta_description', 'showModal']);
+        $this->reset(['name', 'description', 'image', 'is_active', 'is_featured', 'editingId','meta_title','meta_description', 'showModal']);
     }
 
 }
@@ -148,7 +146,6 @@ new class extends Component
             <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection" wire:click="sort('name')">Name</flux:table.column>
             <flux:table.column>Featured</flux:table.column>
             <flux:table.column>Status</flux:table.column>
-            <flux:table.column>Parent</flux:table.column>
             <flux:table.column>Actions</flux:table.column>
         </flux:table.columns>
 
@@ -168,7 +165,6 @@ new class extends Component
                         {!! $category->is_active == 1 ? '<flux:badge color="lime" size="sm">Active</flux:badge>' : 
                         '<flux:badge color="zinc" size="sm">Inactive</flux:badge>' !!}
                     </flux:table.cell>
-                    <flux:table.cell>{{ $category->parent?->name ?? 'None' }}</flux:table.cell>   
                     <flux:table.cell>
                         <flux:button.group>
                             <flux:button wire:click="edit({{ $category->id }})" wire:loading.attr="disabled" size="sm" icon="pencil-square" />
@@ -184,13 +180,6 @@ new class extends Component
         <form wire:submit="save" class="space-y-4">
             <flux:heading size="lg">{{ $editingId ? 'Edit' : 'Add' }} Category</flux:heading>
             
-            <flux:select wire:model="parent_id" label="Parent Category">
-                <option value="">None</option>
-                @foreach($this->categories()->whereNull('parent_id') as $parent)
-                    <option value="{{ $parent->id }}">{{ $parent->name }}</option>
-                @endforeach
-            </flux:select>
-
             <flux:input wire:model="name" label="Category Name" placeholder="e.g. Ethnic Wear" autofocus/>
             
             <flux:textarea wire:model="description" label="Category Description" placeholder="Category Description" />

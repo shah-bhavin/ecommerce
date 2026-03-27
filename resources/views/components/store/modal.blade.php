@@ -1,4 +1,4 @@
-<flux:modal name="sidebar" class="bg-white! md:w-96 w-4/5" flyout position="left">
+<flux:modal name="sidebar" class="bg-white! w-4/5 md:w-24!" flyout position="left">
     <div class="space-y-6">            
         <a href="/"><img src="{{ asset('assets/images/logo.png') }}" class="logo"></a>
         <flux:navlist class="pt-10 gap-2">

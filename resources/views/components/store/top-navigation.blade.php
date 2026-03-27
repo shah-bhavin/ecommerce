@@ -17,7 +17,7 @@
 
         <div class="flex items-center gap-6">
             <a href="/search"><flux:icon.heart /></a>
-            <a href="/search"><flux:icon.user-circle /></a>
+            <a href="/login"><flux:icon.user-circle /></a>
             <livewire:store.cart-counter />
         </div>
     </div>

@@ -10,17 +10,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['name','slug', 'description','image', 'parent_id','is_active', 'is_featured', 'meta_title', 'meta_description'];
+    protected $fillable = ['name','slug', 'description','image', 'is_active', 'is_featured', 'meta_title', 'meta_description'];
 
-    public function parent(): BelongsTo 
-    {
-        return $this->belongsTo(Category::class, 'parent_id');
-    }
+    // public function parent(): BelongsTo 
+    // {
+    //     return $this->belongsTo(Category::class, 'parent_id');
+    // }
 
-    public function children(): HasMany
-    {
-        return $this->hasMany(Category::class, 'parent_id');
-    }
+    // public function children(): HasMany
+    // {
+    //     return $this->hasMany(Category::class, 'parent_id');
+    // }
 
     // Scope for active categories only
     public function scopeActive($query)
