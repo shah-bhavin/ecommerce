@@ -3,8 +3,9 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+// USE THE STARTER KIT LAYOUT
 new class extends Component {
-    #[Layout('layouts.store')] // Force it to use your luxury layout
+    #[Layout('layouts.auth')] 
 
     public $email = '';
     public $password = '';
@@ -16,47 +17,35 @@ new class extends Component {
         ]);
 
         if (Auth::attempt($credentials)) {
-            session()->regenerate();
+            if (Auth::user()->isAdmin()) {
+                session()->regenerate();
+                return redirect()->intended('/admin/dashboard');
+            }
             
-            // Redirect based on role
-            return Auth::user()->isAdmin() 
-                ? redirect()->intended('/dashboard') 
-                : redirect()->intended('/account');
+            // If a non-admin tries to log in here
+            Auth::logout();
+            $this->addError('email', 'This portal is restricted to administrators.');
+        } else {
+            $this->addError('email', 'Invalid credentials.');
         }
-
-        $this->addError('email', 'These credentials do not match our records.');
     }
 }; ?>
 
-<div class="min-h-screen grid">
-    <div class="min-h-screen grid">
-        <div class="flex items-center justify-center px-2 py-2 bg-white">
-            <div class="w-full max-w-sm space-y-4">
-                <div class="text-center space-y-4">
-                    <h1 class="text-3xl font-serif tracking-tight uppercase">Login</h1>
-                </div>
-
-                <form wire:submit="login" class="space-y-4">
-                    <flux:input wire:model="email" label="Email Address" class="[&_input]:rounded-none! h-12"/>
-                    <div class="space-y-1">
-                        <flux:input wire:model="password" type="password" label="Password" class="[&_input]:rounded-none! h-12" />
-
-                        <div class="flex justify-end">
-                            <a href="#" class="text-[9px] uppercase tracking-widest text-zinc-400 underline italic">Forgot Password?</a>
-                        </div>
-                    </div>
-
-                    <flux:button type="submit" class="w-full bg-black! text-white! h-8 rounded-none uppercase text-xs tracking-[0.4em] hover:bg-zinc-800 transition-colors">
-                        Sign In
-                    </flux:button>
-                </form>
-
-                <div class="pt-4 border-zinc-100 text-center">
-                    <flux:button href="/register" class="w-full border border-black rounded-none h-8 uppercase text-[10px] tracking-widest">
-                        Create an Account
-                    </flux:button>
-                </div>
-            </div>
+<div class="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
+    <div class="w-full max-w-sm space-y-6">
+        <div class="text-center">
+            {{-- Use Flux Heading for that 'Starter Kit' look --}}
+            <flux:heading size="xl">Admin Portal</flux:heading>
+            <flux:subheading>Secure back-office access</flux:subheading>
         </div>
+
+        <form wire:submit="login" class="space-y-4">
+            <flux:input wire:model="email" label="Email" type="email" required />
+            <flux:input wire:model="password" label="Password" type="password" required />
+            
+            <flux:button type="submit" variant="primary" class="w-full">
+                Login to Dashboard
+            </flux:button>
+        </form>
     </div>
 </div>

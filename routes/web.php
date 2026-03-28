@@ -56,21 +56,19 @@ Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
     Route::livewire('/carousel', 'admin.carousel')->name('admin.carousel');
 });
 
-// --- CUSTOMER AUTH ---
 Route::middleware('guest')->group(function () {
     Route::livewire('/login', 'store.auth.login')->name('login');
     Route::livewire('/register', 'store.auth.register')->name('register');
 });
 
-// --- ADMIN AUTH ---
 Route::prefix('admin')->group(function () {
     Route::middleware('guest')->group(function () {
-        Route::livewire('/login', 'admin.auth.login')->name('admin.login');
+        Route::view('/login', 'auth.login')->name('admin.login');
     });
     
     // Protected Admin Routes
     Route::middleware(['auth', 'admin'])->group(function () {
-        Route::livewire('/dashboard', 'admin.categories')->name('admin.dashboard');
+        Route::view('/dashboard', 'dashboard')->name('admin.dashboard');
     });
 });
 
