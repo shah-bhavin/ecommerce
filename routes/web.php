@@ -73,3 +73,18 @@ Route::prefix('admin')->group(function () {
         Route::livewire('/dashboard', 'admin.categories')->name('admin.dashboard');
     });
 });
+
+
+
+/********************************Suggested ********************************/
+// Route::get('/', 'store.home')->name('home');
+// Route::get('/shop', 'store.shop')->name('shop');
+
+// Route::get('/account', 'store.account.index')->name('account'); // Smart Login/Profile
+// Route::get('/register', 'store.auth.register')->name('register');
+
+// Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+//     Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('admin.dashboard');
+//     Route::get('/carousels', 'admin.carousel.index')->name('admin.carousels');
+// });
+/********************************Suggested ********************************/
