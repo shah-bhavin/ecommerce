@@ -8,7 +8,7 @@
             <flux:modal.trigger name="sidebar">
                 <flux:icon.bars-3 />
             </flux:modal.trigger>
-            <a href="/shop"><flux:icon.building-storefront /></a>
+            <a href="/collection"><flux:icon.building-storefront /></a>
             <a href="/search"><flux:icon.magnifying-glass /></a>
         </div>
         
@@ -17,7 +17,11 @@
 
         <div class="flex items-center gap-6">
             <a href="/search"><flux:icon.heart /></a>
-            <a href="/login"><flux:icon.user-circle /></a>
+            @if(!Auth::check())
+                <a href="/login"><flux:icon.user-circle /></a>
+            @else
+                <a href="{{ route('account') }}"><flux:icon.user /></a>
+            @endif
             <livewire:store.cart-counter />
         </div>
     </div>

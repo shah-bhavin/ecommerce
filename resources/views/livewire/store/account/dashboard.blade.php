@@ -1,40 +1,72 @@
 <?php
 use App\Models\{Order, Wishlist};
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
 new class extends \Livewire\Component {
-    #[Layout('layouts.store')]
+    public $user;
+    public $url;
+    public $view = 'overview'; // Default view
 
+    public function mount($url=null){
+        $this->user = Auth::user();
+        $this->url = $url;
+    }
+
+    public function setCategory($type){
+        $this->view = $type;
+    }
+
+    #[Layout('layouts.store')]
     public function with() {
+        $user = auth()->user();
+
+        // Fetch the base collections once
+        $orders = Order::where('user_id', $user->id)->latest()->get();
+        $wishlists = Wishlist::with('product')->where('user_id', $user->id)->get();
+
         return [
-            'recentOrder' => Order::where('user_id', auth()->id())->latest()->first(),
-            'wishlistCount' => Wishlist::where('user_id', auth()->id())->count()
+            'orders'        => $orders,
+            'orderscount'   => $orders->count(),
+            'recentOrder'   => $orders->first(), // already sorted by latest()
+            'wishlists'     => $wishlists,
+            'wishlistCount' => $wishlists->count(),
         ];
+
     }
 }; ?>
 
-<div class="grid md:grid-cols-2 gap-12">
-    {{-- Recent Order Card --}}
-    <div class="bg-zinc-50 p-10 space-y-6">
-        <h3 class="text-[10px] font-bold uppercase tracking-widest border-b border-zinc-200 pb-2">Recent Order</h3>
-        @if($recentOrder)
-            <div class="space-y-4">
-                <p class="text-xl font-serif tracking-tight">Status: {{ ucfirst($recentOrder->status) }}</p>
-                <p class="text-xs text-zinc-500">Order #{{ $recentOrder->id }} placed on {{ $recentOrder->created_at->format('M d, Y') }}</p>
-                <flux:button href="/account/orders" variant="ghost" class="uppercase text-[9px] tracking-widest underline p-0">Track Order</flux:button>
-            </div>
-        @else
-            <p class="text-sm text-zinc-400 italic">No recent orders found.</p>
-        @endif
-    </div>
 
-    {{-- Wishlist Summary --}}
-    <div class="border border-zinc-100 p-10 space-y-6">
-        <h3 class="text-[10px] font-bold uppercase tracking-widest border-b border-zinc-100 pb-2">Your Collection</h3>
-        <div class="space-y-4">
-            <p class="text-xl font-serif tracking-tight">{{ $wishlistCount }} Items Saved</p>
-            <p class="text-xs text-zinc-500">Your curated selection of molecular skincare.</p>
-            <flux:button href="/account/wishlist" variant="ghost" class="uppercase text-[9px] tracking-widest underline p-0">View Favorites</flux:button>
-        </div>
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="flex flex-col lg:flex-row! gap-12">
+        <aside class="w-full md:w-64! space-y-10 shrink-0">
+            <div>
+                <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-6 border-b border-zinc-100 pb-2">Welcome, {{ $this->user->name }}</h4>
+                <div class="flex flex-col gap-24">                
+                    <!-- Inside your sidebar (Flux UI) -->
+                    <flux:navlist class="flex flex-col gap-4">
+                        <flux:navlist.item href="/account/overview" wire:navigate :current="$view === 'overview'" icon="user" icon:trailing="chevron-right"> Account Overview</flux:navlist.item>                        
+
+                        <flux:navlist.item href="/account/wishlist" wire:navigate :current="$view === 'wishlist'" icon="heart" icon:trailing="chevron-right">Wishlist</flux:navlist.item>
+
+                        <flux:navlist.item href="/account/orders" wire:navigate :current="$view ==='orders'" icon="shopping-bag" icon:trailing="chevron-right">Orders</flux:navlist.item>
+
+                        <flux:navlist.item href="/account/profile" wire:navigate :current="$view === 'profile'" icon="user" icon:trailing="chevron-right"> Profile</flux:navlist.item>
+
+                        <flux:navlist.item href="{{ route('logout') }}" wire:navigate :current="$view === 'logout'" icon="user" icon:trailing="chevron-right"> Logout</flux:navlist.item>
+                    </flux:navlist>
+
+                </div>
+            </div>        
+        </aside>
+        @if($view === 'overview')
+            <x-store.account.overview :orderscount="$orderscount" :user="$user"/>
+        @elseif($view === 'wishlist')
+            <x-store.account.wishlist :wishlists="$wishlists" :wishlistCount="$wishlistCount"/>
+        @elseif($view === 'orders')
+            <x-store.account.orders :orders="$orders"/>
+        @elseif($view === 'profile')
+            <x-store.account.profile />
+        @endif       
     </div>
 </div>

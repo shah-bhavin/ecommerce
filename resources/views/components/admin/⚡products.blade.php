@@ -10,6 +10,7 @@ new class extends Component {
 
     use WithFileUploads;
     public $products;
+    public $categories;
     public $existingImage;     
     public $showModal = false;
     public $showDeleteModal = false; 
@@ -23,6 +24,7 @@ new class extends Component {
     }
 
     public function loadProducts() {
+        $this->categories = Category::latest()->get();
         $this->products = Product::latest()->get();
     }
 
@@ -157,20 +159,20 @@ new class extends Component {
             <flux:input wire:model="name" label="Product Name" />
             
             <flux:textarea wire:model="description" label="Product Description" placeholder="Product Description" />
-
             
-            <div class="grid grid-cols-2 gap-4">
-                <flux:select wire:model="category" label="Category">
-                    <option value="Cream">Cream</option>
-                    <option value="Lotion">Lotion</option>
-                    <option value="Gel">Gel</option>
-                </flux:select>
+            <flux:select wire:model="category" label="Category">
+                @foreach($categories as $category)
+                    <option value="{{ $category->slug }}">{{ $category->name }}</option>
+                @endforeach
+            </flux:select>
+            
+            <!-- <div class="grid grid-cols-2 gap-4">
                 <flux:select wire:model="skin_type" label="Skin Type">
                     <option value="All">All Types</option>
                     <option value="Oily">Oily</option>
                     <option value="Dry">Dry</option>
                 </flux:select>
-            </div>
+            </div> -->
 
             <div class="grid grid-cols-2 gap-4">
                 <flux:input wire:model="price" type="number" label="Price (₹)" />

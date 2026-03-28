@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Carousel;
 use App\Models\Category;
 use App\Models\Product;
@@ -8,8 +9,10 @@ use Livewire\Component;
 
 
 new class extends Component
-{
-    #[Layout('layouts.store')]
+{   
+    use App\Concerns\WishListTrait;
+
+    #[Layout('layouts.store')]    
     public function with() {
         return [
             'products' => Product::get(),

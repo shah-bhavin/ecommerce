@@ -19,5 +19,5 @@ new class extends Component
     <flux:icon.check-circle class="mx-auto text-emerald-600 size-16" />
     <h1 class="text-5xl font-serif italic">Thank You for your Order.</h1>
     <p class="text-zinc-500 font-light leading-relaxed">Your order #LS-9823 has been received and is currently being prepared for shipping.</p>
-    <flux:button href="/shop" variant="ghost" class="uppercase text-[10px] tracking-widest border border-black px-12 h-14 rounded-none">Continue Shopping</flux:button>
+    <flux:button href="/collection" variant="ghost" class="uppercase text-[10px] tracking-widest border border-black px-12 h-14 rounded-none">Continue Shopping</flux:button>
 </div>

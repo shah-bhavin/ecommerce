@@ -1,21 +1,7 @@
-<?php
-use App\Models\Order;
-use Livewire\Attributes\Layout;
-
-new class extends \Livewire\Component {
-    #[Layout('layouts.store')]
-
-    public function with() {
-        return [
-            'orders' => Order::where('user_id', auth()->id())->latest()->get()
-        ];
-    }
-}; ?>
-
-<div class="space-y-12">
+<div class="space-y-12 w-full">
     <div class="flex justify-between items-end border-b border-zinc-100 pb-6">
         <h1 class="text-3xl font-serif italic">My Orders</h1>
-        <span class="text-[10px] text-zinc-400 uppercase tracking-widest">{{ $orders->count() }} Total</span>
+        <h6 class="text-[10px] text-zinc-400 uppercase tracking-widest">{{ $orders ? 'Total Orders: ' .$orders->count() : 'No Orders Yet...' }} </h6>
     </div>
 
     <div class="space-y-8">
@@ -24,7 +10,7 @@ new class extends \Livewire\Component {
                 <div class="flex justify-between items-start">
                     <div class="space-y-1">
                         <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Order Reference</p>
-                        <h3 class="text-lg font-mono">#{{ $order->id }}</h3>
+                        <h3 class="text-lg font-mono">#{{ $order->order_number }}</h3>
                     </div>
                     <div class="text-right">
                         <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Status</p>
@@ -34,7 +20,6 @@ new class extends \Livewire\Component {
                     </div>
                 </div>
 
-                {{-- Tracking Progress Bar --}}
                 <div class="relative pt-4">
                     <div class="h-[1px] w-full bg-zinc-100 absolute top-1/2 -translate-y-1/2"></div>
                     <div class="flex justify-between relative z-10">
@@ -50,7 +35,7 @@ new class extends \Livewire\Component {
                 <div class="pt-6 flex justify-between items-center border-t border-zinc-50">
                     <div class="flex -space-x-4">
                         @foreach($order->items->take(3) as $item)
-                            <img src="{{ asset('storage/'.$item->product->base_image) }}" class="size-12 rounded-full border-2 border-white object-cover bg-zinc-50">
+                            <img src="{{ asset('storage/'.$item->product->image) }}" class="size-12 rounded-full border-2 border-white object-cover bg-zinc-50">
                         @endforeach
                     </div>
                     <div class="text-right">

@@ -2,6 +2,7 @@
 
 use App\Models\{Order, OrderItem, CartItem};
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -23,7 +24,9 @@ new class extends Component
             'user_id' => Auth::id(),
             'total' => $this->getSubtotal() - $this->discount,
             'status' => 'pending',
-            'coupon_code' => $this->coupon_code
+            'order_number' => Str::random(5),
+            'subtotal' => $this->getSubtotal(),
+            //'coupon_code' => $this->coupon_code
         ]);
 
         // 2. Transfer Cart Items to Order Items
@@ -32,7 +35,8 @@ new class extends Component
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
-                'price' => $item->product->price,
+                //'price' => $item->product->price,
+                'price' => 420,
                 'quantity' => $item->quantity
             ]);
         }

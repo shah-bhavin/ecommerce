@@ -27,9 +27,8 @@ new class extends Component {
     }
 }; ?>
 
-<div class="max-w-4xl mx-auto py-20 px-6">
-    <livewire:store.account.navigation />
-    <div class="mt-12 grid md:grid-cols-2 gap-16">
+<div class="w-full">
+    <div class="grid md:grid-cols-2 gap-8">
         <form wire:submit="updateProfile" class="space-y-6">
             <h3 class="font-serif italic text-xl">General Details</h3>
             <flux:input wire:model="name" label="Name" />

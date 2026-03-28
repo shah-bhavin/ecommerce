@@ -16,7 +16,6 @@ return new class extends Migration
 
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('product_variant_id')->constrained();
             
             $table->integer('quantity');
             $table->decimal('price', 12, 2); // Snapshot of price

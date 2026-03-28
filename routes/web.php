@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 // Frontend Routes (All pointing to Livewire SFCs)
 Route::livewire('/', 'store.home')->name('home');
-Route::livewire('/shop', 'store.shop')->name('shop');
+Route::livewire('/collection/{category?}', 'store.shop')->name('shop');
 Route::livewire('/product/{slug}', 'store.product-detail')->name('product.show');
 Route::livewire('/cart', 'store.cart')->name('cart');
 Route::livewire('/checkout', 'store.checkout')->name('checkout');
@@ -22,14 +22,16 @@ Route::middleware('guest')->group(function () {
     Route::livewire('/register', 'store.auth.register')->name('register');
 });
 
-Route::post('/logout', function () {
+Route::get('/logout', function () {
     auth()->logout();
     return redirect('/');
 })->name('logout');
 
 // --- AUTH CUSTOMERS ---
 Route::middleware('auth')->group(function () {
-    Route::livewire('/account', 'store.account.dashboard');
+    Route::livewire('/account/{view?}', 'store.account.dashboard')->name('account');
+
+    //Route::livewire('/account', 'store.account.dashboard');
     Route::livewire('/account/orders', 'store.account.orders');
     Route::livewire('/account/orders/{id}', 'store.account.track-order'); // Track Order
     Route::livewire('/account/profile', 'store.account.profile');
