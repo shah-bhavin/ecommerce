@@ -24,7 +24,7 @@
 
     <x-store.footer />
     <x-toast />  
-    <x-store.modal />
+    <x-store.sidenav />
 
     @livewireScripts
 </body>

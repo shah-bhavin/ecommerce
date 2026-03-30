@@ -3,15 +3,12 @@
 @if($carousels->isNotEmpty())
     <section id="carousel-example" class="relative w-full carousel" data-carousel="static">
 
-        <div class="relative h-[400px] md:h-[700px] overflow-hidden">
+        <div class="relative h-[300px] md:h-[500px] overflow-hidden">
             @foreach($carousels as $carousel)
             <div class="hidden duration-700 ease-linear" data-carousel-item="active">
                 <img src="{{ asset('storage/' . $carousel->image_path) }}" class="absolute block w-full h-full object-cover">
-
-                <!-- <div class="absolute inset-0 bg-black/40"></div> -->
-
                 <div class="absolute inset-0 flex flex-col justify-center px-8 pl-20 w-1/2 gap-4">
-                    <h3 class="mb-4 uppercase">{{ $carousel->title }}</h3>
+                    <h3 class="mb-4 uppercase text-[32px] font-bold">{{ $carousel->title }}</h3>
                     <p>{{ $carousel->subtitle }}</p>
                     <a href="{{ $carousel->link }}" class="carousel-button self-start">Shop Now</a>
                 </div>

@@ -4,8 +4,8 @@
 
 <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-zinc-100">
     <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        <div class="flex items-center gap-6"> <!-- Add flex and items-center -->
-            <a data-drawer-target="sidebar-example" data-drawer-show="sidebar-example" aria-controls="sidebar-example" >
+        <div class="flex items-center gap-3"> <!-- Add flex and items-center -->
+            <a data-drawer-target="sidebar-example" data-drawer-show="sidebar-example" aria-controls="sidebar-example" class="cursor-pointer">
                 <x-heroicon-o-bars-3 class="w-5 h-5 text-gray-500" />
             </a>
             <a href="/collection">
@@ -19,7 +19,7 @@
 
         <a href="/"><img src="{{ asset('assets/images/logo.png') }}" class="h-[50px]"></a>
 
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-3">
             <a href="/search"><x-heroicon-o-heart class="w-5 h-5 text-gray-500" /></a>
 
             @if(!Auth::check())
