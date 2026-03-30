@@ -1,0 +1,32 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-BB778YoX.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/store.css": {
+    "file": "assets/store-CKI_Eh64.css",
+    "src": "resources/css/store.css",
+    "isEntry": true,
+    "name": "store",
+    "names": [
+      "store.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-l0sNRNKZ.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/store.js": {
+    "file": "assets/store-C1DXE-kZ.js",
+    "name": "store",
+    "src": "resources/js/store.js",
+    "isEntry": true
+  }
+}
