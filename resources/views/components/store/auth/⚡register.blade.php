@@ -28,7 +28,8 @@ new class extends Component {
         Auth::login($user);
         return redirect()->to('/account');
     }
-}; ?>
+};
+?>
 
 <div class="min-h-[80vh] flex items-center justify-center py-20 px-6">
     <div class="w-full max-w-md">

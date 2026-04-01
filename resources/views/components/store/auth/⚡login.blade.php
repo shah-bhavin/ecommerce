@@ -3,7 +3,8 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-new class extends Component {
+new class extends Component
+{
     #[Layout('layouts.store')]
 
     public $email = '';
@@ -24,7 +25,8 @@ new class extends Component {
 
         $this->addError('email', 'These credentials do not match our records.');
     }
-}; ?>
+};
+?>
 
 <div class="min-h-[80vh] flex items-center justify-center px-6">
     <div class="w-full max-w-md">

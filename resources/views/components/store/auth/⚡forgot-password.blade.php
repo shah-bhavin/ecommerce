@@ -19,7 +19,8 @@ new class extends Component {
             $this->addError('email', __($status));
         }
     }
-}; ?>
+};
+?>
 
 <div class="min-h-[80vh] flex items-center justify-center px-6">
     <div class="w-full max-w-md">
