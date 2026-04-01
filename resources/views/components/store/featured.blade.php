@@ -20,8 +20,7 @@
                     </div>
                     <div class="text-center px-4">
                         <h3 class="font-serif text-lg leading-tight mb-1">{{ $product->name }}</h3>
-                        <p class="text-[9px] text-zinc-400 uppercase tracking-[0.2em] mb-3">{{ $product->skin_type }}</p>
-                        <p class="text-sm font-bold">₹{{ number_format($product->base_price, 2) }}</p>
+                        <p class="text-sm font-bold">₹{{ number_format($product->price, 2) }}</p>
                     </div>
                 </a>
                 <button wire:click="addToBag({{ $product->id }})" class="mt-4 w-full border border-black py-3 text-[9px] uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black hover:text-white">

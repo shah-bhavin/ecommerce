@@ -1,4 +1,4 @@
-<div class="text-white text-[10px] py-2 tracking-[0.2em] text-center uppercase font-bold bg-red-950">
+<div class="text-white text-[10px] py-2 tracking-[0.2em] text-center uppercase font-bold bg-pink-800">
     Complimentary Shipping on orders over ₹5,000
 </div>
 

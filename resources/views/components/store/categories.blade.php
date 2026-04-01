@@ -11,7 +11,7 @@
                     <img src="{{ asset('storage/'.$category->image) }}" class="w-full h-full object-cover transition-transform duration-[1.5s] bg-zinc-50 group-hover:scale-110 rounded-xl">
                 </div>
                 <div class="text-center">
-                    <h3 class="text-lg font-serif mb-2">{{ $category->name }}</h3>
+                    <h3 class="font-serif mb-2 uppercase font-light tracking-wide text-base]">{{ $category->name }}</h3>
                 </div>
             </a>
         @endforeach

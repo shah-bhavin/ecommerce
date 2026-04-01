@@ -3,12 +3,12 @@
 @if($carousels->isNotEmpty())
     <section id="carousel-example" class="relative w-full carousel" data-carousel="static">
 
-        <div class="relative h-[300px] md:h-[500px] overflow-hidden">
+        <div class="relative h-[200px] md:h-[350px] overflow-hidden">
             @foreach($carousels as $carousel)
             <div class="hidden duration-700 ease-linear" data-carousel-item="active">
                 <img src="{{ asset('storage/' . $carousel->image_path) }}" class="absolute block w-full h-full object-cover">
-                <div class="absolute inset-0 flex flex-col justify-center px-8 pl-20 w-1/2 gap-4">
-                    <h3 class="mb-4 uppercase text-[32px] font-bold">{{ $carousel->title }}</h3>
+                <div class="absolute inset-0 flex flex-col justify-center px-16 w-1/2 gap-4">
+                    <h3 class="mb-2 text-[17px] md:text-[24px] uppercase font-semibold">{{ $carousel->title }}</h3>
                     <p>{{ $carousel->subtitle }}</p>
                     <a href="{{ $carousel->link }}" class="carousel-button self-start">Shop Now</a>
                 </div>
@@ -29,11 +29,11 @@
 
         <!-- 🔹 Controls -->
         <button type="button" data-carousel-prev class="absolute top-1/2 left-4 z-30 control-button">
-            <flux:icon.chevron-double-left />
+            <x-heroicon-o-chevron-left class="w-5 h-5 text-gray-500" />
         </button>
 
         <button type="button" class="absolute top-1/2 right-4 z-30 control-button" data-carousel-next>
-            <flux:icon.chevron-double-right />
+            <x-heroicon-o-chevron-right class="w-5 h-5 text-gray-500" />
         </button>
 
     </section>

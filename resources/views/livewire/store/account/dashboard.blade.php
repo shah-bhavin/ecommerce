@@ -77,51 +77,51 @@ new class extends \Livewire\Component {
         <div class="flex flex-col lg:flex-row! gap-12">
             <!-- Left Sidebar -->
             <aside class="w-64">
-                <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-6 pb-2">Welcome, {{ $this->user->name }}</h4>
+                <h4 class="text-[12px] font-bold uppercase tracking-[0.2em] mb-6 pb-2">Welcome, {{ $this->user->name }}</h4>
                 <nav class="space-y-2">
                     <a href="/account/overview" wire:navigate
                         class="flex items-center justify-between w-full p-2 {{ $view === 'overview' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
                         <span class="flex items-center gap-2">
-                            <x-heroicon-o-user class="w-5 h-5 text-gray-500" />
+                            <x-heroicon-o-home class="w-4 h-4 text-gray-500" />
                             Account Overview
                         </span>
-                        <x-heroicon-o-chevron-right class="w-5 h-5 text-gray-500" />
+                        <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
                     </a>
                     
                     <a href="/account/wishlist" wire:navigate
                         class="flex items-center justify-between w-full p-2 {{ $view === 'wishlist' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}" icon="heart" icon:trailing="chevron-right">
                         <span class="flex items-center gap-2">
-                            <x-heroicon-o-heart class="w-5 h-5 text-gray-500" />
+                            <x-heroicon-o-heart class="w-4 h-4 text-gray-500" />
                             Wishlist
                         </span>
-                        <x-heroicon-o-chevron-right class="w-5 h-5 text-gray-500" />
+                        <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
                     </a>
                     
                     <a href="/account/orders" wire:navigate
                         class="flex items-center justify-between w-full p-2 {{ $view === 'orders' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
                         <span class="flex items-center gap-2">
-                            <x-heroicon-o-shopping-bag class="w-5 h-5 text-gray-500" />
+                            <x-heroicon-o-shopping-bag class="w-4 h-4 text-gray-500" />
                             Orders
                         </span>
-                        <x-heroicon-o-chevron-right class="w-5 h-5 text-gray-500" />
+                        <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
                     </a>
 
                     <a href="/account/profile" wire:navigate
                         class="flex items-center justify-between w-full p-2 {{ $view === 'profile' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
                         <span class="flex items-center gap-2">
-                            <x-heroicon-o-users class="w-5 h-5 text-gray-500" />
+                            <x-heroicon-o-users class="w-4 h-4 text-gray-500" />
                             Profile
                         </span>
-                        <x-heroicon-o-chevron-right class="w-5 h-5 text-gray-500" />
+                        <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
                     </a>
 
                     <a href="{{ route('logout') }}" wire:navigate
                         class="curser-pointer flex items-center justify-between w-full p-2">
                         <span class="flex items-center gap-2">
-                            <x-heroicon-o-users class="w-5 h-5 text-gray-500" />
+                            <x-heroicon-o-arrow-right-start-on-rectangle class="w-4 h-4 text-gray-500" />
                             Logout
                         </span>
-                        <x-heroicon-o-chevron-right class="w-5 h-5 text-gray-500" />
+                        <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
                     </a>
                 </nav>
             </aside>

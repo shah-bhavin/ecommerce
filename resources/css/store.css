@@ -6,8 +6,8 @@
 
 @theme {
   /* Define your luxury serif font here */
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-serif: "Jost", sans-serif;
+  --font-sans: "Work Sans", sans-serif;
   
   /* Brand Colors */
   --color-lumiskin-gold: #c5a059;
@@ -16,10 +16,11 @@
 /* Custom base styles for the storefront */
 @layer base {
   body {
-    @apply font-sans antialiased text-zinc-900;
+    @apply font-sans antialiased text-gray-900 bg-pink-500;
   }
   
-  h1, h2, h3, .luxury-heading {
-    @apply font-serif italic tracking-tight;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-black font-semibold text-pink-800;
   }
 }
+
