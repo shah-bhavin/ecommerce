@@ -11,19 +11,30 @@ new class extends Component
     public $password = '';
 
     public function login() {
+        
         $credentials = $this->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
+        $credentials['role'] = 'customer';
+        // if (Auth::attempt($credentials)) {
+        //     session()->regenerate();
+        //     return Auth::user()->role === 'admin' 
+        //         ? redirect()->intended('/admin/dashboard') 
+        //         : redirect()->intended('/account');
+        // }
+
         if (Auth::attempt($credentials)) {
             session()->regenerate();
-            return Auth::user()->role === 'admin' 
-                ? redirect()->intended('/admin/dashboard') 
-                : redirect()->intended('/account');
+            return redirect()->intended('/account');
         }
 
-        $this->addError('email', 'These credentials do not match our records.');
+        //$this->addError('email', 'These credentials do not match our records.');
+        $this->dispatch('toast', 
+            type: 'error', 
+            text: 'These credentials do not match our records.'
+        );
     }
 };
 ?>

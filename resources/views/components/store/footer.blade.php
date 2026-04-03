@@ -1,6 +1,5 @@
-<footer class="pt-20 pb-10 bg-black">
+{{--<footer class="pt-20 pb-10 bg-black">
     <div class="max-w-7xl mx-auto px-6">
-        {{-- Top Section: Newsletter & Branding --}}
         <div class="grid lg:grid-cols-12 gap-16 mb-20">
             <div class="lg:col-span-5 space-y-8">
                 <h2 class="text-3xl font-serif tracking-tight text-white">Abrari Collection</h2>
@@ -21,7 +20,6 @@
                 </form>
             </div>
 
-            {{-- Links Grid --}}
             <div class="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12">
                 <div class="space-y-6">
                     <h3 class="text-[10px] font-bold uppercase text-white tracking-[0.2em]">The Collections</h3>
@@ -55,11 +53,30 @@
             </div>
         </div>
 
-        {{-- Bottom Section: Socials & Legal --}}
         <div class="pt-10 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="text-[9px] uppercase tracking-[0.3em] text-white text-center md:text-right">
                 © {{ date('Y') }} LUMISKIN CLINICAL SOLUTIONS. ALL RIGHTS RESERVED.
             </div>
         </div>
     </div>
+</footer>--}}
+
+
+<!-- Footer -->
+<footer class="bg-rose-950 flex flex-col items-center justify-center py-20 px-8 w-full border-t border-white/5 tonal-shift">
+    <div class="text-xl font-headline text-amber-500 mb-12 tracking-widest uppercase">RADIANT</div>
+    <div class="flex flex-wrap justify-center gap-12 mb-16">
+        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">PRIVACY</a>
+        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">TERMS</a>
+        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">SHIPPING</a>
+        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">CONTACT</a>
+    </div>
+    <div class="flex gap-8 mb-16">
+        <span class="material-symbols-outlined text-white/20 hover:text-amber-500 cursor-pointer transition-colors" data-icon="language">language</span>
+        <span class="material-symbols-outlined text-white/20 hover:text-amber-500 cursor-pointer transition-colors" data-icon="share">share</span>
+        <span class="material-symbols-outlined text-white/20 hover:text-amber-500 cursor-pointer transition-colors" data-icon="favorite">favorite</span>
+    </div>
+    <p class="font-label text-xs uppercase tracking-[0.2em] text-white/30 text-center">
+        © 2024 RADIANT MONOLITH. ALL RIGHTS RESERVED.
+    </p>
 </footer>

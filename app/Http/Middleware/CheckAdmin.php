@@ -19,6 +19,9 @@ class CheckAdmin
         if (Auth::check() && Auth::user()->isAdmin()) {
             return $next($request);
         }
+        elseif (!Auth::check() || Auth::user()->role !== 'admin') {
+            Auth::logout();
+        }
 
         // If not admin, kick them to the home page with a warning
         return redirect('/')->with('error', 'Unauthorized access.');

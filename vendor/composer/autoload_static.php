@@ -26,12 +26,12 @@ class ComposerStaticInitf841b1259f3168e5c39f2dccb372beac
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
+        '29ffe97919493792170d47eb03a68da9' => __DIR__ . '/..' . '/blade-ui-kit/blade-icons/src/helpers.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'aadac1114cab8dc19489a7f6dc24c003' => __DIR__ . '/..' . '/pestphp/pest-plugin-arch/src/Autoload.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
-        '29ffe97919493792170d47eb03a68da9' => __DIR__ . '/..' . '/blade-ui-kit/blade-icons/src/helpers.php',
         '476ca15b8d69b04665cd879be9cb4c68' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/functions.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
@@ -204,6 +204,7 @@ class ComposerStaticInitf841b1259f3168e5c39f2dccb372beac
             'Cron\\' => 5,
             'Composer\\Pcre\\' => 14,
             'Composer\\ClassMapGenerator\\' => 27,
+            'Codeat3\\BladeGoogleMaterialDesignIcons\\' => 39,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
@@ -644,6 +645,10 @@ class ComposerStaticInitf841b1259f3168e5c39f2dccb372beac
         array (
             0 => __DIR__ . '/..' . '/composer/class-map-generator/src',
         ),
+        'Codeat3\\BladeGoogleMaterialDesignIcons\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/codeat3/blade-google-material-design-icons/src',
+        ),
         'Carbon\\Doctrine\\' =>
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
@@ -697,6 +702,7 @@ class ComposerStaticInitf841b1259f3168e5c39f2dccb372beac
         'App\\Concerns\\WishListTrait' => __DIR__ . '/../..' . '/app/Concerns/WishListTrait.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Middleware\\CheckAdmin' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckAdmin.php',
+        'App\\Http\\Middleware\\CheckCustomer' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckCustomer.php',
         'App\\Livewire\\Actions\\Logout' => __DIR__ . '/../..' . '/app/Livewire/Actions/Logout.php',
         'App\\Livewire\\Settings\\Appearance' => __DIR__ . '/../..' . '/app/Livewire/Settings/Appearance.php',
         'App\\Livewire\\Settings\\DeleteUserForm' => __DIR__ . '/../..' . '/app/Livewire/Settings/DeleteUserForm.php',
@@ -946,6 +952,7 @@ class ComposerStaticInitf841b1259f3168e5c39f2dccb372beac
         'Carbon\\Unit' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Unit.php',
         'Carbon\\WeekDay' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/WeekDay.php',
         'Carbon\\WrapperClock' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/WrapperClock.php',
+        'Codeat3\\BladeGoogleMaterialDesignIcons\\BladeGoogleMaterialDesignIconsServiceProvider' => __DIR__ . '/..' . '/codeat3/blade-google-material-design-icons/src/BladeGoogleMaterialDesignIconsServiceProvider.php',
         'Composer\\ClassMapGenerator\\ClassMap' => __DIR__ . '/..' . '/composer/class-map-generator/src/ClassMap.php',
         'Composer\\ClassMapGenerator\\ClassMapGenerator' => __DIR__ . '/..' . '/composer/class-map-generator/src/ClassMapGenerator.php',
         'Composer\\ClassMapGenerator\\FileList' => __DIR__ . '/..' . '/composer/class-map-generator/src/FileList.php',
