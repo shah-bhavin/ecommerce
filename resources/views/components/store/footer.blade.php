@@ -64,7 +64,9 @@
 
 <!-- Footer -->
 <footer class="bg-rose-950 flex flex-col items-center justify-center py-20 px-8 w-full border-t border-white/5 tonal-shift">
-    <div class="text-xl font-headline text-amber-500 mb-12 tracking-widest uppercase">RADIANT</div>
+    <div class="text-xl font-headline text-amber-500 mb-12 tracking-widest uppercase">
+        <a href="/"><img src="{{ asset('assets/images/logo.png') }}" class="h-[50px]"></a>
+    </div>
     <div class="flex flex-wrap justify-center gap-12 mb-16">
         <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">PRIVACY</a>
         <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">TERMS</a>

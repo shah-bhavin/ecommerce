@@ -1,18 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-/* This replaces the 'content' array in the old config */
-@source "../../views";
-
-
-/* @theme {
-  --font-serif: "Jost", sans-serif;
-  --font-sans: "Work Sans", sans-serif;
-  
-  --color-lumiskin-gold: #c5a059;
-} */
+@source '../views';
 
 @theme {
-  /* Surface Palette */
   --color-surface: #fcf9f8;
   --color-on-surface: #1c1b1b;
   --color-surface-bright: #fcf9f8;
@@ -21,18 +11,15 @@
   --color-on-surface-variant: #574146;
   --color-surface-tint: #af275a;
 
-  /* Surface Containers */
   --color-surface-container-lowest: #ffffff;
   --color-surface-container-low: #f6f3f2;
   --color-surface-container: #f0eded;
   --color-surface-container-high: #eae7e7;
   --color-surface-container-highest: #e5e2e1;
 
-  /* Inverse Surface */
   --color-inverse-surface: #313030;
   --color-inverse-on-surface: #f3f0ef;
 
-  /* Primary */
   --color-primary: #780037;
   --color-on-primary: #ffffff;
   --color-primary-container: #9d174d;
@@ -43,7 +30,6 @@
   --color-on-primary-fixed-variant: #8e0542;
   --color-inverse-primary: #ffb1c3;
 
-  /* Secondary */
   --color-secondary: #775a19;
   --color-on-secondary: #ffffff;
   --color-secondary-container: #fed488;
@@ -53,7 +39,6 @@
   --color-on-secondary-fixed: #261900;
   --color-on-secondary-fixed-variant: #5d4201;
 
-  /* Tertiary */
   --color-tertiary: #403b28;
   --color-on-tertiary: #ffffff;
   --color-tertiary-container: #57523e;
@@ -63,7 +48,6 @@
   --color-on-tertiary-fixed: #1f1c0b;
   --color-on-tertiary-fixed-variant: #4c4733;
 
-  /* Error & Layout */
   --color-error: #ba1a1a;
   --color-on-error: #ffffff;
   --color-error-container: #ffdad6;
@@ -73,27 +57,14 @@
   --color-outline: #8b7076;
   --color-outline-variant: #debfc4;
 
-  /* Typography */
   --font-headline: "Noto Serif";
   --font-body: "Manrope";
   --font-label: "Manrope";
 
-  /* Border Radius */
   --radius-default: 0.125rem;
   --radius-lg: 0.25rem;
   --radius-xl: 0.5rem;
   --radius-full: 0.75rem;
 }
 
-
-/* Custom base styles for the storefront */
-/* @layer base {
-  body {
-    @apply font-sans antialiased text-gray-900 bg-pink-500;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif text-black font-semibold text-pink-800;
-  }
-} */
-
+@custom-variant hover (&:hover);
