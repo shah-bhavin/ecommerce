@@ -11,10 +11,10 @@
                 </div>
                 <div class="max-w-lg">
                     <span class="font-label text-xs uppercase tracking-[0.4em] text-secondary mb-8 block">The Philosophy</span>
-                    <h2 class="font-headline text-5xl md:text-6xl text-primary mb-10 leading-tight">The Ritual of Radiant Light.</h2>
+                    <h2 class="font-headline text-2xl md:text-3xl text-primary mb-10 leading-tight">A woman should never have to choose between ambition and beauty.</h2>
                     <div class="space-y-6 text-on-surface-variant leading-relaxed text-lg font-light">
-                        <p>Radiant was born under the eternal sun of Dubai, where light is both a challenge and an inspiration. Our ritual is not merely about application; it is an architectural approach to skin health.</p>
-                        <p>By blending rare botanical extracts with modern molecular delivery systems, we create a sanctuary for your skin. Every drop is a testament to the resilience of the desert rose and the opulence of the Arabian spirit.</p>
+                        <p>Created by a woman, for women, Abrari knows skincare is more than a ritual.</p>
+                        <p>It is a moment to return to yourself. A moment of power before the world asks anything of you.</p>
                     </div>
                     <div class="mt-12">
                         <a class="inline-flex items-center gap-4 group" href="#">

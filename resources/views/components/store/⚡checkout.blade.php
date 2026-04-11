@@ -17,11 +17,15 @@ new class extends Component
         $this->validate([
             'email' => 'required|email',
             'name' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            'city' => 'required',
+            'pincode' => 'required'
         ]);
 
         $order = Order::create([
-            'user_id' => Auth::id(),
+            //'user_id' => Auth::id(),
+
+            'user_id' => 2,
             'total' => $this->getSubtotal() - $this->discount,
             'status' => 'pending',
             'order_number' => Str::random(5),
@@ -43,10 +47,10 @@ new class extends Component
 
         // 3. Clear Cart
         CartItem::where('user_id', Auth::id())->delete();
-        return redirect()->route('thank-you');
+        return redirect()->route('thank-you/'.$order->id);
         
         session()->forget('cart');
-        return redirect()->route('thank-you');
+        return redirect()->route('thank-you/'.$order->id);
     }
 
     public function getSubtotal() {
@@ -65,7 +69,7 @@ new class extends Component
 };
 ?>
 
-<div class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-20">
+{{--<div class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-20">
     <div class="space-y-12">
         <h2 class="text-3xl font-serif italic">Shipping Details</h2>
         <div class="grid gap-6">
@@ -97,4 +101,186 @@ new class extends Component
             Complete Purchase
         </flux:button>
     </div>
-</div>
+</div>--}}
+
+
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <section class="lg:col-span-7 space-y-12">
+            <div>
+                <h1 class="font-headline text-4xl md:text-5xl tracking-tight mb-4">Checkout</h1>
+                <p class="text-on-surface-variant font-body">Refining your ritual. Please provide your shipping and
+                    payment information.{{ Auth::id() }}</p>
+            </div>
+            <div class="space-y-10">
+                <div>
+                    <h2 class="font-headline text-xl mb-6 flex items-center gap-2">
+                        <span class="text-xs font-label uppercase tracking-widest text-secondary">01</span> Shipping
+                        Details
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div class="relative">
+                            <label
+                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Full
+                                Name</label>
+                            <input wire:model="name"
+                                class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
+                                placeholder="Sophia Al-Maktoum" type="text" />
+                                @error('name')
+                                    <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
+                                @enderror
+                        </div>
+                        <div class="relative">
+                            <label wire:model="address"
+                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Email
+                                Address</label>
+                            <input wire:model="email"
+                                class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
+                                placeholder="sophia@example.com" type="email" />
+                                @error('email')
+                                    <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
+                                @enderror
+                        </div>
+                        <div class="relative md:col-span-2">
+                            <label 
+                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Street
+                                Address</label>
+                            <input wire:model="address"
+                                class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
+                                placeholder="Downtown Boulevard, Villa 42" type="text" />
+                                @error('address')
+                                    <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
+                                @enderror
+                        </div>
+                        <div class="relative">
+                            <label
+                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">City</label>
+                            <input wire:model="city"
+                                class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
+                                placeholder="Dubai" type="text" />
+                                @error('city')
+                                    <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
+                                @enderror
+                        </div>
+                        <div class="relative">
+                            <label
+                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Postal
+                                Code</label>
+                            <input wire:model="pincode"
+                                class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
+                                placeholder="00000" type="text" />
+                                @error('pincode')
+                                    <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
+                                @enderror
+                        </div>
+                    </div>
+                </div>
+                {{--<div>
+                    <div class="flex justify-between items-end mb-6">
+                        <h2 class="font-headline text-xl flex items-center gap-2">
+                            <span class="text-xs font-label uppercase tracking-widest text-secondary">02</span>
+                            Payment Method
+                        </h2>
+                        <div class="flex gap-3 grayscale opacity-60">
+                            <span class="material-symbols-outlined text-2xl"
+                                data-icon="credit_card">credit_card</span>
+                            <span class="material-symbols-outlined text-2xl"
+                                data-icon="contactless">contactless</span>
+                            <span class="material-symbols-outlined text-2xl"
+                                data-icon="account_balance">account_balance</span>
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low p-6 space-y-6 mb-6">
+                        <div class="flex items-center gap-4">
+                            <input checked="" class="text-primary focus:ring-primary border-outline" id="card"
+                                name="payment" type="radio" />
+                            <label class="font-label text-sm uppercase tracking-wider font-semibold"
+                                for="card">Credit or Debit Card</label>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                            <div class="relative md:col-span-2">
+                                <label
+                                    class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Card
+                                    Number</label>
+                                <input
+                                    class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm"
+                                    placeholder="•••• •••• •••• ••••" type="text" />
+                            </div>
+                            <div class="relative">
+                                <label
+                                    class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Expiry
+                                    Date</label>
+                                <input
+                                    class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm"
+                                    placeholder="MM / YY" type="text" />
+                            </div>
+                            <div class="relative">
+                                <label
+                                    class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">CVV</label>
+                                <input
+                                    class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm"
+                                    placeholder="•••" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button
+                            class="flex items-center justify-center gap-2 border border-outline-variant py-4 px-6 hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-xl" data-icon="apple">ios</span>
+                            <span class="text-[10px] uppercase tracking-widest font-bold">Apple Pay</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-center gap-2 border border-outline-variant py-4 px-6 hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-xl" data-icon="payments">payments</span>
+                            <span class="text-[10px] uppercase tracking-widest font-bold">PayPal</span>
+                        </button>
+                    </div>
+                </div>--}}
+            </div>
+        </section>
+        <aside class="lg:col-span-5">
+            <div class="sticky top-32 bg-surface-container p-8 md:p-12 space-y-8">
+                <h2 class="font-headline text-2xl tracking-tight">Order Summary</h2>
+                <div class="space-y-6">
+                    @foreach(session()->get('cart', []) as $item)
+                    <div class="flex gap-6 items-center">
+                        <div class="w-20 h-20 bg-surface-container-highest flex-shrink-0">
+                            <img alt="Radiant Serum" class="w-full h-full object-cover"
+                                data-alt="Close-up of a frosted glass skincare bottle with golden liquid inside, minimalist luxury studio lighting on a warm rose background"
+                                src="{{ asset('storage/'.$item['image']) }}" />
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-label font-bold text-sm uppercase tracking-wide">{{ $item['name'] }} (x{{ $item['quantity'] }})</h3>
+                            <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1">{{ $item['variant_name'] }}</p>
+                            <p class="font-headline text-secondary mt-2">₹{{ number_format($item['price'] * $item['quantity'], 2) }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <div class="space-y-4 pt-8 border-t border-outline-variant/30">
+                    <div class="flex justify-between items-center text-xs uppercase tracking-widest">
+                        <span class="text-on-surface-variant">Subtotal</span>
+                        <span>₹{{ number_format($this->getSubtotal(), 2) }}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs uppercase tracking-widest">
+                        <span class="text-on-surface-variant">Shipping</span>
+                        <span class="text-secondary">Complimentary</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 border-t border-on-surface/10">
+                        <span class="font-label font-bold uppercase tracking-widest">Total</span>
+                        <span class="font-headline text-2xl text-primary">₹{{ number_format($this->getSubtotal(), 2) }}</span>
+                    </div>
+                </div>
+                <button wire:click="placeOrder"
+                    class="w-full bg-primary! text-white py-6 px-8 text-xs font-bold uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform duration-400">
+                    Complete Order
+                </button>
+                <div
+                    class="flex items-center justify-center gap-2 text-[9px] uppercase tracking-widest text-on-surface-variant">
+                    <span class="material-symbols-outlined text-xs" data-icon="lock">lock</span>
+                    Secure Encrypted Transaction
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>

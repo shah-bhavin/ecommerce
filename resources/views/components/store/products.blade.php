@@ -44,9 +44,9 @@
             <div class="relative overflow-hidden aspect-[4/5] bg-surface-container-highest mb-8">
                 <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Luxury sunscreen bottle on a marble pedestal, dramatic shadows, warm desert aesthetic, high-end packaging design" src="{{ asset('storage/'.$products[0]->image) }}" />
                 <div class="absolute bottom-6 right-6">
-                    <a type="button" wire:click="addToBag({{ $products[0]->id }})" class="bg-white/90 backdrop-blur p-4 shadow-xl hover:bg-primary hover:text-white transition-colors duration-400">
+                    <button type="button" wire:click="addToBag({{ $products[0]->id }})" class="bg-white/90 backdrop-blur p-4 shadow-xl hover:bg-primary! hover:text-white transition-colors duration-400">
                         <span class="material-symbols-outlined" data-icon="add">add</span>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class="flex justify-between items-start">
@@ -61,9 +61,9 @@
             <div class="relative overflow-hidden aspect-[4/5] bg-surface-container-highest mb-8">
                 <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Elegant face wash glass bottle with golden pump, placed near splashing water and desert stones, soft morning light" src="{{ asset('storage/'.$products[1]->image) }}" />
                 <div class="absolute bottom-6 right-6">
-                    <a wire:click="addToBag({{ $products[1]->id }})" class="bg-white/90 backdrop-blur p-4 shadow-xl hover:bg-primary hover:text-white transition-colors duration-400">
+                    <button wire:click="addToBag({{ $products[1]->id }})" class="bg-white/90 backdrop-blur p-4 shadow-xl hover:bg-primary! hover:text-white transition-colors duration-400">
                         <span class="material-symbols-outlined" data-icon="add">add</span>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class="flex justify-between items-start">

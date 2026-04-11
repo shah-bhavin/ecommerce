@@ -10,7 +10,7 @@ Route::livewire('/product/{slug}', 'store.product-detail')->name('product.show')
 Route::livewire('/cart', 'store.cart')->name('cart');
 Route::livewire('/checkout', 'store.checkout')->name('checkout');
 Route::livewire('/search', 'store.search')->name('search');
-Route::livewire('/thank-you', 'store.thank-you')->name('thank-you');
+Route::livewire('/thank-you/{orderid?}', 'store.thank-you')->name('thank-you');
 
 
 Route::get('/logout', function () {
