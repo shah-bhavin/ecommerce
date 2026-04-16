@@ -6,8 +6,6 @@ use App\Models\Product;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-
-
 new class extends Component
 {   
     use App\Concerns\WishListTrait;
@@ -22,12 +20,6 @@ new class extends Component
     }
 };
 ?>
-
-{{--<div>
-    <x-store.slider :carousels="$carousels"/>
-    <x-store.categories :categories="$categories"/>
-    <x-store.featured :products="$products"/>
-</div>--}}
 
 <div>
     <x-store.slider :carousels="$carousels"/>

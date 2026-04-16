@@ -36,11 +36,9 @@ trait WishListTrait
             ['quantity' => DB::raw('quantity + 1')]
         );
         
-        // $this->dispatch('cart-updated');
-        // $this->dispatch('toast', type: 'success', text: 'Added to bag');
         $this->dispatch('toast', 
             type: 'success', 
-            text: 'Wishlist updated'
+            text: 'Product added to cart.'
         );
     }
 

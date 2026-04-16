@@ -2,9 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class CartItem extends Model
 {
     protected $fillable = ['user_id', 'session_id', 'product_id', 'quantity'];
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
 }
+
+

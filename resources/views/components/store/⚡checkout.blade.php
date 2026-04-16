@@ -13,6 +13,21 @@ new class extends Component
     public $coupon = '';
     public $discount = 0;
 
+    public function mount(){
+        if (session()->get('cart') == null || count(session()->get('cart')) === 0) {
+            
+            // 2. Redirect back to shop with a message
+            return redirect()->route('shop')->with('notify', 'Your bag must contain items to checkout.');
+        }
+        if (!Auth::check()) {
+            return redirect()->route('login')->with(
+                'toast', [
+                    'type'=> 'danger', 
+                    'text'=> 'Please login first to checkout'
+                ]);
+        }
+    }
+
     public function placeOrder() {
         $this->validate([
             'email' => 'required|email',
@@ -34,38 +49,39 @@ new class extends Component
         ]);
 
         // 2. Transfer Cart Items to Order Items
-        $cartItems = CartItem::where('user_id', Auth::id())->get();
+        $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get();
         foreach ($cartItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
-                //'price' => $item->product->price,
-                'price' => 420,
+                'price' => $item->product->price,
+                //'price' => 420,
                 'quantity' => $item->quantity
             ]);
         }
 
         // 3. Clear Cart
         CartItem::where('user_id', Auth::id())->delete();
-        return redirect()->route('thank-you/'.$order->id);
-        
+        //return redirect()->route('thanks', ['orderid' => $order->id]);
+
         session()->forget('cart');
-        return redirect()->route('thank-you/'.$order->id);
+        return redirect()->route('thanks', ['orderid' => $order->order_number]);
+
     }
 
-    public function getSubtotal() {
-        $cart = session()->get('cart', []);
-        return array_reduce($cart, fn($carry, $item) => $carry + ($item['price'] * $item['quantity']), 0);
-    }
+    // public function getSubtotal() {
+    //     $cart = session()->get('cart', []);
+    //     return array_reduce($cart, fn($carry, $item) => $carry + ($item['price'] * $item['quantity']), 0);
+    // }
 
-    public function applyCoupon() {
-        if ($this->coupon === 'LUMI10') {
-            $this->discount = 500; // Fixed discount for example
-            $this->dispatch('toast', text: 'Coupon Applied!');
-        } else {
-            $this->addError('coupon', 'Invalid coupon code.');
-        }
-    }
+    // public function applyCoupon() {
+    //     if ($this->coupon === 'LUMI10') {
+    //         $this->discount = 500; // Fixed discount for example
+    //         $this->dispatch('toast', text: 'Coupon Applied!');
+    //     } else {
+    //         $this->addError('coupon', 'Invalid coupon code.');
+    //     }
+    // }
 };
 ?>
 
@@ -115,8 +131,7 @@ new class extends Component
             <div class="space-y-10">
                 <div>
                     <h2 class="font-headline text-xl mb-6 flex items-center gap-2">
-                        <span class="text-xs font-label uppercase tracking-widest text-secondary">01</span> Shipping
-                        Details
+                        Shipping Details
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         <div class="relative">
@@ -175,67 +190,6 @@ new class extends Component
                         </div>
                     </div>
                 </div>
-                {{--<div>
-                    <div class="flex justify-between items-end mb-6">
-                        <h2 class="font-headline text-xl flex items-center gap-2">
-                            <span class="text-xs font-label uppercase tracking-widest text-secondary">02</span>
-                            Payment Method
-                        </h2>
-                        <div class="flex gap-3 grayscale opacity-60">
-                            <span class="material-symbols-outlined text-2xl"
-                                data-icon="credit_card">credit_card</span>
-                            <span class="material-symbols-outlined text-2xl"
-                                data-icon="contactless">contactless</span>
-                            <span class="material-symbols-outlined text-2xl"
-                                data-icon="account_balance">account_balance</span>
-                        </div>
-                    </div>
-                    <div class="bg-surface-container-low p-6 space-y-6 mb-6">
-                        <div class="flex items-center gap-4">
-                            <input checked="" class="text-primary focus:ring-primary border-outline" id="card"
-                                name="payment" type="radio" />
-                            <label class="font-label text-sm uppercase tracking-wider font-semibold"
-                                for="card">Credit or Debit Card</label>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                            <div class="relative md:col-span-2">
-                                <label
-                                    class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Card
-                                    Number</label>
-                                <input
-                                    class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm"
-                                    placeholder="•••• •••• •••• ••••" type="text" />
-                            </div>
-                            <div class="relative">
-                                <label
-                                    class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Expiry
-                                    Date</label>
-                                <input
-                                    class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm"
-                                    placeholder="MM / YY" type="text" />
-                            </div>
-                            <div class="relative">
-                                <label
-                                    class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">CVV</label>
-                                <input
-                                    class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm"
-                                    placeholder="•••" type="text" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <button
-                            class="flex items-center justify-center gap-2 border border-outline-variant py-4 px-6 hover:bg-surface-container transition-colors">
-                            <span class="material-symbols-outlined text-xl" data-icon="apple">ios</span>
-                            <span class="text-[10px] uppercase tracking-widest font-bold">Apple Pay</span>
-                        </button>
-                        <button
-                            class="flex items-center justify-center gap-2 border border-outline-variant py-4 px-6 hover:bg-surface-container transition-colors">
-                            <span class="material-symbols-outlined text-xl" data-icon="payments">payments</span>
-                            <span class="text-[10px] uppercase tracking-widest font-bold">PayPal</span>
-                        </button>
-                    </div>
-                </div>--}}
             </div>
         </section>
         <aside class="lg:col-span-5">

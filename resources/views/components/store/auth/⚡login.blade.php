@@ -18,19 +18,13 @@ new class extends Component
         ]);
 
         $credentials['role'] = 'customer';
-        // if (Auth::attempt($credentials)) {
-        //     session()->regenerate();
-        //     return Auth::user()->role === 'admin' 
-        //         ? redirect()->intended('/admin/dashboard') 
-        //         : redirect()->intended('/account');
-        // }
 
         if (Auth::attempt($credentials)) {
             session()->regenerate();
             return redirect()->intended('/account');
+            //return redirect()->intended(route('account'));
         }
 
-        //$this->addError('email', 'These credentials do not match our records.');
         $this->dispatch('toast', 
             type: 'error', 
             text: 'These credentials do not match our records.'

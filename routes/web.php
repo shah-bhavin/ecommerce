@@ -8,15 +8,16 @@ Route::livewire('/', 'store.home')->name('home');
 Route::livewire('/collection/{category?}', 'store.shop')->name('shop');
 Route::livewire('/product/{slug}', 'store.product-detail')->name('product.show');
 Route::livewire('/cart', 'store.cart')->name('cart');
-Route::livewire('/checkout', 'store.checkout')->name('checkout');
+Route::livewire('/checkout', 'store.checkout')->middleware('auth')->name('checkout');
 Route::livewire('/search', 'store.search')->name('search');
-Route::livewire('/thank-you/{orderid?}', 'store.thank-you')->name('thank-you');
+Route::livewire('/thanks/{orderid?}', 'store.thanks')->name('thanks');
+//Route::livewire('/thanks', 'store.thanks')->name('thanks');
 
 
 Route::get('/logout', function () {
     auth()->logout();
     return redirect('/');
-})->name('logout');
+})->name('custom.logout');
 
 // --- AUTH CUSTOMERS ---
 Route::middleware('auth', 'customer')->group(function () {
