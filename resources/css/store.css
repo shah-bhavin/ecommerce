@@ -57,9 +57,9 @@
   --color-outline: #8b7076;
   --color-outline-variant: #debfc4;
 
-  --font-headline: "Noto Serif";
-  --font-body: "Manrope";
-  --font-label: "Manrope";
+  --font-headline: "Cormorant Garamond";
+  --font-body: "Inter";
+  --font-label: "Inter";
 
   --radius-default: 0.125rem;
   --radius-lg: 0.25rem;

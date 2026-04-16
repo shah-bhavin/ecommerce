@@ -3,7 +3,7 @@
         <a href="/"><img src="{{ asset('assets/images/logo.png') }}" class="logo h-[50px]"></a>
     
         <button type="button" data-drawer-hide="sidebar-example" aria-controls="main-sidebar" >
-            <x-heroicon-o-x-mark class="w-5 h-5 text-gray-500" />
+            <x-lucide-x class="w-5 h-5 text-gray-500" />
         </button>
     </div>    
 

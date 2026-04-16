@@ -1,53 +1,21 @@
-{{--<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-zinc-100">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        <div class="flex items-center gap-3"> <!-- Add flex and items-center -->
-            <a data-drawer-target="sidebar-example" data-drawer-show="sidebar-example" aria-controls="sidebar-example" class="cursor-pointer">
-                <x-heroicon-o-bars-3 class="w-5 h-5 text-gray-500" />
-            </a>
-            <a href="/collection">
-                <x-heroicon-o-building-storefront class="w-5 h-5 text-gray-500" />
-            </a>
-            <a href="/search">
-                <x-heroicon-o-magnifying-glass class="w-5 h-5 text-gray-500" />
-            </a>
-        </div>
-        
-
-        <a href="/"><img src="{{ asset('assets/images/logo.png') }}" class="h-[50px]"></a>
-
-        <div class="flex items-center gap-3">
-            <a href="/search"><x-heroicon-o-heart class="w-5 h-5 text-gray-500" /></a>
-
-            @if(!Auth::check())
-                <a href="/login">
-                    <x-heroicon-o-user-circle class="w-5 h-5 text-gray-500" />
+<header class="sticky top-0 z-50 bg-[#fffef2] border-b border-[#bcbbb4]">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div class="flex items-center justify-between h-20"><a class="text-2xl font-light tracking-wide" href="/" data-discover="true" style="font-family: &quot;Cormorant Garamond&quot;, serif;">ABRARI LONDON</a>
+            <nav class="hidden lg:flex items-center gap-10">
+                <a href="{{ route('home') }}" class="text-sm font-medium tracking-wide transition-all relative text-[#333333]" href="/" data-discover="true" style="font-family: Inter, sans-serif;">HOME<span class="absolute bottom-[-8px] left-0 w-full h-[1px] bg-[#333333]"></span></a>
+                <a href="{{ route('shop') }}" class="text-sm font-medium tracking-wide transition-all relative text-[#666666] hover:text-[#333333]" href="/shop" data-discover="true" style="font-family: Inter, sans-serif;">SHOP</a>
+                <a href="{{ route('about') }}" class="text-sm font-medium tracking-wide transition-all relative text-[#666666] hover:text-[#333333]" href="/about" data-discover="true" style="font-family: Inter, sans-serif;">ABOUT</a>
+                <a href="{{ route('contact') }}" class="text-sm font-medium tracking-wide transition-all relative text-[#666666] hover:text-[#333333]" href="/contact" data-discover="true" style="font-family: Inter, sans-serif;">CONTACT</a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <a href="{{ route('login') }}" class="hidden lg:block text-[#333333] hover:text-[#000000] transition-colors">
+                    <x-lucide-user  width="20" height="20" />
                 </a>
-            @else
-                <a href="{{ route('account') }}">
-                    <x-heroicon-o-user class="w-5 h-5 text-gray-500" />
+            
+                <a href="{{ route('cart') }}" class="hidden lg:block text-[#333333] hover:text-[#000000] transition-colors">
+                    <x-lucide-shopping-bag  width="20" height="20" />
                 </a>
-            @endif
-            <livewire:store.cart-counter />
+            </div>
         </div>
     </div>
-</nav>--}}
-
-
-<!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full z-50 bg-rose-900/90 backdrop-blur-xl flex justify-between items-center px-12 py-4 w-full no-line-rule tonal-shift">
-    <div class="text-3xl font-headline tracking-widest text-white uppercase">
-        <a href="/"><img src="{{ asset('assets/images/logo.png') }}" class="h-[50px]"></a>
-    </div>
-    <div class="hidden md:flex items-center space-x-12">
-        <a class="text-amber-500 font-bold border-b-2 border-amber-500 pb-1 font-label uppercase text-xs tracking-widest" href="#">COLLECTIONS</a>
-        <a class="text-white/80 font-medium uppercase text-xs tracking-widest hover:text-amber-400 transition-all duration-400 ease-in-out" href="#">ABOUT</a>
-        <a class="text-white/80 font-medium uppercase text-xs tracking-widest hover:text-amber-400 transition-all duration-400 ease-in-out" href="#">RITUALS</a>
-    </div>
-    <div class="flex items-center space-x-2">
-        <livewire:store.cart-counter />
-
-        <button class="text-white hover:text-amber-400 transition-transform scale-105">
-            <span class="material-symbols-outlined" data-icon="person">person</span>
-        </button>
-    </div>
-</nav>
+</header>

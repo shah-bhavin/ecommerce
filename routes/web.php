@@ -1,21 +1,24 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 // Frontend Routes (All pointing to Livewire SFCs)
 Route::livewire('/', 'store.home')->name('home');
-Route::livewire('/collection/{category?}', 'store.shop')->name('shop');
+Route::livewire('/shop/{category?}', 'store.shop')->name('shop');
+Route::livewire('/about', 'store.about')->name('about');
+Route::livewire('/contact', 'store.contact')->name('contact');
 Route::livewire('/product/{slug}', 'store.product-detail')->name('product.show');
+
 Route::livewire('/cart', 'store.cart')->name('cart');
 Route::livewire('/checkout', 'store.checkout')->middleware('auth')->name('checkout');
 Route::livewire('/search', 'store.search')->name('search');
 Route::livewire('/thanks/{orderid?}', 'store.thanks')->name('thanks');
-//Route::livewire('/thanks', 'store.thanks')->name('thanks');
 
 
 Route::get('/logout', function () {
-    auth()->logout();
+    Auth::logout();
     return redirect('/');
 })->name('custom.logout');
 

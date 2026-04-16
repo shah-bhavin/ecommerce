@@ -1,84 +1,43 @@
-{{--<footer class="pt-20 pb-10 bg-black">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid lg:grid-cols-12 gap-16 mb-20">
-            <div class="lg:col-span-5 space-y-8">
-                <h2 class="text-3xl font-serif tracking-tight text-white">Abrari Collection</h2>
-                <p class="text-xs uppercase tracking-[0.2em] text-white leading-relaxed max-w-sm">
-                    Subscribe to receive clinical skincare updates, exclusive invitations, and 10% off your first molecular order.
-                </p>
-                
-                <form wire:submit="subscribe" class="relative max-w-md">
-                    <input 
-                        wire:model="email"
-                        type="email" 
-                        placeholder="EMAIL ADDRESS" 
-                        class="w-full border-b border-zinc-300 py-3 text-[10px] tracking-[0.2em] focus:outline-none focus:border-black transition-colors bg-transparent rounded-none text-white"
-                    >
-                    <button type="submit" class="absolute right-0 bottom-3 text-[10px] font-bold tracking-[0.2em] uppercase hover:text-zinc-400 transition-colors text-white">
-                        Join —>
-                    </button>
-                </form>
+<footer class="bg-[#f6f5e8] border-t border-[#bcbbb4]">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="md:col-span-1">
+                <h3 class="text-2xl font-light mb-4" style="font-family: &quot;Cormorant Garamond&quot;, serif;">ABRARI LONDON</h3>
+                <p class="text-sm text-[#666666] leading-relaxed" style="font-family: Inter, sans-serif;">Redefining beauty with luxury and precision</p>
             </div>
-
-            <div class="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12">
-                <div class="space-y-6">
-                    <h3 class="text-[10px] font-bold uppercase text-white tracking-[0.2em]">The Collections</h3>
-                    <ul class="space-y-3 text-xs text-zinc-500 font-light tracking-wide">
-                        <li><a href="/shop/reparative" class="hover:text-black transition-colors">Reparative</a></li>
-                        <li><a href="/shop/intensive" class="hover:text-black transition-colors">Intensive</a></li>
-                        <li><a href="/shop/treatment" class="hover:text-black transition-colors">Treatment</a></li>
-                        <li><a href="/shop/clarity" class="hover:text-black transition-colors">Clarity</a></li>
-                    </ul>
-                </div>
-
-                <div class="space-y-6">
-                    <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Concierge</h3>
-                    <ul class="space-y-3 text-xs text-zinc-500 font-light tracking-wide">
-                        <li><a href="/shipping" class="hover:text-black transition-colors">Shipping & Returns</a></li>
-                        <li><a href="/faq" class="hover:text-black transition-colors">Frequently Asked Questions</a></li>
-                        <li><a href="/contact" class="hover:text-black transition-colors">Contact Us</a></li>
-                        <li><a href="/account" class="hover:text-black transition-colors">My Account</a></li>
-                    </ul>
-                </div>
-
-                <div class="space-y-6">
-                    <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Explore</h3>
-                    <ul class="space-y-3 text-xs text-zinc-500 font-light tracking-wide">
-                        <li><a href="/about" class="hover:text-black transition-colors">The Science</a></li>
-                        <li><a href="/blog" class="hover:text-black transition-colors">Clinical Journal</a></li>
-                        <li><a href="/stockists" class="hover:text-black transition-colors">Our Stockists</a></li>
-                        <li><a href="/privacy" class="hover:text-black transition-colors">Privacy Policy</a></li>
-                    </ul>
-                </div>
+            <div>
+                <h4 class="text-sm font-medium mb-4 tracking-wide" style="font-family: Inter, sans-serif;">SHOP</h4>
+                <ul class="space-y-3">
+                    <li><a class="text-sm text-[#666666] hover:text-[#333333] transition-colors" href="/shop?category=skincare" data-discover="true" style="font-family: Inter, sans-serif;">Skincare</a></li>
+                    <li><a class="text-sm text-[#666666] hover:text-[#333333] transition-colors" href="/shop?category=cosmetics" data-discover="true" style="font-family: Inter, sans-serif;">Makeup</a></li>
+                    <li><a class="text-sm text-[#666666] hover:text-[#333333] transition-colors" href="/shop" data-discover="true" style="font-family: Inter, sans-serif;">All Products</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-sm font-medium mb-4 tracking-wide" style="font-family: Inter, sans-serif;">ABOUT</h4>
+                <ul class="space-y-3">
+                    <li><a class="text-sm text-[#666666] hover:text-[#333333] transition-colors" href="/about" data-discover="true" style="font-family: Inter, sans-serif;">Our Story</a></li>
+                    <li><a class="text-sm text-[#666666] hover:text-[#333333] transition-colors" href="/contact" data-discover="true" style="font-family: Inter, sans-serif;">Contact Us</a></li>
+                    <li><a href="#" class="text-sm text-[#666666] hover:text-[#333333] transition-colors" style="font-family: Inter, sans-serif;">Stockists</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-sm font-medium mb-4 tracking-wide" style="font-family: Inter, sans-serif;">CONNECT</h4>
+                <div class="flex gap-4 mb-6"><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram" aria-hidden="true">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                        </svg></a><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook" aria-hidden="true">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg></a><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter" aria-hidden="true">
+                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                        </svg></a></div>
+                <p class="text-sm text-[#666666]" style="font-family: Inter, sans-serif;">Dubai | London</p>
             </div>
         </div>
-
-        <div class="pt-10 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="text-[9px] uppercase tracking-[0.3em] text-white text-center md:text-right">
-                © {{ date('Y') }} LUMISKIN CLINICAL SOLUTIONS. ALL RIGHTS RESERVED.
-            </div>
+        <div class="pt-8 border-t border-[#bcbbb4] flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-[#666666]" style="font-family: Inter, sans-serif;">© 2025 Abrari London. All rights reserved.</p>
+            <div class="flex gap-6"><a href="#" class="text-sm text-[#666666] hover:text-[#333333] transition-colors" style="font-family: Inter, sans-serif;">Privacy Policy</a><a href="#" class="text-sm text-[#666666] hover:text-[#333333] transition-colors" style="font-family: Inter, sans-serif;">Terms &amp; Conditions</a></div>
         </div>
     </div>
-</footer>--}}
-
-
-<!-- Footer -->
-<footer class="bg-rose-950 flex flex-col items-center justify-center py-20 px-8 w-full border-t border-white/5 tonal-shift">
-    <div class="text-xl font-headline text-amber-500 mb-12 tracking-widest uppercase">
-        <a href="/"><img src="{{ asset('assets/images/logo.png') }}" class="h-[50px]"></a>
-    </div>
-    <div class="flex flex-wrap justify-center gap-12 mb-16">
-        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">PRIVACY</a>
-        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">TERMS</a>
-        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">SHIPPING</a>
-        <a class="font-label text-xs uppercase tracking-[0.2em] text-white/40 hover:text-amber-500 transition-colors duration-400" href="#">CONTACT</a>
-    </div>
-    <div class="flex gap-8 mb-16">
-        <span class="material-symbols-outlined text-white/20 hover:text-amber-500 cursor-pointer transition-colors" data-icon="language">language</span>
-        <span class="material-symbols-outlined text-white/20 hover:text-amber-500 cursor-pointer transition-colors" data-icon="share">share</span>
-        <span class="material-symbols-outlined text-white/20 hover:text-amber-500 cursor-pointer transition-colors" data-icon="favorite">favorite</span>
-    </div>
-    <p class="font-label text-xs uppercase tracking-[0.2em] text-white/30 text-center">
-        © 2024 RADIANT MONOLITH. ALL RIGHTS RESERVED.
-    </p>
 </footer>
