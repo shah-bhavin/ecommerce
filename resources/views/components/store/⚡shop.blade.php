@@ -145,9 +145,21 @@ new class extends Component
                     </div>
                 </div>
             </aside>
-            <div class="lg:hidden col-span-1"><button class="flex items-center gap-2 btn-primary w-full justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-funnel" aria-hidden="true">
-                        <path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"></path>
-                    </svg>Filter &amp; Sort</button></div>
+            <div  x-data="{ open: @entangle('showFilters') }" class="lg:hidden col-span-1">
+                <button  @click="open = !open" class="flex items-center gap-2 btn-primary w-full justify-center btn-theme">
+                    <x-lucide-funnel class="size-4" />Filter &amp; Sort
+                </button>
+                <div x-show="open" x-transition class="mt-6 p-6 bg-[#f6f5e8] border border-[#bcbbb4]">
+                    <h4 class="text-sm font-medium mb-4 tracking-wide">CATEGORY</h4>
+                    <div class="space-y-3 mb-6"><label class="flex items-center gap-3 cursor-pointer"><input class="w-4 h-4" type="radio" checked="" name="category-mobile"><span class="text-sm">All Products</span></label><label class="flex items-center gap-3 cursor-pointer"><input class="w-4 h-4" type="radio" name="category-mobile"><span class="text-sm">Skincare</span></label><label class="flex items-center gap-3 cursor-pointer"><input class="w-4 h-4" type="radio" name="category-mobile"><span class="text-sm">Makeup</span></label></div>
+                    <h4 class="text-sm font-medium mb-4 tracking-wide">SORT BY</h4><select class="w-full px-4 py-3 border border-[#bcbbb4] bg-transparent text-sm" style="border-radius: 0px;">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name">Name: A to Z</option>
+                    </select>
+                </div>
+            </div>
             <div class="lg:col-span-3">
                 <div class="mb-6 flex justify-between items-center">
                     <p class="body-small text-[#666666]">10 products</p>
@@ -202,7 +214,8 @@ new class extends Component
                         <h3 class="heading-3 mb-2 group-hover:text-[#000000] transition-colors">Precision Liquid Eyeliner</h3>
                         <p class="body-small text-[#666666] mb-3 line-clamp-2">Ultra-fine brush tip for effortless precision and dramatic definition.</p>
                         <p class="body-regular font-medium">£38</p>
-                    </a></div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

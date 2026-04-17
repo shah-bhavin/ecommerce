@@ -11,7 +11,7 @@ new class extends Component
 
 <div class="min-h-screen bg-[#fffef2]">
     <section class="relative h-[60vh] min-h-[500px] overflow-hidden"><img alt="About Abrari London" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1657928198258-1db7e50e2fd9">
-        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
             <div class="text-center px-6">
                 <h1 class="hero-large mb-4 text-white">Our Story</h1>
                 <p class="body-large text-white">Where luxury meets precision</p>

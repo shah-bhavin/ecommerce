@@ -25,19 +25,21 @@ new class extends Component
 <div class="min-h-screen">
     <section class="relative h-[90vh] min-h-[600px] overflow-hidden bg-[#f6f5e8]">
         <div class="absolute inset-0 transition-opacity duration-1000" style="opacity: 1;"><img alt="Abrari London Hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1624819581070-7868475f038c">
-            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
         </div>
         <div class="absolute inset-0 transition-opacity duration-1000" style="opacity: 1;"><img alt="Abrari London Hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1603389722569-c0a0328f42c7">
-            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
         </div>
         <div class="absolute inset-0 transition-opacity duration-1000" style="opacity: 1;"><img alt="Abrari London Hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1770460882029-d19659d9c771">
-            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
         </div>
         <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
             <div class="max-w-4xl fade-in-up text-white">
                 <h1 class="hero-large mb-6">Redefining Beauty with Luxury and Precision</h1>
                 <p class="body-large mb-10">Discover the art of refined elegance</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center"><a class="btn-primary bg-white !text-[#333333] border-white hover:bg-opacity-90" href="/shop" data-discover="true">Shop Now</a><a class="btn-primary !text-white border-white hover:bg-white hover:!text-[#333333]" href="/shop" data-discover="true">Explore Collection</a></div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a class="btn-theme" href="/shop" data-discover="true">Shop Now</a>
+                    <a class="btn-theme-inverse" href="/shop" data-discover="true">Explore Collection</a></div>
             </div>
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-2"><button class="w-2 h-2 rounded-full transition-all bg-white bg-opacity-50"></button><button class="w-2 h-2 rounded-full transition-all bg-white bg-opacity-50"></button><button class="w-2 h-2 rounded-full transition-all bg-white w-8"></button></div>
@@ -48,19 +50,13 @@ new class extends Component
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
                         <h3 class="heading-2 mb-2 text-white">Skincare</h3>
-                        <p class="body-regular mb-4 text-white opacity-90">Exceptional formulations for radiant, healthy skin</p><span class="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-white">DISCOVER <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right transition-transform group-hover:translate-x-1" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg></span>
+                        <p class="body-regular mb-4 text-white opacity-90">Exceptional formulations for radiant, healthy skin</p><span class="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-white">DISCOVER <x-lucide-arrow-right class="size-4" /></span>
                     </div>
                 </a><a class="group relative h-[400px] overflow-hidden hover-lift" href="/shop?category=cosmetics" data-discover="true"><img alt="Makeup" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.pexels.com/photos/4889711/pexels-photo-4889711.jpeg">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
                         <h3 class="heading-2 mb-2 text-white">Makeup</h3>
-                        <p class="body-regular mb-4 text-white opacity-90">Luxury cosmetics for timeless beauty</p><span class="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-white">DISCOVER <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right transition-transform group-hover:translate-x-1" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg></span>
+                        <p class="body-regular mb-4 text-white opacity-90">Luxury cosmetics for timeless beauty</p><span class="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-white">DISCOVER <x-lucide-arrow-right class="size-4" /></span></span>
                     </div>
                 </a></div>
         </div>
@@ -70,7 +66,7 @@ new class extends Component
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="order-2 lg:order-1">
                     <h2 class="hero-medium mb-6">A Vision of Timeless Elegance</h2>
-                    <p class="body-large text-[#666666] leading-relaxed mb-8">Abrari London was born from a vision to create beauty that transcends trends. Rooted in the finest traditions of luxury craftsmanship and powered by innovative formulations, we bring you products that celebrate confidence, sophistication, and the art of being beautifully yourself. From Dubai to London, our global perspective ensures every creation meets the highest standards of excellence.</p><a class="btn-secondary inline-block" href="/about" data-discover="true">Learn More About Us</a>
+                    <p class="body-large text-[#666666] leading-relaxed mb-8">Abrari London was born from a vision to create beauty that transcends trends. Rooted in the finest traditions of luxury craftsmanship and powered by innovative formulations, we bring you products that celebrate confidence, sophistication, and the art of being beautifully yourself. From Dubai to London, our global perspective ensures every creation meets the highest standards of excellence.</p><a class="btn-secondary inline-block text-sm uppercase" href="/about" data-discover="true">Learn More About Us</a>
                 </div>
                 <div class="order-1 lg:order-2"><img alt="Abrari London Brand Story" class="w-full h-[500px] object-cover hover-lift" src="https://images.unsplash.com/photo-1657928198258-1db7e50e2fd9"></div>
             </div>
@@ -108,7 +104,7 @@ new class extends Component
                     <p class="body-small text-[#666666] mb-3 line-clamp-2">Weightless coverage with a radiant finish that perfects and enhances natural beauty.</p>
                     <p class="body-regular font-medium">£78</p>
                 </a></div>
-            <div class="text-center mt-12"><a class="btn-primary" href="/shop" data-discover="true">View All Products</a></div>
+            <div class="text-center mt-12"><a class="btn-theme" href="/shop" data-discover="true">View All Products</a></div>
         </div>
     </section>
     <section class="py-20 px-6 bg-[#f6f5e8]">
@@ -166,7 +162,7 @@ new class extends Component
         <div class="max-w-2xl mx-auto text-center">
             <h2 class="hero-medium mb-4">Join Our Community</h2>
             <p class="body-large text-[#666666] mb-10">Be the first to discover new launches, exclusive offers, and beauty insights</p>
-            <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"><input placeholder="Enter your email" required="" class="flex-1 px-6 py-4 border border-[#bcbbb4] bg-transparent text-[#333333] placeholder-[#bcbbb4] focus:outline-none focus:border-[#333333] transition-colors" type="email" value="" style="border-radius: 0px; font-family: Inter, sans-serif; font-size: 14px;"><button type="submit" class="btn-primary">Subscribe</button></form>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"><input placeholder="Enter your email" required="" class="flex-1 px-6 py-4 border border-[#bcbbb4] bg-transparent text-[#333333] placeholder-[#bcbbb4] focus:outline-none focus:border-[#333333] transition-colors" type="email" value="" style="border-radius: 0px; font-family: Inter, sans-serif; font-size: 14px;"><button type="submit" class="btn-theme">Subscribe</button></form>
         </div>
     </section>
 </div>
