@@ -22,7 +22,6 @@ new class extends Component
         if (Auth::attempt($credentials)) {
             session()->regenerate();
             return redirect()->intended('/account');
-            //return redirect()->intended(route('account'));
         }
 
         $this->dispatch('toast', 
@@ -33,42 +32,38 @@ new class extends Component
 };
 ?>
 
-<div class="min-h-[80vh] flex items-center justify-center px-6">
-    <div class="w-full max-w-md">
-        <div class="text-center mb-12">
-            <h1 class="text-3xl font-serif uppercase tracking-widest text-zinc-800">Login</h1>
-            <p class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mt-2">Enter your clinical profile</p>
+<div class="min-h-[80vh] flex items-center justify-center py-10 px-6">
+    <div class="w-full max-w-lg">
+        <div class="text-center mb-8">
+            <h1 class="hero-medium mb-4">Login</h1>
         </div>
 
         <form wire:submit="login" class="space-y-10">
             <div class="relative z-0 w-full group">
+                <label for="email" class="label-theme">EMAIL ADDRESS</label>
                 <input wire:model="email" type="email" id="email" 
-                    class="block py-2.5 px-2 w-full text-sm text-zinc-900 bg-transparent border-0 border-b appearance-none focus:outline-none focus:ring-0 peer {{ $errors->has('email') ? 'border-red-600 focus:border-red-600' : 'border-zinc-300 focus:border-black' }}" 
+                    class="input-theme {{ $errors->has('email') ? 'input-error' : 'input-default' }}" 
                     placeholder=" " />
-                <label for="email" class="peer-focus:font-medium absolute text-xs duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-widest {{ $errors->has('email') ? 'text-red-600' : 'text-zinc-500 peer-focus:text-black' }}">
-                    Email Address
-                </label>
+                
                 @error('email') 
-                    <p class="mt-1 text-[10px] text-red-600 font-medium">{{ $message }}</p> 
+                    <p class="mt-1 text-[12px] text-red-600 font-medium">{{ $message }}</p> 
                 @enderror
             </div>
 
             <div class="relative z-0 w-full group">
+                <label for="password" class="label-theme">PASSWORD</label>
                 <input wire:model="password" type="password" id="password" 
-                    class="block py-2.5 px-2 w-full text-sm text-zinc-900 bg-transparent border-0 border-b appearance-none focus:outline-none focus:ring-0 peer {{ $errors->has('password') ? 'border-red-600 focus:border-red-600' : 'border-zinc-300 focus:border-black' }}" 
-                    placeholder=" " />
-                <label for="password" class="peer-focus:font-medium absolute text-xs duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-widest {{ $errors->has('password') ? 'text-red-600' : 'text-zinc-500 peer-focus:text-black' }}">
-                    Password
-                </label>
+                    class="input-theme {{ $errors->has('password') ? 'input-error' : 'input-default' }}" 
+                    placeholder=" " />                
                 @error('password') 
-                    <p class="mt-1 text-[10px] text-red-600 font-medium">{{ $message }}</p> 
+                    <p class="mt-1 text-[12px] text-red-600 font-medium">{{ $message }}</p> 
                 @enderror
                 <div class="flex justify-end mt-2">
                     <a href="/forgot-password" class="text-[9px] uppercase tracking-widest text-zinc-400 hover:text-black transition-colors underline italic">Forgot?</a>
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-black text-white py-4 text-xs uppercase tracking-[0.4em] hover:bg-zinc-800 transition-all active:scale-[0.98]">
+            <button type="submit" class="w-full btn-theme-inverse">
                 Sign In
             </button>
         </form>

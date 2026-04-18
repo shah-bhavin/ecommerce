@@ -58,5 +58,31 @@
   line-height: 1.5;
 }
 
+@utility input-theme {
+  @apply w-full px-6 py-4 border bg-transparent text-[#333333]
+         focus:outline-none transition-colors;
+
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  border-radius: 0;
+}
+
+@utility label-theme {
+  @apply block text-sm font-medium mb-2 tracking-wide;
+
+  font-family: Inter, sans-serif;
+}
+
+@utility input-default {
+  @apply border-zinc-300 focus:border-black;
+}
+
+@utility input-error {
+  @apply border-red-600 focus:border-red-600;
+}
+
+@utility input-error-text {
+  @apply mt-1 text-[14px] text-red-600 font-medium;
+}
 
 @custom-variant hover (&:hover);

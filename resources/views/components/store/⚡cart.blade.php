@@ -39,11 +39,9 @@ new class extends Component
 };
 ?>
 
-<main class="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
-    <header class="mb-16">
-        <h1 class="font-headline text-4xl md:text-5xl tracking-tight mb-4">Your Ritual Cart</h1>
-        <p class="font-label text-on-surface-variant tracking-widest text-xs uppercase">Review and refine your
-            selected essentials</p>
+<main class="pt-16 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+    <header class="mb-8">
+        <h1 class="hero-medium mb-4 text-center">Your Ritual Cart</h1>
     </header>
     @if(count($this->cart) > 0)
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -120,11 +118,11 @@ new class extends Component
             </div>
         </div>
     @else
-        <div class="text-center py-20 border border-dashed border-zinc-200">
-            <p class="text-[10px] uppercase tracking-[0.3em] text-zinc-400 mb-8">
-                Your clinical selection is currently empty.
+        <div class="text-center py-12 border border-dashed border-zinc-200">
+            <p class="hero-medium mb-8">
+                Your selection is currently empty.
             </p>
-            <a href="/" class="inline-block border-b border-black pb-1 text-[10px] uppercase tracking-[0.2em] font-bold hover:text-zinc-500 hover:border-zinc-500 transition-all">
+            <a href="/" class="btn-theme">
                 Continue Shopping
             </a>
         </div>
