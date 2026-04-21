@@ -70,7 +70,7 @@ new class extends Component
     public function save() {
         $this->validate([
             'name' => 'required|min:3', 
-            'image' => 'nullable|image|max:1024'
+            'image' => 'nullable|image|max:2048'
         ]);
 
         $category = Category::updateOrCreate
@@ -142,7 +142,7 @@ new class extends Component
     </div>
 
     <flux:table :paginate="$this->categories()">
-        <flux:table.columns sticky class="bg-white dark:bg-zinc-900">
+        <flux:table.columns sticky>
             <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection" wire:click="sort('name')">Name</flux:table.column>
             <flux:table.column>Featured</flux:table.column>
             <flux:table.column>Status</flux:table.column>

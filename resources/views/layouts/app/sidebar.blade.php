@@ -38,7 +38,7 @@
             <flux:sidebar.nav>
                 <flux:sidebar.group expandable :heading="__('Catalogue')" class="grid" icon="squares-plus">
                     <flux:sidebar.item href="{{ route('admin.categories') }}"  wire:navigate lazy>{{ __('Categories') }}</flux:sidebar.item>
-                    <flux:sidebar.item href="{{ route('admin.brands') }}"  wire:navigate lazy>{{ __('Brands') }}</flux:sidebar.item>
+                    {{--<flux:sidebar.item href="{{ route('admin.brands') }}"  wire:navigate lazy>{{ __('Brands') }}</flux:sidebar.item>--}}
                     <flux:sidebar.item href="{{ route('admin.products') }}"  wire:navigate lazy>{{ __('Products') }}</flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>           

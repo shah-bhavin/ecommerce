@@ -67,9 +67,12 @@ new class extends Component
                             </div>
                             <div class="flex justify-between items-center mt-8">
                                 <div class="flex items-center gap-4">
-                                    <input type="number" value="{{ $item['quantity'] }}" 
+                                    <!-- <input type="number" value="{{ $item['quantity'] }}" 
                                         wire:change="updateQty('{{ $key }}', $event.target.value)"
-                                        class="w-12 border-0 bg-zinc-50 text-center text-sm p-2">
+                                        class="w-12 border-0 bg-zinc-50 text-center text-sm p-2"> -->
+                                        <button wire:click="decreaseQty" class="px-4 py-2 text-[#333333] hover:bg-[#f6f5e8] transition-colors">−</button>
+                                            <span class="px-6 py-2 border-x border-[#bcbbb4] text-sm" style="font-family: Inter, sans-serif;">{{ $qty }}</span>
+                                        <button wire:click="increaseQty" class="px-4 py-2 text-[#333333] hover:bg-[#f6f5e8] transition-colors">+</button>
                                 </div>
                                 <button  wire:click="removeItem('{{ $key }}')"
                                     class="flex items-center text-xs font-label uppercase tracking-widest text-on-surface-variant hover:text-error transition-colors group">

@@ -10,12 +10,13 @@ Route::livewire('/shop/{category?}', 'store.shop')->name('shop');
 Route::livewire('/about', 'store.about')->name('about');
 Route::livewire('/contact', 'store.contact')->name('contact');
 Route::livewire('/product/{slug}', 'store.product-detail')->name('product.show');
-
 Route::livewire('/cart', 'store.cart')->name('cart');
-Route::livewire('/checkout', 'store.checkout')->middleware('auth')->name('checkout');
-Route::livewire('/search', 'store.search')->name('search');
-Route::livewire('/thanks/{orderid?}', 'store.thanks')->name('thanks');
 
+Route::middleware('auth')->group(function () {
+    Route::livewire('/checkout', 'store.checkout')->name('checkout');
+    Route::livewire('/search', 'store.search')->name('search');
+    Route::livewire('/thanks/{orderid?}', 'store.thanks')->name('thanks');
+});
 
 Route::get('/logout', function () {
     Auth::logout();

@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
-            $table->string('category'); // Cream, Lotion, Gel
-            $table->string('skin_type'); // Oily, Dry, All
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->string('size')->nullable(); 
+            $table->text('key_ingredients')->nullable(); 
             $table->integer('stock')->default(0);
             $table->string('image')->nullable();
             $table->string('meta_title')->nullable();

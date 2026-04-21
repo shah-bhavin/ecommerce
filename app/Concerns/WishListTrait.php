@@ -11,20 +11,20 @@ use Illuminate\Support\Facades\DB;
 
 trait WishListTrait
 {
-    public function addToBag($productId) {
+    public function addToBag($productId, $quantity) {
         $product = Product::find($productId);
         $cart = session()->get('cart', []);
         $cartKey = $product->id . '-base';
 
         if(isset($cart[$cartKey])) {
-            $cart[$cartKey]['quantity']++;
+            $cart[$cartKey]['quantity'] + $quantity;
         } else {
             $cart[$cartKey] = [
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
                 'image' => $product->image,
-                'quantity' => 1,
+                'quantity' => $quantity,
                 'variant_id' => null,
                 'variant_name' => 'Standard'
             ];
@@ -33,7 +33,7 @@ trait WishListTrait
         session()->put('cart', $cart);
         CartItem::updateOrCreate(
             ['user_id' => Auth::id(), 'product_id' => $productId],
-            ['quantity' => DB::raw('quantity + 1')]
+            ['quantity' => DB::raw($quantity)]
         );
         
         $this->dispatch('toast', 

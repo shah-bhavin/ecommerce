@@ -17,7 +17,7 @@ new class extends Component {
     public $editingId = null, $deletingId = null;
 
     // Form Fields
-    public $name, $price, $category = 'Cream', $skin_type = 'All', $stock = 0, $image, $description, $meta_title, $meta_description;
+    public $name, $price, $size, $category_id, $key_ingredients, $skin_type = 'All', $stock = 0, $image, $description, $meta_title, $meta_description;
 
     public function mount() {
         $this->loadProducts();
@@ -25,11 +25,11 @@ new class extends Component {
 
     public function loadProducts() {
         $this->categories = Category::latest()->get();
-        $this->products = Product::latest()->get();
+        $this->products = Product::with('category')->latest()->get();
     }
 
     public function openCreateModal() {
-        $this->reset(['name', 'price', 'category', 'skin_type', 'stock', 'image', 'editingId']);
+        $this->reset(['name', 'price', 'category_id','size','key_ingredients','description', 'skin_type', 'stock', 'image', 'editingId', 'meta_title','meta_description']);
         $this->showModal = true;
     }
 
@@ -38,10 +38,11 @@ new class extends Component {
         $this->editingId = $id;
         $this->name = $product->name;
         $this->price = $product->price;
-        $this->category = $product->category;
+        $this->category_id = $product->category_id;
         $this->description = $product->description;
         $this->existingImage = $product->image;
-        $this->skin_type = $product->skin_type;
+        $this->size = $product->size;
+        $this->key_ingredients = $product->key_ingredients;
         $this->stock = $product->stock;
         $this->meta_title = $product->meta_title;
         $this->meta_description = $product->meta_description;
@@ -52,8 +53,8 @@ new class extends Component {
         $data = $this->validate([
             'name' => 'required|min:3',
             'price' => 'required|numeric',
-            'category' => 'required',
-            'skin_type' => 'required',
+            'category_id' => 'required',
+            'size' => 'required',
             'stock' => 'required|integer',
         ]);
 
@@ -63,8 +64,9 @@ new class extends Component {
             'slug' => Str::slug($this->name),
             'description' => $this->description,
             'price' => $this->price ?: null,
-            'category' => $this->category,
-            'skin_type' => $this->skin_type,
+            'category_id' => $this->category_id,
+            'size' => $this->size,
+            'key_ingredients' => $this->key_ingredients,
             'stock' => $this->stock,
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
@@ -120,9 +122,9 @@ new class extends Component {
     </div>
 
     {{-- Data Table --}}
-    <flux:card class="p-0 overflow-hidden">
+    {{--<flux:card class="p-0 overflow-hidden">--}}
         <flux:table>
-            <flux:table.columns>
+            <flux:table.columns sticky>
                 <flux:table.column class="pl-1">Product</flux:table.column>
                 <flux:table.column>Category</flux:table.column>
                 <flux:table.column>Stock</flux:table.column>
@@ -133,13 +135,15 @@ new class extends Component {
             <flux:table.rows>
                 @foreach($products as $product)
                     <flux:table.row :key="$product->id">
-                        <flux:table.cell class="font-medium">{{ @$product->name }}</flux:table.cell>
-                        <flux:table.cell><flux:badge size="sm" inset="top bottom">{{ $product->category }}</flux:badge></flux:table.cell>
+                        <flux:table.cell class="flex items-center gap-3">
+                            <flux:avatar size="lg" src="{{ asset('storage/' . $product->image) }}" />
+                            {{ $product->name }}
+                        </flux:table.cell>
+                        
+                        <flux:table.cell><flux:badge size="sm" inset="top bottom">{{ $product->category->name }}</flux:badge></flux:table.cell>
                         <flux:table.cell>{{ $product->stock }} units</flux:table.cell>
                         <flux:table.cell>₹{{ $product->price }}</flux:table.cell>
                         <flux:table.cell>
-                            <!-- <flux:button wire:click="edit({{ $product->id }})" variant="ghost" size="sm" icon="pencil-square" />
-                            <flux:button wire:click="delete({{ $product->id }})" wire:confirm="Delete this product?" variant="ghost" size="sm" icon="trash" color="danger" /> -->
                             <flux:button.group>
                                 <flux:button wire:click="edit({{ $product->id }})" wire:loading.attr="disabled" size="sm" icon="pencil-square" />
                                 <flux:button wire:click="confirmDelete({{ $product->id }})" wire:loading.attr="disabled" size="sm" variant="danger" icon="trash" />                                
@@ -149,7 +153,7 @@ new class extends Component {
                 @endforeach
             </flux:table.rows>
         </flux:table>
-    </flux:card>
+    {{--</flux:card>--}}
 
     {{-- Create/Edit Modal --}}
     <flux:modal wire:model="showModal" class="md:w-[500px] space-y-6" flyout>
@@ -160,24 +164,22 @@ new class extends Component {
             
             <flux:textarea wire:model="description" label="Product Description" placeholder="Product Description" />
             
-            <flux:select wire:model="category" label="Category">
+            <flux:select wire:model="category_id" label="Category">
+                <option value="">Select a category...</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category->slug }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </flux:select>
-            
-            <!-- <div class="grid grid-cols-2 gap-4">
-                <flux:select wire:model="skin_type" label="Skin Type">
-                    <option value="All">All Types</option>
-                    <option value="Oily">Oily</option>
-                    <option value="Dry">Dry</option>
-                </flux:select>
-            </div> -->
 
             <div class="grid grid-cols-2 gap-4">
                 <flux:input wire:model="price" type="number" label="Price (₹)" />
                 <flux:input wire:model="stock" type="number" label="Initial Stock" />
             </div>
+
+            <flux:input wire:model="size" label="Product Size" />
+            
+            <flux:textarea wire:model="key_ingredients" label="Key Ingredients" placeholder="Key Ingredients" />
+
 
             <!-- <flux:input wire:model="image" type="file" label="Product Image" /> -->
             <div class="flex items-center gap-4">

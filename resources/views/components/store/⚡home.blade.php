@@ -5,6 +5,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 new class extends Component
 {
@@ -46,19 +47,19 @@ new class extends Component
     </section>
     <section class="py-20 px-6">
         <div class="max-w-[1400px] mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8"><a class="group relative h-[400px] overflow-hidden hover-lift" href="/shop?category=skincare" data-discover="true"><img alt="Skincare" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1622618991746-fe6004db3a47">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                @foreach($categories as $category)
+                <a class="group relative h-[400px] overflow-hidden hover-lift" href="shop/{{ $category->slug }}" data-discover="true">
+                    <img alt="Skincare" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="{{ asset('storage/'.$category->image) }}">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <h3 class="heading-2 mb-2 text-white">Skincare</h3>
-                        <p class="body-regular mb-4 text-white opacity-90">Exceptional formulations for radiant, healthy skin</p><span class="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-white">DISCOVER <x-lucide-arrow-right class="size-4" /></span>
+                        <h3 class="heading-2 mb-2 text-white">{{ $category->name }}</h3>
+                        <p class="body-regular mb-4 text-white opacity-90">{{ Str::limit($category->description, 100) }}</p>
+                        <span class="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-white">DISCOVER <x-lucide-arrow-right class="size-4" /></span>
                     </div>
-                </a><a class="group relative h-[400px] overflow-hidden hover-lift" href="/shop?category=cosmetics" data-discover="true"><img alt="Makeup" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.pexels.com/photos/4889711/pexels-photo-4889711.jpeg">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <h3 class="heading-2 mb-2 text-white">Makeup</h3>
-                        <p class="body-regular mb-4 text-white opacity-90">Luxury cosmetics for timeless beauty</p><span class="inline-flex items-center gap-2 text-sm font-medium tracking-wide text-white">DISCOVER <x-lucide-arrow-right class="size-4" /></span></span>
-                    </div>
-                </a></div>
+                </a>
+                @endforeach
+            </div>
         </div>
     </section>
     <section class="py-20 px-6 bg-[#f6f5e8]">
@@ -66,7 +67,14 @@ new class extends Component
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="order-2 lg:order-1">
                     <h2 class="hero-medium mb-6">A Vision of Timeless Elegance</h2>
-                    <p class="body-large text-[#666666] leading-relaxed mb-8">Abrari London was born from a vision to create beauty that transcends trends. Rooted in the finest traditions of luxury craftsmanship and powered by innovative formulations, we bring you products that celebrate confidence, sophistication, and the art of being beautifully yourself. From Dubai to London, our global perspective ensures every creation meets the highest standards of excellence.</p><a class="btn-secondary inline-block text-sm uppercase" href="/about" data-discover="true">Learn More About Us</a>
+                    <p class="body-large text-[#666666] leading-relaxed mb-8">Abrari was born from a simple belief:
+                    a woman should never have to choose between ambition and beauty.</p>
+                    <p class="body-large text-[#666666] leading-relaxed mb-8">Created by a woman, for women, Abrari knows skincare is more than a ritual.
+                    It is a moment to return to yourself. A moment of power before the world asks anything of you.</p>
+                    <p class="body-large text-[#666666] leading-relaxed mb-8">Because when a woman feels confident in her own skin, she moves differently.
+                    She walks into rooms with certainty.
+                    She builds the life she imagines — and never apologizes for wanting more.</p>
+                    <a class="btn-secondary inline-block text-sm uppercase" href="{{ route('about') }}" data-discover="true">Learn More About Us</a>
                 </div>
                 <div class="order-1 lg:order-2"><img alt="Abrari London Brand Story" class="w-full h-[500px] object-cover hover-lift" src="https://images.unsplash.com/photo-1657928198258-1db7e50e2fd9"></div>
             </div>
@@ -78,32 +86,18 @@ new class extends Component
                 <h2 class="hero-medium mb-4">Signature Collection</h2>
                 <p class="body-large text-[#666666]">Our most coveted formulations</p>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8"><a class="group" href="/product/skin-1" data-discover="true">
-                    <div class="mb-4 overflow-hidden hover-lift"><img alt="Luminous Facial Serum" class="w-full h-[280px] object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1622618991227-412b19e4fef9"></div>
-                    <h3 class="heading-3 mb-2 group-hover:text-[#000000] transition-colors">Luminous Facial Serum</h3>
-                    <p class="body-small text-[#666666] mb-3 line-clamp-2">A vitamin-rich serum that delivers radiant, youthful-looking skin with 24-carat gold essence.</p>
-                    <p class="body-regular font-medium">£185</p>
-                </a><a class="group" href="/product/skin-2" data-discover="true">
-                    <div class="mb-4 overflow-hidden hover-lift"><img alt="Velvet Hydration Cream" class="w-full h-[280px] object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1739980737820-b6bb1a9b8456"></div>
-                    <h3 class="heading-3 mb-2 group-hover:text-[#000000] transition-colors">Velvet Hydration Cream</h3>
-                    <p class="body-small text-[#666666] mb-3 line-clamp-2">Luxuriously rich moisturizer that deeply nourishes and restores skin's natural barrier.</p>
-                    <p class="body-regular font-medium">£165</p>
-                </a><a class="group" href="/product/skin-5" data-discover="true">
-                    <div class="mb-4 overflow-hidden hover-lift"><img alt="Renewal Eye Treatment" class="w-full h-[280px] object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.pexels.com/photos/33365010/pexels-photo-33365010.jpeg"></div>
-                    <h3 class="heading-3 mb-2 group-hover:text-[#000000] transition-colors">Renewal Eye Treatment</h3>
-                    <p class="body-small text-[#666666] mb-3 line-clamp-2">Delicate eye cream that diminishes fine lines and restores youthful radiance.</p>
-                    <p class="body-regular font-medium">£145</p>
-                </a><a class="group" href="/product/cos-1" data-discover="true">
-                    <div class="mb-4 overflow-hidden hover-lift"><img alt="Velvet Matte Lipstick" class="w-full h-[280px] object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1598452963314-b09f397a5c48"></div>
-                    <h3 class="heading-3 mb-2 group-hover:text-[#000000] transition-colors">Velvet Matte Lipstick</h3>
-                    <p class="body-small text-[#666666] mb-3 line-clamp-2">Luxuriously smooth matte finish with long-lasting color and comfortable wear.</p>
-                    <p class="body-regular font-medium">£48</p>
-                </a><a class="group" href="/product/cos-2" data-discover="true">
-                    <div class="mb-4 overflow-hidden hover-lift"><img alt="Luminous Foundation" class="w-full h-[280px] object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1608979048467-6194dabc6a3d"></div>
-                    <h3 class="heading-3 mb-2 group-hover:text-[#000000] transition-colors">Luminous Foundation</h3>
-                    <p class="body-small text-[#666666] mb-3 line-clamp-2">Weightless coverage with a radiant finish that perfects and enhances natural beauty.</p>
-                    <p class="body-regular font-medium">£78</p>
-                </a></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+                @foreach($products->random(5) as $product)
+                <a class="group" href="/product/{{ $product->slug }}" data-discover="true">
+                    <div class="mb-4 overflow-hidden hover-lift">
+                        <img alt="Luminous Facial Serum" class="w-full h-[280px] object-cover transition-transform duration-500 group-hover:scale-105" src="{{ asset('storage/'.$product->image) }}">
+                    </div>
+                    <h3 class="heading-3 mb-2 group-hover:text-[#000000] transition-colors">{{ $product->name }}</h3>
+                    <p class="body-small text-[#666666] mb-3 line-clamp-2">{{ $product->description }}</p>
+                    <p class="body-regular font-medium">₹{{ number_format($product->price, 2) }}</p>
+                </a>
+                @endforeach
+            </div>
             <div class="text-center mt-12"><a class="btn-theme" href="/shop" data-discover="true">View All Products</a></div>
         </div>
     </section>

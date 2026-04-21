@@ -12,6 +12,11 @@ class Category extends Model
     use SoftDeletes;
     protected $fillable = ['name','slug', 'description','image', 'is_active', 'is_featured', 'meta_title', 'meta_description'];
 
+    public function products(): HasMany 
+    {
+        return $this->hasMany(Product::class);
+    }
+    
     // public function parent(): BelongsTo 
     // {
     //     return $this->belongsTo(Category::class, 'parent_id');
