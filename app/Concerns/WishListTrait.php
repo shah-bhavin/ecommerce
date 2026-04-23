@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 trait WishListTrait
 {
     public function addToBag($productId, $quantity) {
-        $product = Product::find($productId);
+        $product = Product::with('category')->find($productId);
         $cart = session()->get('cart', []);
         $cartKey = $product->id . '-base';
 
@@ -26,7 +26,7 @@ trait WishListTrait
                 'image' => $product->image,
                 'quantity' => $quantity,
                 'variant_id' => null,
-                'variant_name' => 'Standard'
+                'category_name' => $product->category->name
             ];
         }
 

@@ -85,4 +85,9 @@
   @apply mt-1 text-[14px] text-red-600 font-medium;
 }
 
+@utility address-card {
+  @apply border border-gray-200 overflow-hidden bg-white shadow-sm transition-all;
+  @apply has-[:checked]:border-gray-950 has-[:checked]:ring-1 has-[:checked]:ring-gray-500;
+}
+
 @custom-variant hover (&:hover);

@@ -54,6 +54,14 @@ new class extends Component {
                 @enderror
             </div>
 
+            <div class="relative z-0 w-full group">
+                <label for="email" class="label-theme">Mobile Number</label>
+                <input wire:model="phone" type="tel" id="phone" class="input-theme {{ $errors->has('phone') ? 'input-error' : 'input-default' }}" placeholder=" " />
+                @error('phone') 
+                    <p class="input-error-text">{{ $message }}</p> 
+                @enderror
+            </div>
+
             <div class="grid grid-cols-2 gap-8">
                 <div class="relative z-0 w-full group">
                     <label for="password" class="label-theme">PASSWORD</label>

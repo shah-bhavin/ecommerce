@@ -27,11 +27,10 @@ new class extends Component
   <section class="max-w-6xl mx-auto mb-20 text-center">
     <div class="mb-8 inline-block">
       <div class="w-20 h-20 rounded-xl! flex items-center justify-center bg-secondary-fixed! mb-4 mx-auto">
-        <span class="material-symbols-outlined text-secondary text-4xl" data-icon="check_circle"
-          style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        <x-lucide-square-check-big />
       </div>
     </div>
-    <h1 class="font-headline text-5xl md:text-7xl text-primary tracking-tight mb-6">Thank You for Your Ritual </h1>
+    <h1 class="hero-medium">Thank You for Your Order </h1>
     <p class="font-body text-on-surface-variant max-w-2xl mx-auto text-lg leading-relaxed">
       Your journey towards radiant skin has begun. We are preparing your selection with the utmost care in our Dubai
       atelier.
@@ -101,8 +100,8 @@ new class extends Component
           United Arab Emirates
         </address>
         <div class="mt-8 flex items-center gap-3 text-on-primary-fixed-variant">
-          <span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
-          <span class="text-xs font-label font-bold uppercase tracking-widest">White Glove Delivery</span>
+          <x-lucide-truck class="size-4" />
+          <span class="text-xs font-label font-bold uppercase tracking-widest">Fast Delivery</span>
         </div>
       </div>
       <div

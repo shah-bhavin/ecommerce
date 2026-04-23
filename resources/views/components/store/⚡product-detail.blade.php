@@ -11,7 +11,7 @@ new class extends Component
 
     public Product $product;
     public $selectedVariantId;
-    public $quantity = 1;
+    //public $quantity = 1;
     public $rating = 5;
     public $comment = '';
     public $products, $key;

@@ -48,46 +48,46 @@ new class extends Component {
                 <a href="/account/overview" wire:navigate
                     class="flex items-center justify-between w-full p-2 {{ $view === 'overview' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
                     <span class="flex items-center gap-2">
-                        <x-heroicon-o-home class="w-4 h-4 text-gray-500" />
+                        <x-lucide-home class="w-4 h-4 text-gray-500" />
                         Account Overview
                     </span>
-                    <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
+                    <x-lucide-chevron-right class="w-4 h-4 text-gray-500" />
                 </a>
                 
                 <a href="/account/wishlist" wire:navigate
                     class="flex items-center justify-between w-full p-2 {{ $view === 'wishlist' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}" icon="heart" icon:trailing="chevron-right">
                     <span class="flex items-center gap-2">
-                        <x-heroicon-o-heart class="w-4 h-4 text-gray-500" />
+                        <x-lucide-heart class="w-4 h-4 text-gray-500" />
                         Wishlist
                     </span>
-                    <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
+                    <x-lucide-chevron-right class="w-4 h-4 text-gray-500" />
                 </a>
                 
                 <a href="/account/orders" wire:navigate
                     class="flex items-center justify-between w-full p-2 {{ $view === 'orders' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
                     <span class="flex items-center gap-2">
-                        <x-heroicon-o-shopping-bag class="w-4 h-4 text-gray-500" />
+                        <x-lucide-shopping-bag class="w-4 h-4 text-gray-500" />
                         Orders
                     </span>
-                    <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
+                    <x-lucide-chevron-right class="w-4 h-4 text-gray-500" />
                 </a>
 
                 <a href="/account/profile" wire:navigate
                     class="flex items-center justify-between w-full p-2 {{ $view === 'profile' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
                     <span class="flex items-center gap-2">
-                        <x-heroicon-o-users class="w-4 h-4 text-gray-500" />
+                        <x-lucide-users class="w-4 h-4 text-gray-500" />
                         Profile
                     </span>
-                    <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
+                    <x-lucide-chevron-right class="w-4 h-4 text-gray-500" />
                 </a>
 
                 <a href="{{ route('logout') }}" wire:navigate
                     class="curser-pointer flex items-center justify-between w-full p-2">
                     <span class="flex items-center gap-2">
-                        <x-heroicon-o-arrow-right-start-on-rectangle class="w-4 h-4 text-gray-500" />
+                        <x-lucide-square-arrow-right-exit class="w-4 h-4 text-gray-500" />
                         Logout
                     </span>
-                    <x-heroicon-o-chevron-right class="w-4 h-4 text-gray-500" />
+                    <x-lucide-chevron-right class="w-4 h-4 text-gray-500" />
                 </a>
             </nav>
         </aside>
