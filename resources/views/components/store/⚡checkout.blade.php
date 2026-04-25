@@ -63,7 +63,7 @@ new class extends Component
             'user_id' => Auth::id(),
             'total' => $this->getSubtotal() - $this->discount,
             'status' => 'pending',
-            'order_number' => Str::random(5),
+            'order_number' => 'ORD-'.now()->format('Ymd').'-'.Str::upper(Str::random(8)),
             'subtotal' => $this->getSubtotal(),
         ]);
 
@@ -80,7 +80,6 @@ new class extends Component
 
         // 3. Clear Cart
         CartItem::where('user_id', Auth::id())->delete();
-        //return redirect()->route('thanks', ['orderid' => $order->id]);
 
         session()->forget('cart');
         return redirect()->route('thanks', ['orderid' => $order->order_number]);
@@ -109,7 +108,7 @@ new class extends Component
             <div>
                 <h1 class="font-headline text-4xl md:text-5xl tracking-tight mb-4">Checkout</h1>
                 <p class="text-on-surface-variant font-body">Refining your ritual. Please provide your shipping and
-                    payment information.{{ Auth::id() }}</p>
+                    payment information.</p>
             </div>
             
             <div class="space-y-10">
@@ -261,15 +260,15 @@ new class extends Component
                             <div class="ml-3 flex-1">
                                 <span class="block font-semibold text-slate-900 text-[14px]">{{ strtoupper($address->type) }}</span>
                                 <div class="grid grid-rows-[0fr] transition-all duration-300 group-has-[:checked]:grid-rows-[1fr]">
-                                <div class="overflow-hidden">
-                                    <p class="mt-2 text-sm text-slate-500">{{ $address->fullname }}</p>
-                                    <p class="mt-2 text-sm text-slate-500">{{ $address->phone }}</p>
-                                </div>
-                                <div class="overflow-hidden">
-                                    <p class="mt-2 text-sm text-slate-500">
-                                        {{ $address->house_no }}, {{ $address->area }}, {{ $address->landmark }}, {{ $address->city }}, {{ $address->pincode }}
-                                    </p>
-                                </div>
+                                    <div class="overflow-hidden">
+                                        <p class="mt-2 text-sm text-slate-500">{{ $address->fullname }}</p>
+                                        <p class="mt-2 text-sm text-slate-500">{{ $address->phone }}</p>
+                                    </div>
+                                    <div class="overflow-hidden">
+                                        <p class="mt-2 text-sm text-slate-500">
+                                            {{ $address->house_no }}, {{ $address->area }}, {{ $address->landmark }}, {{ $address->city }}, {{ $address->pincode }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                             </label>

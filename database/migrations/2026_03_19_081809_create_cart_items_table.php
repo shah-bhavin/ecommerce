@@ -26,6 +26,13 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('cart_items', function (Blueprint $table) {
+            // Option A: Use the constraint name directly
+            $table->dropForeign('cart_items_product_id_foreign');
+            
+            // Option B: Pass the column name in an array (Laravel generates the name)
+            // $table->dropForeign(['product_id']); 
+        });
         Schema::dropIfExists('cart_items');
     }
 };

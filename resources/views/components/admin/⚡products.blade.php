@@ -17,7 +17,7 @@ new class extends Component {
     public $editingId = null, $deletingId = null;
 
     // Form Fields
-    public $name, $price, $size, $category_id, $key_ingredients, $skin_type = 'All', $stock = 0, $image, $description, $meta_title, $meta_description;
+    public $name, $price, $tax, $size, $category_id, $key_ingredients, $skin_type = 'All', $stock = 0, $image, $description, $meta_title, $meta_description;
 
     public function mount() {
         $this->loadProducts();
@@ -29,7 +29,7 @@ new class extends Component {
     }
 
     public function openCreateModal() {
-        $this->reset(['name', 'price', 'category_id','size','key_ingredients','description', 'skin_type', 'stock', 'image', 'editingId', 'meta_title','meta_description']);
+        $this->reset(['name', 'price','tax', 'category_id','size','key_ingredients','description', 'skin_type', 'stock', 'image', 'editingId', 'meta_title','meta_description']);
         $this->showModal = true;
     }
 
@@ -38,6 +38,7 @@ new class extends Component {
         $this->editingId = $id;
         $this->name = $product->name;
         $this->price = $product->price;
+        $this->tax = $product->tax;
         $this->category_id = $product->category_id;
         $this->description = $product->description;
         $this->existingImage = $product->image;
@@ -53,6 +54,7 @@ new class extends Component {
         $data = $this->validate([
             'name' => 'required|min:3',
             'price' => 'required|numeric',
+            'tax' => 'required|numeric',
             'category_id' => 'required',
             'size' => 'required',
             'stock' => 'required|integer',
@@ -64,6 +66,7 @@ new class extends Component {
             'slug' => Str::slug($this->name),
             'description' => $this->description,
             'price' => $this->price ?: null,
+            'tax' => $this->tax ?: null,
             'category_id' => $this->category_id,
             'size' => $this->size,
             'key_ingredients' => $this->key_ingredients,
@@ -129,6 +132,7 @@ new class extends Component {
                 <flux:table.column>Category</flux:table.column>
                 <flux:table.column>Stock</flux:table.column>
                 <flux:table.column>Price</flux:table.column>
+                <flux:table.column>Tax</flux:table.column>
                 <flux:table.column>Actions</flux:table.column>
             </flux:table.columns>
 
@@ -143,6 +147,8 @@ new class extends Component {
                         <flux:table.cell><flux:badge size="sm" inset="top bottom">{{ $product->category->name }}</flux:badge></flux:table.cell>
                         <flux:table.cell>{{ $product->stock }} units</flux:table.cell>
                         <flux:table.cell>₹{{ $product->price }}</flux:table.cell>
+                        <flux:table.cell>₹{{ $product->tax }}</flux:table.cell>
+
                         <flux:table.cell>
                             <flux:button.group>
                                 <flux:button wire:click="edit({{ $product->id }})" wire:loading.attr="disabled" size="sm" icon="pencil-square" />
@@ -173,8 +179,9 @@ new class extends Component {
 
             <div class="grid grid-cols-2 gap-4">
                 <flux:input wire:model="price" type="number" label="Price (₹)" />
-                <flux:input wire:model="stock" type="number" label="Initial Stock" />
+                <flux:input wire:model="tax" type="number" label="Tax (%)" />
             </div>
+            <flux:input wire:model="stock" type="number" label="Initial Stock" />
 
             <flux:input wire:model="size" label="Product Size" />
             
@@ -199,8 +206,8 @@ new class extends Component {
 
 
             <div class="flex justify-end space-x-2">
-                <flux:button wire:click="$set('showModal', false)">Cancel</flux:button>
-                <flux:button type="submit" variant="primary">Save</flux:button>
+                <flux:button wire:click="$set('showModal', false)" class="cursor-pointer">Cancel</flux:button>
+                <flux:button type="submit" variant="primary" class="cursor-pointer">Save</flux:button>
             </div>
         </form>
     </flux:modal>

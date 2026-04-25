@@ -4,6 +4,7 @@ use App\Models\{Product, Review};
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Concerns\WishListTrait;
+use Illuminate\Support\Facades\Auth;
 
 new class extends Component
 {
@@ -11,20 +12,17 @@ new class extends Component
 
     public Product $product;
     public $selectedVariantId;
-    //public $quantity = 1;
     public $rating = 5;
     public $comment = '';
     public $products, $key;
     public $qty = 1;
     use WishListTrait; 
 
-
     public function mount($slug)
     {
         $this->product = Product::with('category')->where('slug', $slug)->firstOrFail();
         $this->products = Product::with('category')->where('category_id', $this->product->category_id)->get();
         $this->qty;
-        //$this->selectedVariantId = $this->product->first()?->id;
     }
 
     public function increaseQty(){

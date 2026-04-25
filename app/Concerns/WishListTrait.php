@@ -15,24 +15,26 @@ trait WishListTrait
         $product = Product::with('category')->find($productId);
         $cart = session()->get('cart', []);
         $cartKey = $product->id . '-base';
+        
 
         if(isset($cart[$cartKey])) {
             $cart[$cartKey]['quantity'] + $quantity;
         } else {
             $cart[$cartKey] = [
+                'user_id' => Auth::id(),
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
+                'tax' => $product->tax,
                 'image' => $product->image,
                 'quantity' => $quantity,
-                'variant_id' => null,
                 'category_name' => $product->category->name
             ];
         }
 
         session()->put('cart', $cart);
         CartItem::updateOrCreate(
-            ['user_id' => Auth::id(), 'product_id' => $productId],
+            ['user_id' => Auth::id(), 'product_id' => $productId, 'session_id' => session()->getId()],
             ['quantity' => DB::raw($quantity)]
         );
         
@@ -40,7 +42,7 @@ trait WishListTrait
             type: 'success', 
             text: 'Product added to cart.'
         );
-    }
+    }   
 
     public function toggleWishlist($productId) {
         if (!auth()->check()) return redirect()->route('login');

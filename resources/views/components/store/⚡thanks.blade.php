@@ -14,6 +14,7 @@ new class extends Component
     public function mount($orderid = null){
         if ($orderid) {
             $this->order = Order::with('items')
+                            ->with('address')
                             ->where(['order_number' => $orderid])
                             ->first();
             $this->orderitems = $this->order ? $this->order->items : collect();
@@ -41,8 +42,8 @@ new class extends Component
       <div class="bg-surface-container-low p-8 md:p-12">
         <div class="flex justify-between items-end mb-12">
           <div>
-            <p class="font-label text-xs uppercase tracking-[0.2em] text-secondary mb-2">Order Identification</p>
-            <h2 class="font-headline text-3xl">{{ @$order->order_number }}</h2>
+            <p class="font-label text-xs uppercase tracking-[0.2em] text-secondary mb-2">Order Number</p>
+            <h2 class="font-headline text-md font-bold">{{ @$order->order_number }}</h2>
           </div>
         </div>
         <div class="space-y-8">
@@ -94,10 +95,13 @@ new class extends Component
         <h4 class="font-label font-extrabold text-xs uppercase tracking-[0.2em] text-on-primary-fixed-variant mb-6">
           Delivery Address</h4>
         <address class="not-italic font-body text-on-surface leading-loose">
-          Khalid Al-Mansoori<br />
-          Level 42, Burj Daman<br />
-          DIFC, Dubai<br />
-          United Arab Emirates
+          <span class="block font-semibold text-slate-900 text-[14px]">{{ strtoupper($order->address->type) }}</span>
+          <div class="grid grid-rows-[0fr] transition-all duration-300 group-has-[:checked]:grid-rows-[1fr]">
+          <p class="mt-2 text-sm text-slate-500">{{ $order->address->fullname }}</p>
+          <p class="mt-2 text-sm text-slate-500">{{ $order->address->phone }}</p>
+          <p class="mt-2 text-sm text-slate-500">
+              {{ $order->address->house_no }}, {{ $order->address->area }}, {{ $order->address->landmark }}, {{ $order->address->city }}, {{ $order->address->pincode }}
+          </p>
         </address>
         <div class="mt-8 flex items-center gap-3 text-on-primary-fixed-variant">
           <x-lucide-truck class="size-4" />

@@ -16,8 +16,7 @@ new class extends Component
         return session()->get('cart', []);
     }
 
-    public function increaseQty($key)
-    {
+    public function increaseQty($key){
         // 1. Get the current cart from session
         $cart = session()->get('cart', []);
 
@@ -31,8 +30,7 @@ new class extends Component
         }
     }
 
-    public function decreaseQty($key)
-    {
+    public function decreaseQty($key){
         $cart = session()->get('cart', []);
 
         if (isset($cart[$key]) && $cart[$key]['quantity'] > 1) {
@@ -49,11 +47,21 @@ new class extends Component
         $this->dispatch('cart-updated');
     }
 
-    public function getTotal() {
+    public function getSubTotal() {
         // Access the computed property via $this->cart
         return array_reduce($this->cart, function($carry, $item) {
             return $carry + ($item['price'] * $item['quantity']);
         }, 0);
+    }
+
+    public function getTax() {
+        return array_reduce($this->cart, function($carry, $item) {
+            return $carry + ($item['price'] * $item['quantity'] * $item['tax']/100);
+        }, 0);
+    }
+
+    public function getTotal() {
+        return $this->getSubTotal() + $this->getTax();
     }
 
     public function checkout() {
@@ -114,21 +122,21 @@ new class extends Component
                     <div class="space-y-6 mb-10 border-b border-outline-variant/10 pb-10">
                         <div class="flex justify-between items-center text-sm">
                             <span class="font-label text-on-surface-variant uppercase tracking-widest">Subtotal</span>
-                            <span class="font-headline">₹{{ number_format($this->getTotal(), 2) }}</span>
+                            <span class="font-headline">₹{{ number_format($this->getSubTotal(), 2) }}</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="font-label text-on-surface-variant uppercase tracking-widest">Shipping</span>
                             <span class="font-label italic text-secondary text-xs uppercase">Complimentary</span>
                         </div>
-                        <div class="flex justify-between items-center text-sm">
+                        <!-- <div class="flex justify-between items-center text-sm">
                             <span class="font-label text-on-surface-variant uppercase tracking-widest">Estimated
                                 Tax</span>
-                            <span class="font-headline">₹{{ number_format($this->getTotal()*5/100, 2) }}</span>
-                        </div>
+                            <span class="font-headline">₹{{ number_format($this->getTax(), 2) }}</span>
+                        </div> -->
                     </div>
                     <div class="flex justify-between items-center mb-10">
                         <span class="font-headline text-xl">Total</span>
-                        <span class="font-headline text-2xl text-primary">₹{{ number_format($this->getTotal()+ $this->getTotal()*5/100, 2) }}</span>
+                        <span class="font-headline text-2xl text-primary">₹{{ number_format($this->getTotal(), 2) }}</span>
                     </div>
                     <button wire:click="checkout"
                         class="w-full hero-gradient bg-black text-white py-5 font-label uppercase tracking-[0.2em] text-xs font-bold hover:brightness-110 transition-all duration-300 cursor-pointer">

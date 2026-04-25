@@ -34,6 +34,9 @@
 </head>
 
 <body class="bg-surface font-body text-on-surface">
+    {{--<pre>
+        @php print_r(session()->all()); echo session()->getId(); @endphp
+    </pre>--}}
     <x-store.top-navigation />
 
     {{ $slot }}
