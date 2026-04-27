@@ -21,7 +21,7 @@
                     </flux:sidebar.item>
                                 
                 <flux:sidebar.group expandable :heading="__('Marketing & Orders')" class="grid" icon="arrow-trending-up">
-                    <!-- <flux:sidebar.item href="{{ route('admin.shipping') }}"  wire:navigate lazy>{{ __('Shipping') }}</flux:sidebar.item> -->
+                    <flux:sidebar.item href="{{ route('admin.shipping') }}"  wire:navigate lazy>{{ __('Shipping') }}</flux:sidebar.item>
                     <flux:sidebar.item href="{{ route('admin.coupons') }}"  wire:navigate lazy>{{ __('Coupons') }}</flux:sidebar.item>
                     <flux:sidebar.item href="{{ route('admin.orders') }}"  wire:navigate lazy>{{ __('Orders') }}</flux:sidebar.item>
                     <flux:sidebar.item href="{{ route('admin.wishlist') }}"  wire:navigate lazy>{{ __('Product Wishlist') }}</flux:sidebar.item>

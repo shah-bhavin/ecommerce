@@ -156,7 +156,7 @@ new class extends Component
         <div class="max-w-2xl mx-auto text-center">
             <h2 class="hero-medium mb-4">Join Our Community</h2>
             <p class="body-large text-[#666666] mb-10">Be the first to discover new launches, exclusive offers, and beauty insights</p>
-            <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"><input placeholder="Enter your email" required="" class="flex-1 px-6 py-4 border border-[#bcbbb4] bg-transparent text-[#333333] placeholder-[#bcbbb4] focus:outline-none focus:border-[#333333] transition-colors" type="email" value="" style="border-radius: 0px; font-family: Inter, sans-serif; font-size: 14px;"><button type="submit" class="btn-theme">Subscribe</button></form>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"><input placeholder="Enter your email" required="" class="input-theme" type="email" value="" style="border-radius: 0px; font-family: Inter, sans-serif; font-size: 14px;"><button type="submit" class="btn-theme">Subscribe</button></form>
         </div>
     </section>
 </div>

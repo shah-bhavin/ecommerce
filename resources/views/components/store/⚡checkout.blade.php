@@ -2,6 +2,9 @@
 
 use App\Models\{Order, OrderItem, CartItem};
 use App\Models\Address;
+use App\Models\Coupon;
+use App\Services\ShippingCalculator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
@@ -10,8 +13,8 @@ use Livewire\Component;
 new class extends Component
 {
     #[Layout('layouts.store')]
-    public $email, $fullname, $address, $address_id, $city, $pincode, $house_no, $area, $phone, $landmark, $type, $is_default;
-    public $coupon = '';
+    public $email, $fullname, $address, $address_id, $city, $pincode, $house_no, $area, $phone, $landmark, $type, $is_default, $coupon_id_text;
+    public $coupon_id = '';
     public $discount = 0;
     public $hasAddress = false;
     public $user;
@@ -59,12 +62,15 @@ new class extends Component
         // ]);
 
         $order = Order::create([
-            'address_id' => $this->address_id,
             'user_id' => Auth::id(),
-            'total' => $this->getSubtotal() - $this->discount,
-            'status' => 'pending',
+            'address_id' => $this->address_id,
             'order_number' => 'ORD-'.now()->format('Ymd').'-'.Str::upper(Str::random(8)),
             'subtotal' => $this->getSubtotal(),
+            'discount_amount' => $this->discount,
+            'coupon_id' => $this->coupon_id ?: null,
+            'shipping_charges' => $this->getShippingFeeProperty(),
+            'total' => $this->getSubtotal() - $this->discount + $this->getShippingFeeProperty(),
+            'status' => 'pending',
         ]);
 
         // 2. Transfer Cart Items to Order Items
@@ -91,32 +97,75 @@ new class extends Component
         return array_reduce($cart, fn($carry, $item) => $carry + ($item['price'] * $item['quantity']), 0);
     }
 
-    // public function applyCoupon() {
-    //     if ($this->coupon === 'LUMI10') {
-    //         $this->discount = 500; // Fixed discount for example
-    //         $this->dispatch('toast', text: 'Coupon Applied!');
-    //     } else {
-    //         $this->addError('coupon', 'Invalid coupon code.');
-    //     }
-    // }
+    public function getShippingFeeProperty(){
+        return ShippingCalculator::getFee($this->getSubtotal());
+    }
+
+    public function getTotal() {
+        return $this->getSubTotal() + $this->getShippingFeeProperty() - $this->discount;
+    }
+
+    public function applyCoupon() {
+        $this->resetErrorBag();
+
+        $couponData = Coupon::where('code', $this->coupon_id_text)
+            ->where('is_active', 1)
+            ->first();
+
+        if (!$couponData) {
+            $this->dispatch('toast', text: 'Invalid or inactive coupon code.', type: 'error');
+            return;
+        }
+
+        if ($couponData->expiry_date && Carbon::parse($couponData->expiry_date)->isPast()) {
+            $this->dispatch('toast', text: 'This coupon has expired.', type: 'error');
+            return;
+        }
+
+        if ($this->getSubtotal() < $couponData->min_order_amount) {
+            $this->dispatch('toast', text: 'Minimum spend of ₹' . $couponData->min_order_amount . ' required.', type: 'error');
+            return;
+        }
+
+        if ($couponData->usage_limit && $couponData->used_count >= $couponData->usage_limit) {
+            $this->dispatch('toast', text: 'This coupon has reached its usage limit.', type: 'error');
+            return;
+        }
+
+        if ($couponData->type === 'percent') {
+            $this->coupon_id = $couponData->id;
+            $this->discount = ($this->getSubtotal() * ($couponData->value / 100));
+            $this->dispatch('toast', text: 'Coupon Code Applied Successfully', type: 'success');
+        } else {
+            $this->coupon_id = $couponData->id;
+            $this->discount = $couponData->value;
+            $this->dispatch('toast', text: 'Coupon Code Applied Successfully', type: 'success');
+        }
+
+    }
 };
 ?>
 
-<main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-        <section class="lg:col-span-7 space-y-12">
-            <div>
-                <h1 class="font-headline text-4xl md:text-5xl tracking-tight mb-4">Checkout</h1>
-                <p class="text-on-surface-variant font-body">Refining your ritual. Please provide your shipping and
-                    payment information.</p>
+<main class="pt-16 pb-16 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="mb-24">
+        <h1 class="font-headline text-4xl md:text-5xl tracking-tight mb-4">Checkout</h1>
+        <p class="text-on-surface-variant font-body">Refining your ritual. Please provide your shipping and payment information.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">        
+        <section class="lg:col-span-7 space-y-3">          
+
+            <h2 class="font-headline font-bold uppercase text-md mb-3 flex items-center gap-2">Add Coupon Code</h2>                    
+            <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                <input placeholder="Enter Coupon Code" class="w-full input-theme" wire:model="coupon_id_text">
+                <button class="btn-theme" wire:click="applyCoupon">{{ $discount > 0 ? 'Applied' : 'Apply' }}</button>
             </div>
-            
+
+                        
             <div class="space-y-10">
                 <div>
-                    <h2 class="font-headline text-xl mb-6 flex items-center gap-2">
-                        Shipping Details
-                    </h2>
                     @if($this->hasAddress->isEmpty())
+                    <h2 class="font-headline font-bold uppercase text-md mb-3 flex items-center gap-2">Add Shipping Details</h2>                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         <div class="relative md:col-span-2">
                             <label
@@ -245,7 +294,8 @@ new class extends Component
                     </div>
                     @else
                     <div class="mx-auto space-y-2">
-                        <h2 class="text-xl font-bold mb-4">Select Shipping Address</h2>
+                        <h2 class="font-headline font-bold uppercase text-md mb-3 flex items-center gap-2">Choose Shipping Address</h2>                    
+
                         @foreach($this->hasAddress as $address)
                         <div class="group address-card">
                             <label class="flex items-center p-4 cursor-pointer">
@@ -303,13 +353,29 @@ new class extends Component
                         <span class="text-on-surface-variant">Subtotal</span>
                         <span>₹{{ number_format($this->getSubtotal(), 2) }}</span>
                     </div>
+                    
                     <div class="flex justify-between items-center text-xs uppercase tracking-widest">
                         <span class="text-on-surface-variant">Shipping</span>
-                        <span class="text-secondary">Complimentary</span>
+                        @if($this->shippingFee == 0)
+                            <span class="text-green-600 font-bold uppercase tracking-widest text-[10px]">Complimentary</span>
+                        @else
+                            <span class="text-secondary">₹{{ number_format($this->shippingFee, 2) }}</span>
+                        @endif
+                        
+                    </div>
+
+                    <div class="flex justify-between items-center text-xs uppercase tracking-widest">
+                        <span class="text-on-surface-variant">Discount</span>
+                        @if($this->discount == 0)
+                            <span class="text-green-600 font-bold uppercase tracking-widest text-[10px]"></span>
+                        @else
+                            <span class="text-secondary"> - ₹{{ number_format($this->discount, 2) }}</span>
+                        @endif
+                        
                     </div>
                     <div class="flex justify-between items-center pt-4 border-t border-on-surface/10">
                         <span class="font-label font-bold uppercase tracking-widest">Total</span>
-                        <span class="font-headline text-2xl text-primary">₹{{ number_format($this->getSubtotal(), 2) }}</span>
+                        <span class="font-headline text-2xl text-primary">₹{{ number_format($this->getTotal(), 2) }}</span>
                     </div>
                 </div>
                 <button wire:click="placeOrder" class="w-full btn-theme cursor-pointer">
@@ -324,37 +390,3 @@ new class extends Component
         </aside>
     </div>
 </main>
-
-{{--<div class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-20">
-    <div class="space-y-12">
-        <h2 class="text-3xl font-serif italic">Shipping Details</h2>
-        <div class="grid gap-6">
-            <flux:input wire:model="email" label="Email Address" class="rounded-none" />
-            <flux:input wire:model="name" label="Full Name" class="rounded-none" />
-            <flux:textarea wire:model="address" label="Street Address" class="rounded-none" />
-            <div class="grid grid-cols-2 gap-6">
-                <flux:input wire:model="city" label="City" class="rounded-none" />
-                <flux:input wire:model="pincode" label="Pincode" />
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-zinc-50 p-10 h-fit space-y-8">
-        <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">Order Summary</h3>
-        <div class="space-y-4">
-             @foreach(session()->get('cart', []) as $item)
-                <div class="flex justify-between text-sm">
-                    <span>{{ $item['name'] }} (x{{ $item['quantity'] }})</span>
-                    <span class="font-mono">₹{{ number_format($item['price'] * $item['quantity'], 2) }}</span>
-                </div>
-             @endforeach
-        </div>
-        <div class="border-t border-zinc-200 pt-6 flex justify-between items-center">
-            <span class="text-lg font-serif">Total Due</span>
-            <span class="text-2xl font-serif">₹{{ number_format($this->getSubtotal(), 2) }}</span>
-        </div>
-        <flux:button wire:click="placeOrder" class="w-full bg-black text-white h-16 rounded-none uppercase text-xs tracking-widest cursor-pointer">
-            Complete Purchase
-        </flux:button>
-    </div>
-</div>--}}

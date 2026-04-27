@@ -54,15 +54,15 @@ new class extends Component
         }, 0);
     }
 
-    public function getTax() {
-        return array_reduce($this->cart, function($carry, $item) {
-            return $carry + ($item['price'] * $item['quantity'] * $item['tax']/100);
-        }, 0);
-    }
+    // public function getTax() {
+    //     return array_reduce($this->cart, function($carry, $item) {
+    //         return $carry + ($item['price'] * $item['quantity'] * $item['tax']/100);
+    //     }, 0);
+    // }
 
-    public function getTotal() {
-        return $this->getSubTotal() + $this->getTax();
-    }
+    // public function getTotal() {
+    //     return $this->getSubTotal();
+    // }
 
     public function checkout() {
         return redirect('/checkout');
@@ -119,28 +119,15 @@ new class extends Component
             <div class="lg:col-span-4 lg:sticky lg:top-32">
                 <div class="bg-surface-container-low p-10">
                     <h2 class="font-headline text-2xl mb-8">Summary</h2>
-                    <div class="space-y-6 mb-10 border-b border-outline-variant/10 pb-10">
+                    <div class="space-y-6 mb-10">
                         <div class="flex justify-between items-center text-sm">
                             <span class="font-label text-on-surface-variant uppercase tracking-widest">Subtotal</span>
                             <span class="font-headline">₹{{ number_format($this->getSubTotal(), 2) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm">
-                            <span class="font-label text-on-surface-variant uppercase tracking-widest">Shipping</span>
-                            <span class="font-label italic text-secondary text-xs uppercase">Complimentary</span>
-                        </div>
-                        <!-- <div class="flex justify-between items-center text-sm">
-                            <span class="font-label text-on-surface-variant uppercase tracking-widest">Estimated
-                                Tax</span>
-                            <span class="font-headline">₹{{ number_format($this->getTax(), 2) }}</span>
-                        </div> -->
-                    </div>
-                    <div class="flex justify-between items-center mb-10">
-                        <span class="font-headline text-xl">Total</span>
-                        <span class="font-headline text-2xl text-primary">₹{{ number_format($this->getTotal(), 2) }}</span>
-                    </div>
+                        </div>                        
+                    </div>                    
                     <button wire:click="checkout"
                         class="w-full hero-gradient bg-black text-white py-5 font-label uppercase tracking-[0.2em] text-xs font-bold hover:brightness-110 transition-all duration-300 cursor-pointer">
-                        Checkout
+                        Proceed to Buy
                     </button>
                     <div class="mt-8 flex items-center justify-center space-x-4 opacity-50">
                         <x-lucide-lock class="size-4"/>

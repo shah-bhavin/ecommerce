@@ -16,7 +16,7 @@ return new class extends Migration
             
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('address_id')->nullable()->constrained()->nullOnDelete();
-            
+            $table->foreignId('coupon_id')->nullable()->constrained()->cascadeOnDelete();
             // Unique Order ID (e.g., ORD-2026-1001)
             $table->string('order_number')->unique();
             
@@ -25,7 +25,6 @@ return new class extends Migration
             $table->decimal('discount_amount', 12, 2)->default(0);
             $table->decimal('shipping_charges', 12, 2)->default(0);
             $table->decimal('total', 12, 2);
-            $table->string('coupon_code')->nullable();
             
             // Status tracking
             $table->string('status')->default('pending'); // pending, processing, shipped, delivered, cancelled
@@ -43,6 +42,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('orders');
+        Schema::enableForeignKeyConstraints();
     }
 };
