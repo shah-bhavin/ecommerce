@@ -13,7 +13,7 @@ use Livewire\Component;
 new class extends Component
 {
     #[Layout('layouts.store')]
-    public $email, $fullname, $address, $address_id, $city, $pincode, $house_no, $area, $phone, $landmark, $type, $is_default, $coupon_id_text;
+    public $fullname, $address, $address_id, $city, $pincode, $house_no, $area, $phone, $landmark, $type, $is_default, $coupon_id_text;
     public $coupon_id = '';
     public $discount = 0;
     public $hasAddress = false;
@@ -38,58 +38,129 @@ new class extends Component
         }
     }
 
-    public function placeOrder() {
-        // $this->validate([
-        //     'email' => 'required|email',
-        //     'fullname' => 'required',
-        //     'city' => 'required',
-        //     'pincode' => 'required'
-        // ]);
+    // public function placeOrder() {
+    //     $this->validate([
+    //         'fullname' => 'required',
+    //         'city' => 'required',
+    //         'pincode' => 'required'
+    //     ]);
 
-        // Address::create([
-        //     'user_id' => Auth::id(),
-        //     'fullname' => $this->fullname,
-        //     'email' => $this->email,
-        //     'phone' => $this->phone,
-        //     'house_no' => $this->house_no,
-        //     'area' => $this->area,
-        //     'landmark' => $this->landmark,
-        //     'city' => $this->city,
-        //     'state' => $this->city,
-        //     'pincode' => $this->pincode,
-        //     'type' => $this->type,
-        //     'is_default' => $this->is_default,
-        // ]);
+    //     Address::create([
+    //         'user_id' => Auth::id(),
+    //         'fullname' => $this->fullname,
+    //         'phone' => $this->phone,
+    //         'house_no' => $this->house_no,
+    //         'area' => $this->area,
+    //         'landmark' => $this->landmark,
+    //         'city' => $this->city,
+    //         'state' => $this->city,
+    //         'pincode' => $this->pincode,
+    //         'type' => $this->type,
+    //         'is_default' => $this->is_default,
+    //     ]);
+
+    //     $order = Order::create([
+    //         'user_id' => Auth::id(),
+    //         'address_id' => $this->address_id,
+    //         'order_number' => 'ORD-'.now()->format('Ymd').'-'.Str::upper(Str::random(8)),
+    //         'subtotal' => $this->getSubtotal(),
+    //         'discount_amount' => $this->discount,
+    //         'coupon_id' => $this->coupon_id ?: null,
+    //         'shipping_charges' => $this->getShippingFeeProperty(),
+    //         'total' => $this->getSubtotal() - $this->discount + $this->getShippingFeeProperty(),
+    //         'status' => 'pending',
+    //     ]);
+
+    //     // 2. Transfer Cart Items to Order Items
+    //     $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get();
+    //     foreach ($cartItems as $item) {
+    //         OrderItem::create([
+    //             'order_id' => $order->id,
+    //             'product_id' => $item->product_id,
+    //             'price' => $item->product->price,
+    //             'quantity' => $item->quantity
+    //         ]);
+    //     }
+
+    //     // 3. Clear Cart
+    //     CartItem::where('user_id', Auth::id())->delete();
+
+    //     session()->forget('cart');
+    //     return redirect()->route('thanks', ['orderid' => $order->order_number]);
+
+    // }
+
+    public function placeOrder() {
+        if ($this->hasAddress->isEmpty()) {
+            $this->validate([
+                'fullname' => 'required|string|max:255',
+                'phone'    => 'required|digits:10',
+                'house_no' => 'required',
+                'area'     => 'required',
+                'city'     => 'required',
+                'pincode'  => 'required|digits:6',
+                'type'     => 'required',
+            ]);
+
+            // Create the new address and capture the ID
+            $newAddress = Address::create([
+                'user_id'    => Auth::id(),
+                'fullname'   => $this->fullname,
+                'phone'      => $this->phone,
+                'house_no'   => $this->house_no,
+                'area'       => $this->area,
+                'landmark'   => $this->landmark,
+                'city'       => $this->city,
+                'state'      => $this->city, // Or add a state field
+                'pincode'    => $this->pincode,
+                'type'       => $this->type,
+                'is_default' => $this->is_default ?? 0,
+            ]);
+
+            $this->address_id = $newAddress->id;
+        } else {
+            // VALIDATION FOR EXISTING ADDRESS
+            $this->validate([
+                'address_id' => 'required|exists:addresses,id',
+            ]);
+            
+            // Extra Security: Ensure the address belongs to the logged-in user
+            $ownsAddress = Address::where('id', $this->address_id)
+                                ->where('user_id', Auth::id())
+                                ->exists();
+            
+            if (!$ownsAddress) {
+                $this->addError('address_id', 'Please select a valid shipping address.');
+                return;
+            }
+        }
 
         $order = Order::create([
-            'user_id' => Auth::id(),
-            'address_id' => $this->address_id,
-            'order_number' => 'ORD-'.now()->format('Ymd').'-'.Str::upper(Str::random(8)),
-            'subtotal' => $this->getSubtotal(),
-            'discount_amount' => $this->discount,
-            'coupon_id' => $this->coupon_id ?: null,
+            'user_id'          => Auth::id(),
+            'address_id'       => $this->address_id,
+            'order_number'     => 'ORD-'.now()->format('Ymd').'-'.Str::upper(Str::random(8)),
+            'subtotal'         => $this->getSubtotal(),
+            'discount_amount'  => $this->discount,
+            'coupon_id'        => $this->coupon_id ?: null,
             'shipping_charges' => $this->getShippingFeeProperty(),
-            'total' => $this->getSubtotal() - $this->discount + $this->getShippingFeeProperty(),
-            'status' => 'pending',
+            'total'            => $this->getTotal(), // Used your getTotal method here
+            'status'           => 'pending',
         ]);
 
-        // 2. Transfer Cart Items to Order Items
         $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get();
         foreach ($cartItems as $item) {
             OrderItem::create([
-                'order_id' => $order->id,
+                'order_id'   => $order->id,
                 'product_id' => $item->product_id,
-                'price' => $item->product->price,
-                'quantity' => $item->quantity
+                'price'      => $item->product->price,
+                'quantity'   => $item->quantity
             ]);
         }
 
-        // 3. Clear Cart
         CartItem::where('user_id', Auth::id())->delete();
-
         session()->forget('cart');
-        return redirect()->route('thanks', ['orderid' => $order->order_number]);
 
+        return redirect()->route('thanks', ['orderid' => $order->order_number]);
     }
 
     public function getSubtotal() {
@@ -146,6 +217,10 @@ new class extends Component
 };
 ?>
 
+@push('head')
+    <meta name="robots" content="noindex, nofollow">
+@endpush
+
 <main class="pt-16 pb-16 px-6 md:px-12 max-w-7xl mx-auto">
     <div class="mb-24">
         <h1 class="font-headline text-4xl md:text-5xl tracking-tight mb-4">Checkout</h1>
@@ -168,9 +243,7 @@ new class extends Component
                     <h2 class="font-headline font-bold uppercase text-md mb-3 flex items-center gap-2">Add Shipping Details</h2>                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         <div class="relative md:col-span-2">
-                            <label
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Full
-                                Name</label>
+                            <label class="label-theme">Full Name</label>
                             <input wire:model="fullname"
                                 class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
                                 placeholder="Sophia Al-Maktoum" type="text" />
@@ -178,20 +251,9 @@ new class extends Component
                                     <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                                 @enderror
                         </div>
+                    
                         <div class="relative">
-                            <label
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Email
-                                Address</label>
-                            <input wire:model="email"
-                                class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
-                                placeholder="sophia@example.com" type="email" />
-                                @error('email')
-                                    <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
-                                @enderror
-                        </div>
-                        <div class="relative">
-                            <label wire:model="phone"
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Phone</label>
+                            <label wire:model="phone" class="label-theme">Phone</label>
                             <input wire:model="phone"
                                 class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
                                 placeholder="99999 99999" type="tel" />
@@ -200,8 +262,7 @@ new class extends Component
                                 @enderror
                         </div>
                         <div class="relative">
-                            <label wire:model="house_no"
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">House No</label>
+                            <label wire:model="house_no" class="label-theme">House No</label>
                             <input wire:model="house_no"
                                 class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
                                 placeholder="A-7" type="text" />
@@ -210,8 +271,7 @@ new class extends Component
                                 @enderror
                         </div>
                         <div class="relative">
-                            <label wire:model="area"
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Area</label>
+                            <label wire:model="area" class="label-theme">Area</label>
                             <input wire:model="area"
                                 class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
                                 placeholder="Downtown" type="text" />
@@ -220,10 +280,9 @@ new class extends Component
                                 @enderror
                         </div>
                         <div class="relative">
-                            <label 
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Landmark</label>
+                            <label class="label-theme">Landmark</label>
                             <input wire:model="landmark"
-                                class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
+                                class="input-underlined"
                                 placeholder="Downtown Boulevard, Villa 42" type="text" />
                                 @error('landmark')
                                     <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
@@ -231,9 +290,7 @@ new class extends Component
                         </div>                    
                         
                         <div class="relative">
-                            <label
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">Postal
-                                Code</label>
+                            <label class="label-theme">Postal Code</label>
                             <input wire:model="pincode"
                                 class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
                                 placeholder="00000" type="text" />
@@ -242,8 +299,7 @@ new class extends Component
                                 @enderror
                         </div>
                         <div class="relative">
-                            <label
-                                class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">City</label>
+                            <label class="label-theme">City</label>
                             <input wire:model="city"
                                 class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm placeholder:text-outline"
                                 placeholder="Dubai" type="text" />
@@ -252,9 +308,7 @@ new class extends Component
                                 @enderror
                         </div>
                         <div class="relative">
-                            <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 ml-1">
-                                Type
-                            </label>
+                            <label class="label-theme"> Type </label>
                             <select wire:model="type"
                                 class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-secondary transition-colors py-2 px-1 text-sm appearance-none cursor-pointer">
                                 <option value="" disabled selected>Select Type</option>
@@ -316,7 +370,7 @@ new class extends Component
                                     </div>
                                     <div class="overflow-hidden">
                                         <p class="mt-2 text-sm text-slate-500">
-                                            {{ $address->house_no }}, {{ $address->area }}, {{ $address->landmark }}, {{ $address->city }}, {{ $address->pincode }}
+                                            {{ $address->getFullAddressAttribute() }}
                                         </p>
                                     </div>
                                 </div>

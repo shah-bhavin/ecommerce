@@ -24,7 +24,9 @@ new class extends Component
 };
 ?>
 
-
+@push('head')
+    <meta name="robots" content="noindex, nofollow">
+@endpush
 
 <main class="pt-32 pb-24 px-6 md:px-12 lg:px-24">
   @if(!$order)

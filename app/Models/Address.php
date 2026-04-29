@@ -19,4 +19,13 @@ class Address extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function getFullAddressAttribute(){
+        return collect([
+            $this->house_no,
+            $this->area,
+            $this->landmark,
+            $this->city . ' - ' . $this->pincode,
+        ])->filter()->implode(", ");
+    }
 }

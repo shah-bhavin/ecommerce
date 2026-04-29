@@ -9,6 +9,33 @@ new class extends Component
 };
 ?>
 
+{{-- Dynamic SEO & Social Tags[cite: 2] --}}
+    @section('title', 'The Science of Radiance: Our Story | Abrari')
+    @section('meta_description', 'Discover Abrari’s journey from clinical research to luxury skincare. High-performance formulas designed for professional results.')
+    @section('og_image', asset('images/about-hero.jpg'))
+
+    {{-- Organization & AboutPage Schema[cite: 2] --}}
+    @push('head')
+    <script type="application/ld+json">
+    @verbatim
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Abrari",
+        "url": "{{ url('/') }}",
+        "logo": "{{ asset('images/logo.png') }}",
+        "sameAs": [
+          "https://instagram.com/abrari",
+          "https://facebook.com/abrari"
+        ]
+      }
+    }
+    @endverbatim
+    </script>
+    @endpush
+    
 <div class="min-h-screen bg-[#fffef2]">
     <section class="relative h-[60vh] min-h-[500px] overflow-hidden"><img alt="About Abrari London" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1657928198258-1db7e50e2fd9">
         <div class="absolute inset-0 bg-black/30 flex items-center justify-center">

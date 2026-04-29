@@ -1,46 +1,30 @@
-<?php
-use Illuminate\Support\Facades\{Auth, Hash};
-use Livewire\Attributes\Layout;
-use Livewire\Component;
+<div class="w-full font-inter">
+    <div class="grid md:grid-cols-2 gap-12">
+        <form wire:submit="updatePassword" class="space-y-5">
+            <h3 class="text-brand-dark font-bold text-lg uppercase tracking-tight border-b border-zinc-100 pb-2">Security</h3>
+            
+            <div class="space-y-1">
+                <label class="label-theme" for="current_password">Current Password</label>
+                <input wire:model="current_password" type="password" 
+                    class="input-theme {{ $errors->has('current_password') ? 'input-error' : 'input-default' }}" />
+                @error('current_password') 
+                    <p class="input-error-text">{{ $message }}</p> 
+                @enderror
+            </div>
 
-new class extends Component {
-    #[Layout('layouts.store')]
+            <div class="space-y-1">
+                <label class="label-theme">New Password</label>
+                <input wire:model="new_password" type="password" 
+                    class="input-theme {{ $errors->has('new_password') ? 'input-error' : 'input-default' }}" />
+                @error('new_password') 
+                    <p class="input-error-text">{{ $message }}</p> 
+                @enderror
+            </div>
 
-    public $name, $email, $current_password, $new_password;
-
-    public function mount() {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
-    }
-
-    public function updateProfile() {
-        $this->validate(['name' => 'required', 'email' => 'required|email|unique:users,email,'.Auth::id()]);
-        Auth::user()->update(['name' => $this->name, 'email' => $this->email]);
-        $this->dispatch('toast', text: 'Profile Updated');
-    }
-
-    public function updatePassword() {
-        $this->validate(['current_password' => 'required|current_password', 'new_password' => 'required|min:8']);
-        Auth::user()->update(['password' => Hash::make($this->new_password)]);
-        $this->reset(['current_password', 'new_password']);
-        $this->dispatch('toast', text: 'Password Changed');
-    }
-}; ?>
-
-<div class="w-full">
-    <div class="grid md:grid-cols-2 gap-8">
-        <form wire:submit="updateProfile" class="space-y-6">
-            <h3 class="font-serif italic text-xl">General Details</h3>
-            <flux:input wire:model="name" label="Name" />
-            <flux:input wire:model="email" label="Email" />
-            <flux:button type="submit" variant="filled">Save Changes</flux:button>
-        </form>
-
-        <form wire:submit="updatePassword" class="space-y-6">
-            <h3 class="font-serif italic text-xl">Security</h3>
-            <flux:input wire:model="current_password" type="password" label="Current Password" />
-            <flux:input wire:model="new_password" type="password" label="New Password" />
-            <flux:button type="submit" variant="outline">Update Password</flux:button>
+            <button type="submit" 
+                class="w-full btn-theme">
+                Update Password
+            </button>
         </form>
     </div>
 </div>

@@ -2,6 +2,20 @@
 
 @source '../views';
 
+@theme {
+  --color-brand-muted: #666666;
+  --color-brand-dark: #333333;
+  --font-inter: "Inter", sans-serif;
+
+  --color-secondary: #6366f1;
+  --color-outline: #9ca3af;
+  --color-outline-variant: #d1d5db;
+}
+
+@utility body-text {
+  @apply text-sm text-brand-muted group-hover:text-brand-dark transition-colors font-inter;
+}
+
 @utility hero-large {
   font-family: "Cormorant Garamond", serif;
   font-weight: 300;
@@ -41,7 +55,7 @@
 
 @utility btn-theme {
   @apply border border-gray-950 bg-transparent px-12 py-4 text-gray-950 transition-colors 
-         hover:bg-gray-950 hover:text-white;
+         hover:bg-gray-950 hover:text-white cursor-pointer;
 }
 
 @utility btn-theme-inverse {
@@ -83,6 +97,12 @@
 
 @utility input-error-text {
   @apply mt-1 text-[14px] text-red-600 font-medium;
+}
+
+@utility input-underlined {
+  @apply w-full bg-transparent border-0 border-b py-2 px-1 text-sm transition-colors;
+  @apply border-outline-variant placeholder:text-outline;
+  @apply focus:ring-0 focus:border-secondary focus:outline-none;
 }
 
 @utility address-card {

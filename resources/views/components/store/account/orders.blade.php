@@ -1,48 +1,98 @@
 <div class="space-y-12 w-full">
-    <div class="flex justify-between items-end border-b border-zinc-100 pb-6">
-        <h1 class="text-3xl font-serif italic">My Orders</h1>
-        <h6 class="text-[10px] text-zinc-400 uppercase tracking-widest">{{ $orders ? 'Total Orders: ' .$orders->count() : 'No Orders Yet...' }} </h6>
+    <div class="flex justify-between items-baseline border-b border-zinc-300 py-3">
+        <h3 class="text-lg uppercase font-bold text-brand-dark font-inter">Details</h3>
+        <h6 class="text-sm text-brand-muted font-inter">
+            {{ $orders ? 'Total Orders: ' .$orders->count() : 'No Orders Yet...' }}
+        </h6>
     </div>
+
 
     <div class="space-y-8">
         @forelse($orders as $order)
-            <div class="border border-zinc-100 p-8 space-y-8 hover:shadow-xl hover:shadow-zinc-100 transition-all duration-500">
+            
+
+            <div class="group bg-white border border-zinc-200 rounded-lg p-6 space-y-6 hover:shadow-md transition-all duration-300">
+
+                <!-- Top Section -->
                 <div class="flex justify-between items-start">
+
+                    <!-- Left -->
                     <div class="space-y-1">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Order Reference</p>
-                        <h3 class="text-lg font-mono">#{{ $order->order_number }}</h3>
+                        <h2 class="text-sm font-semibold text-zinc-800">
+                            #{{ $order->order_number }}
+                        </h2>
+
+                        <!-- Status -->
+                        <span class="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full 
+                            {{ $order->status == 'delivered' ? 'bg-green-100 text-green-600' : '' }}
+                            {{ $order->status == 'shipped' ? 'bg-blue-100 text-blue-600' : '' }}
+                            {{ $order->status == 'processing' ? 'bg-yellow-100 text-yellow-600' : '' }}
+                            {{ $order->status == 'pending' ? 'bg-zinc-100 text-zinc-500' : '' }}">
+                            
+                            <span class="size-1.5 rounded-full bg-current"></span>
+                            {{ ucfirst($order->status) }}
+                        </span>
                     </div>
-                    <div class="text-right">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Status</p>
-                        <flux:badge variant="outline" size="sm" class="uppercase text-[9px] rounded-none px-4">
-                            {{ $order->status }}
-                        </flux:badge>
+
+                    <!-- Actions -->
+                    <div class="flex gap-1">
+                        <a href="{{ route('invoice.view', $order->order_number) }}" 
+                        target="_blank"
+                        class="p-1.5 rounded-md border border-zinc-200 hover:bg-zinc-50 transition">
+                            <x-lucide-eye class="size-3.5 text-zinc-600"/>
+                        </a>
+
+                        <button wire:click="downloadInvoice('{{ $order->order_number }}')" 
+                            class="p-1.5 rounded-md border border-zinc-200 hover:bg-zinc-50 transition cursor-pointer">
+                            <x-lucide-file-down class="size-3.5 text-zinc-600"/>
+                        </button>
                     </div>
                 </div>
 
-                <div class="relative pt-4">
-                    <div class="h-[1px] w-full bg-zinc-100 absolute top-1/2 -translate-y-1/2"></div>
-                    <div class="flex justify-between relative z-10">
-                        @foreach(['Processing', 'Shipped', 'Delivered'] as $step)
-                            <div class="bg-white px-2 flex flex-col items-center">
-                                <div class="size-2 rounded-full border border-black {{ $order->status == strtolower($step) ? 'bg-black' : 'bg-white' }}"></div>
-                                <span class="text-[8px] uppercase tracking-widest mt-2 text-zinc-400">{{ $step }}</span>
-                            </div>
-                        @endforeach
+                <!-- Progress -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[9px] uppercase tracking-widest text-zinc-400">
+                        <span>Processing</span>
+                        <span>Shipped</span>
+                        <span>Delivered</span>
+                    </div>
+
+                    <div class="relative h-[3px] bg-zinc-200 rounded-full overflow-hidden">
+                        @php
+                            $progress = match($order->status) {
+                                'processing' => '33%',
+                                'shipped' => '66%',
+                                'delivered' => '100%',
+                                default => '10%',
+                            };
+                        @endphp
+
+                        <div class="h-full bg-brand-dark transition-all duration-500" style="width: {{ $progress }}"></div>
                     </div>
                 </div>
 
-                <div class="pt-6 flex justify-between items-center border-t border-zinc-50">
-                    <div class="flex -space-x-4">
+                <!-- Bottom -->
+                <div class="flex justify-between items-center pt-3 border-t border-zinc-100">
+
+                    <!-- Items -->
+                    <div class="flex -space-x-2">
                         @foreach($order->items->take(3) as $item)
-                            <img src="{{ asset('storage/'.$item->product->image) }}" class="size-12 rounded-full border-2 border-white object-cover bg-zinc-50">
+                            <img src="{{ asset('storage/'.$item->product->image) }}"
+                                class="size-8 rounded-full border-2 border-white object-cover">
                         @endforeach
                     </div>
+
+                    <!-- Amount -->
                     <div class="text-right">
-                        <p class="text-xs text-zinc-500">Amount Paid</p>
-                        <p class="text-lg font-serif">₹{{ number_format($order->total, 2) }}</p>
+                        <p class="text-[9px] uppercase tracking-widest text-zinc-400">Amount</p>
+                        <p class="text-sm font-semibold text-zinc-800">
+                            ₹{{ number_format($order->total, 2) }}
+                        </p>
                     </div>
                 </div>
+
+                
+
             </div>
         @empty
             <div class="py-20 text-center border border-dashed border-zinc-200">

@@ -42,6 +42,27 @@ new class extends Component
 };
 ?>
 
+{{-- Dynamic SEO[cite: 2] --}}
+@section('title', 'Customer Concierge & Expert Support | Abrari')
+@section('meta_description', 'Connect with our clinical experts. We are here to assist with your orders and skincare rituals.')
+
+{{-- ContactPage Schema[cite: 2] --}}
+@push('head')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "description": "Customer support and expert skincare consultation.",
+    "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "concierge@abrari.com",
+    "availableLanguage": "en"
+    }
+}
+</script>
+@endpush
+
 <div class="min-h-screen bg-[#fffef2]">
     <section class="py-16 px-6 bg-[#f6f5e8] text-center">
         <h1 class="hero-medium mb-4">Get in Touch</h1>

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('area');     // Street, Sector, Village
             $table->string('landmark')->nullable();
             $table->string('city');
-            $table->string('state');
             $table->string('pincode', 6); // Standard 6-digit Indian PIN
             
             // Type & Status
@@ -38,6 +37,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('addresses');
+        Schema::enableForeignKeyConstraints();
     }
 };

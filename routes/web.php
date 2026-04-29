@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +27,20 @@ Route::get('/logout', function () {
 
 // --- AUTH CUSTOMERS ---
 Route::middleware('auth', 'customer')->group(function () {
+    Route::livewire('/account/orders-history', 'account.order-history')->name('account.orders');
+
+    Route::get('/orders/{order:order_number}/invoice/view', function (Order $order) {
+        // Security: Ensure user owns the order
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $pdf = Pdf::loadView('pdf.invoice', ['order' => $order]);
+        
+        // ->stream() opens it in the browser instead of downloading
+        return $pdf->stream("invoice-{$order->order_number}.blade.php");
+    })->middleware(['auth'])->name('invoice.view');
+    
     Route::livewire('/account/{view?}', 'store.account.dashboard')->name('account');
     Route::livewire('/account/orders', 'store.account.orders');
     Route::livewire('/account/orders/{id}', 'store.account.track-order'); // Track Order

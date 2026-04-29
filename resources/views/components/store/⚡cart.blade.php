@@ -72,6 +72,10 @@ new class extends Component
 
 ?>
 
+@push('head')
+    <meta name="robots" content="noindex, nofollow">
+@endpush
+
 <main class="pt-16 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
     <header class="mb-8">
         <h1 class="hero-medium mb-4 text-center">Your Ritual Cart</h1>

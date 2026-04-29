@@ -9,8 +9,8 @@ use Illuminate\Support\Str;
 
 new class extends Component
 {
-    use App\Concerns\WishListTrait;
-
+    //use App\Concerns\WishListTrait;
+    public $slides;
     #[Layout('layouts.store')]
     public function with()
     {
@@ -20,30 +20,91 @@ new class extends Component
             'carousels' => Carousel::get()
         ];
     }
+
+    public function mount(){
+        $this->slides = Carousel::where('is_active', true)->get();
+    }
 };
 ?>
 
-<div class="min-h-screen">
-    <section class="relative h-[90vh] min-h-[600px] overflow-hidden bg-[#f6f5e8]">
-        <div class="absolute inset-0 transition-opacity duration-1000" style="opacity: 1;"><img alt="Abrari London Hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1624819581070-7868475f038c">
-            <div class="absolute inset-0 bg-black/20"></div>
-        </div>
-        <div class="absolute inset-0 transition-opacity duration-1000" style="opacity: 1;"><img alt="Abrari London Hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1603389722569-c0a0328f42c7">
-            <div class="absolute inset-0 bg-black/20"></div>
-        </div>
-        <div class="absolute inset-0 transition-opacity duration-1000" style="opacity: 1;"><img alt="Abrari London Hero" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1770460882029-d19659d9c771">
-            <div class="absolute inset-0 bg-black/20"></div>
-        </div>
-        <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
-            <div class="max-w-4xl fade-in-up text-white">
-                <h1 class="hero-large mb-6">Redefining Beauty with Luxury and Precision</h1>
-                <p class="body-large mb-10">Discover the art of refined elegance</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a class="btn-theme" href="/shop" data-discover="true">Shop Now</a>
-                    <a class="btn-theme-inverse" href="/shop" data-discover="true">Explore Collection</a></div>
+@section('title', 'Abrari | Professional Clinical Skincare & Beauty')
+@section('meta_description', 'Experience the intersection of science and luxury. Shop our award-winning clinical formulas and professional serums.')
+
+@push('head')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "url": "{{ url('/') }}",
+  "logo": "{{ asset('images/logo.png') }}",
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "telephone": "+91-XXXXXXXXXX",
+    "contactType": "customer service"
+  }]
+}
+</script>
+@endpush
+
+<div class="min-h-screen">    
+
+    <section class="relative h-[90vh] min-h-[600px] overflow-hidden bg-[#f6f5e8]"
+        x-data="{ 
+            activeSlide: 0, 
+            slides: @js($slides),
+            init() {
+                if (this.slides.length > 1) {
+                    setInterval(() => {
+                        this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+                    }, 6000);
+                }
+            }
+        }">
+
+        <template x-for="(slide, index) in slides" :key="slide.id">
+            <div class="absolute inset-0 transition-opacity duration-1000" 
+                x-show="activeSlide === index"
+                x-transition:enter="transition-opacity duration-1000"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition-opacity duration-1000"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0">
+                
+                <!-- <img :src="slide.image_path" alt="Slide Image" class="w-full h-full object-cover"> -->
+                 <img :src="'storage/' + slide.image_path" alt="Slide Image" class="w-full h-full object-cover">
+
+                <div class="absolute inset-0 bg-black/20"></div>
             </div>
+        </template>
+
+        <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+            <template x-for="(slide, index) in slides" :key="slide.id">
+                <div class="max-w-4xl fade-in-up text-white" 
+                    x-show="activeSlide === index"
+                    x-transition:enter="transition-all duration-700 delay-300"
+                    x-transition:enter-start="opacity-0 translate-y-10"
+                    x-transition:enter-end="opacity-100 translate-y-0">
+                    
+                    <h1 class="hero-large mb-6" x-text="slide.title"></h1>
+                    <p class="body-large mb-10" x-text="slide.subtitle"></p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a class="btn-theme" href="/shop">Shop Now</a>
+                        <a class="btn-theme-inverse" href="/shop">Explore Collection</a>
+                    </div>
+                </div>
+            </template>
         </div>
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-2"><button class="w-2 h-2 rounded-full transition-all bg-white bg-opacity-50"></button><button class="w-2 h-2 rounded-full transition-all bg-white bg-opacity-50"></button><button class="w-2 h-2 rounded-full transition-all bg-white w-8"></button></div>
+
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
+            <template x-for="(slide, index) in slides" :key="slide.id">
+                <button @click="activeSlide = index"
+                        class="w-2 h-2 rounded-full transition-all duration-300"
+                        :class="activeSlide === index ? 'w-8 bg-white' : 'bg-white bg-opacity-50'">
+                </button>
+            </template>
+        </div>
     </section>
     <section class="py-20 px-6">
         <div class="max-w-[1400px] mx-auto">

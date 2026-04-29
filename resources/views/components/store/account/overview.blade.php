@@ -2,16 +2,15 @@
   <div class="p-4 gap-4">
     <h3 class="text-[18px] uppercase font-bold mb-4">Details</h3>
     <div class="grid gap-2">
-        <h4 class="capitalize text-[14px]"><b>Name: </b>{{ $user->name }}</h4>
-        <h4 class="text-[14px]"><b>Email: </b>{{ $user->email }}</h4>
-        <h4 class="capitalize text-[14px]"><b>Phone: </b>{{ $user->phone }}</h4>
+      <p class="body-text"><b>Name: </b>{{ $user->name }}</p>
+      <p class="body-text"><b>Email: </b>{{ $user->email }}</p>
+      <p class="body-text"><b>Phone: </b>{{ $user->phone }}</p>
     </div>
   </div>
   <div class="p-4 col-span-2">
-    <h3>Orders</h3>
-    <h5 class="text-[12px] text-zinc-400 uppercase tracking-widest">
-        {{ $orderscount ? 'Total Orders: ' .$orderscount : 'No Orders Yet...' }} 
-    </h5>
-
+    <h3 class="text-[18px] uppercase font-bold mb-4">Orders</h3>
+    <p class="body-text">
+      {{ $orderscount ? 'Total Orders: ' .$orderscount : 'No Orders Yet...' }}
+    </p>
   </div>
 </div>
