@@ -125,41 +125,39 @@ new class extends Component {
     </div>
 
     {{-- Data Table --}}
-    {{--<flux:card class="p-0 overflow-hidden">--}}
-        <flux:table>
-            <flux:table.columns sticky>
-                <flux:table.column class="pl-1">Product</flux:table.column>
-                <flux:table.column>Category</flux:table.column>
-                <flux:table.column>Stock</flux:table.column>
-                <flux:table.column>Price</flux:table.column>
-                <flux:table.column>Tax</flux:table.column>
-                <flux:table.column>Actions</flux:table.column>
-            </flux:table.columns>
+    <flux:table>
+        <flux:table.columns sticky>
+            <flux:table.column class="pl-1">Product</flux:table.column>
+            <flux:table.column>Category</flux:table.column>
+            <flux:table.column>Stock</flux:table.column>
+            <flux:table.column>Price</flux:table.column>
+            <flux:table.column>Tax</flux:table.column>
+            <flux:table.column>Actions</flux:table.column>
+        </flux:table.columns>
 
-            <flux:table.rows>
-                @foreach($products as $product)
-                    <flux:table.row :key="$product->id">
-                        <flux:table.cell class="flex items-center gap-3">
-                            <flux:avatar size="lg" src="{{ asset('storage/' . $product->image) }}" />
-                            {{ $product->name }}
-                        </flux:table.cell>
-                        
-                        <flux:table.cell><flux:badge size="sm" inset="top bottom">{{ $product->category->name }}</flux:badge></flux:table.cell>
-                        <flux:table.cell>{{ $product->stock }} units</flux:table.cell>
-                        <flux:table.cell>₹{{ $product->price }}</flux:table.cell>
-                        <flux:table.cell>₹{{ $product->tax }}</flux:table.cell>
+        <flux:table.rows>
+            @foreach($products as $product)
+                <flux:table.row :key="$product->id">
+                    <flux:table.cell class="flex items-center gap-3">
+                        <flux:avatar size="lg" src="{{ asset('storage/' . $product->image) }}" />
+                        {{ $product->name }}
+                    </flux:table.cell>
+                    
+                    <flux:table.cell><flux:badge size="sm" inset="top bottom">{{ $product->category->name }}</flux:badge></flux:table.cell>
+                    <flux:table.cell>{{ $product->stock }} units</flux:table.cell>
+                    <flux:table.cell>₹{{ $product->price }}</flux:table.cell>
+                    <flux:table.cell>₹{{ $product->tax }}</flux:table.cell>
 
-                        <flux:table.cell>
-                            <flux:button.group>
-                                <flux:button wire:click="edit({{ $product->id }})" wire:loading.attr="disabled" size="sm" icon="pencil-square" />
-                                <flux:button wire:click="confirmDelete({{ $product->id }})" wire:loading.attr="disabled" size="sm" variant="danger" icon="trash" />                                
-                            </flux:button.group>
-                        </flux:table.cell>
-                    </flux:table.row>
-                @endforeach
-            </flux:table.rows>
-        </flux:table>
-    {{--</flux:card>--}}
+                    <flux:table.cell>
+                        <flux:button.group>
+                            <flux:button wire:click="edit({{ $product->id }})" wire:loading.attr="disabled" size="sm" icon="pencil-square" />
+                            <flux:button wire:click="confirmDelete({{ $product->id }})" wire:loading.attr="disabled" size="sm" variant="danger" icon="trash" />                                
+                        </flux:button.group>
+                    </flux:table.cell>
+                </flux:table.row>
+            @endforeach
+        </flux:table.rows>
+    </flux:table>
 
     {{-- Create/Edit Modal --}}
     <flux:modal wire:model="showModal" class="md:w-[500px] space-y-6" flyout>

@@ -60,12 +60,6 @@ new class extends Component
         }
     }
 
-    // public function setAsDefault($id, $userId) {
-    //     Address::where('user_id', $userId)->update(['is_default' => 0]);
-    //     Address::where('id', $id)->update(['is_default' => 1]);
-    //     $this->addresses();
-    // }
-
     public function edit($id) {
         $address = Address::find($id);
         $this->editingId = $id;

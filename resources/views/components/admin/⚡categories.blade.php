@@ -135,7 +135,7 @@ new class extends Component
 ?>
 
 
-<div>
+<section>
     <div class="flex justify-between items-center mb-6">
         <flux:heading size="xl">Categories</flux:heading>
         <flux:button wire:click="create" variant="primary" icon="plus">Add Category</flux:button>
@@ -238,4 +238,4 @@ new class extends Component
             </div>
         </div>
     </flux:modal>
-</div>
+</section>
