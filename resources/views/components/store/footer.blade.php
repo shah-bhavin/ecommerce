@@ -24,13 +24,13 @@
             <div>
                 <h4 class="text-sm font-medium mb-4 tracking-wide" style="font-family: Inter, sans-serif;">CONNECT</h4>
                 <div class="flex gap-4 mb-6">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors">
+                    <a href="{{ setting('social_instagram') }}" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors">
                         <x-lucide-instagram class="size-5" />
                     </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors">
+                    <a href="{{ setting('social_facebook') }}" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors">
                         <x-lucide-facebook class="size-5" />
                     </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors">
+                    <a href="{{ setting('social_x') }}" target="_blank" rel="noopener noreferrer" class="text-[#333333] hover:text-[#000000] transition-colors">
                         <x-lucide-twitter class="size-5" />
                     </a>
                 </div>

@@ -33,6 +33,7 @@ return array(
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\ProductVariant' => $baseDir . '/app/Models/ProductVariant.php',
     'App\\Models\\Review' => $baseDir . '/app/Models/Review.php',
+    'App\\Models\\Setting' => $baseDir . '/app/Models/Setting.php',
     'App\\Models\\ShippingRule' => $baseDir . '/app/Models/ShippingRule.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',

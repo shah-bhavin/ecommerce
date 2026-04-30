@@ -38,58 +38,6 @@ new class extends Component
         }
     }
 
-    // public function placeOrder() {
-    //     $this->validate([
-    //         'fullname' => 'required',
-    //         'city' => 'required',
-    //         'pincode' => 'required'
-    //     ]);
-
-    //     Address::create([
-    //         'user_id' => Auth::id(),
-    //         'fullname' => $this->fullname,
-    //         'phone' => $this->phone,
-    //         'house_no' => $this->house_no,
-    //         'area' => $this->area,
-    //         'landmark' => $this->landmark,
-    //         'city' => $this->city,
-    //         'state' => $this->city,
-    //         'pincode' => $this->pincode,
-    //         'type' => $this->type,
-    //         'is_default' => $this->is_default,
-    //     ]);
-
-    //     $order = Order::create([
-    //         'user_id' => Auth::id(),
-    //         'address_id' => $this->address_id,
-    //         'order_number' => 'ORD-'.now()->format('Ymd').'-'.Str::upper(Str::random(8)),
-    //         'subtotal' => $this->getSubtotal(),
-    //         'discount_amount' => $this->discount,
-    //         'coupon_id' => $this->coupon_id ?: null,
-    //         'shipping_charges' => $this->getShippingFeeProperty(),
-    //         'total' => $this->getSubtotal() - $this->discount + $this->getShippingFeeProperty(),
-    //         'status' => 'pending',
-    //     ]);
-
-    //     // 2. Transfer Cart Items to Order Items
-    //     $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get();
-    //     foreach ($cartItems as $item) {
-    //         OrderItem::create([
-    //             'order_id' => $order->id,
-    //             'product_id' => $item->product_id,
-    //             'price' => $item->product->price,
-    //             'quantity' => $item->quantity
-    //         ]);
-    //     }
-
-    //     // 3. Clear Cart
-    //     CartItem::where('user_id', Auth::id())->delete();
-
-    //     session()->forget('cart');
-    //     return redirect()->route('thanks', ['orderid' => $order->order_number]);
-
-    // }
-
     public function placeOrder() {
         if ($this->hasAddress->isEmpty()) {
             $this->validate([
@@ -119,12 +67,10 @@ new class extends Component
 
             $this->address_id = $newAddress->id;
         } else {
-            // VALIDATION FOR EXISTING ADDRESS
             $this->validate([
                 'address_id' => 'required|exists:addresses,id',
             ]);
             
-            // Extra Security: Ensure the address belongs to the logged-in user
             $ownsAddress = Address::where('id', $this->address_id)
                                 ->where('user_id', Auth::id())
                                 ->exists();

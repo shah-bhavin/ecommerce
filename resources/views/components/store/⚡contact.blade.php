@@ -50,15 +50,18 @@ new class extends Component
 @push('head')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "description": "Customer support and expert skincare consultation.",
-    "contactPoint": {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact {{ Setting::get('site_name') }}",
+  "description": "Get in touch with the {{ Setting::get('site_name') }} concierge for support.",
+  "mainEntity": {
     "@type": "ContactPoint",
+    "telephone": "{{ Setting::get('contact_phone') }}",
+    "email": "{{ Setting::get('contact_email') }}",
     "contactType": "customer service",
-    "email": "concierge@abrari.com",
+    "areaServed": "IN",
     "availableLanguage": "en"
-    }
+  }
 }
 </script>
 @endpush

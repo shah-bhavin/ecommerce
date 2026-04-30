@@ -58,7 +58,6 @@ new class extends Component
 
 @push('head')
 <script type="application/ld+json">
-@verbatim
 {
   "@context": "https://schema.org/",
   "@type": "Product",
@@ -66,16 +65,22 @@ new class extends Component
   "image": ["{{ asset('storage/'.$product->image) }}"],
   "description": "{{ Str::limit($product->description, 150) }}",
   "sku": "{{ $product->sku }}",
-  "brand": { "@type": "Brand", "name": "Abrari" },
+  "brand": { 
+    "@type": "Brand", 
+    "name": "{{ Setting::get('site_name') }}" 
+  },
   "offers": {
     "@type": "Offer",
     "url": "{{ url()->current() }}",
     "priceCurrency": "INR",
     "price": "{{ $product->price }}",
-    "availability": "https://schema.org/InStock"
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "{{ Setting::get('site_name') }}"
+    }
   }
 }
-@endverbatim
 </script>
 @endpush
 

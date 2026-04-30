@@ -35,13 +35,22 @@ new class extends Component
 {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "name": "{{ Setting::get('site_name') }}",
   "url": "{{ url('/') }}",
-  "logo": "{{ asset('images/logo.png') }}",
-  "contactPoint": [{
+  "logo": "{{ asset('storage/' . Setting::get('logo_header')) }}",
+  "description": "{{ Setting::get('brand_tagline') }}",
+  "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+91-XXXXXXXXXX",
-    "contactType": "customer service"
-  }]
+    "telephone": "{{ Setting::get('contact_phone') }}",
+    "contactType": "customer service",
+    "email": "{{ Setting::get('contact_email') }}"
+  },
+  "sameAs": [
+    "{{ Setting::get('social_facebook') }}",
+    "{{ Setting::get('social_instagram') }}",
+    "{{ Setting::get('social_x') }}",
+    "{{ Setting::get('social_linkedin') }}"
+  ]
 }
 </script>
 @endpush

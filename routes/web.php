@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('/admin')->group(functi
     Route::livewire('/reviews', 'admin.reviews')->name('admin.reviews');
     Route::livewire('/carousel', 'admin.carousel')->name('admin.carousel');
     Route::livewire('/shipping', 'admin.shipping-rules')->name('admin.shipping');
+    Route::livewire('/manage-store', 'admin.settings-manager')->name('admin.manage-store');
 });
 
 Route::middleware('guest')->group(function () {

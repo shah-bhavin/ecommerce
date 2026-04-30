@@ -19,18 +19,14 @@ new class extends Component
     <script type="application/ld+json">
     @verbatim
     {
-      "@context": "https://schema.org",
-      "@type": "AboutPage",
-      "mainEntity": {
-        "@type": "Organization",
-        "name": "Abrari",
-        "url": "{{ url('/') }}",
-        "logo": "{{ asset('images/logo.png') }}",
-        "sameAs": [
-          "https://instagram.com/abrari",
-          "https://facebook.com/abrari"
-        ]
-      }
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "{{ Setting::get('site_name') }}",
+            "logo": "{{ asset('storage/' . Setting::get('logo_header')) }}",
+            "description": "{{ Setting::get('brand_tagline') }}"
+        }
     }
     @endverbatim
     </script>
