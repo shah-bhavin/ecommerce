@@ -22,7 +22,7 @@
                 {{ __('Dashboard') }}
             </flux:sidebar.item>
 
-            <flux:sidebar.group expandable :heading="__('Marketing & Orders')" class="grid" icon="arrow-trending-up">
+            <flux:sidebar.group expandable :expanded="false" :heading="__('Marketing & Orders')" class="grid" icon="arrow-trending-up">
                 <flux:sidebar.item href="{{ route('admin.shipping') }}" wire:navigate lazy>{{ __('Shipping') }}</flux:sidebar.item>
                 <flux:sidebar.item href="{{ route('admin.coupons') }}" wire:navigate lazy>{{ __('Coupons') }}</flux:sidebar.item>
                 <flux:sidebar.item href="{{ route('admin.orders') }}" wire:navigate lazy>{{ __('Orders') }}</flux:sidebar.item>
@@ -30,18 +30,23 @@
                 <flux:sidebar.item href="{{ route('admin.reviews') }}" wire:navigate lazy>{{ __('Product Reviews') }}</flux:sidebar.item>
                 <flux:sidebar.item href="{{ route('admin.carousel') }}" wire:navigate lazy>{{ __('Home Carousel') }}</flux:sidebar.item>
             </flux:sidebar.group>
-            <flux:sidebar.group expandable :heading="__('Users')" class="grid" icon="user">
+            <flux:sidebar.group expandable :expanded="false" :heading="__('Users')" class="grid" icon="user">
                 <flux:sidebar.item href="{{ route('admin.users') }}" wire:navigate lazy>{{ __('Users') }}</flux:sidebar.item>
                 <flux:sidebar.item href="{{ route('admin.addresses') }}" wire:navigate lazy>{{ __('User Addresses') }}</flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 
         <flux:spacer />
-        <flux:sidebar.item :href="route('admin.manage-store')" :current="request()->routeIs('admin.manage-store')" wire:navigate>
-            {{ __('Manage Store') }}
-        </flux:sidebar.item>
+        
         <flux:sidebar.nav>
-            <flux:sidebar.group expandable :heading="__('Catalogue')" class="grid" icon="squares-plus">
+            <flux:sidebar.group expandable :expanded="false" :heading="__('Settings')" class="grid" icon="cog-8-tooth">
+                <flux:sidebar.item href="{{ route('admin.manage-store') }}" wire:navigate lazy>{{ __('Manage Store') }}</flux:sidebar.item>
+                <flux:sidebar.item href="{{ route('admin.payment') }}" wire:navigate lazy>{{ __('Payment') }}</flux:sidebar.item>
+            </flux:sidebar.group>
+        </flux:sidebar.nav>
+
+        <flux:sidebar.nav>
+            <flux:sidebar.group expandable :expanded="false" :heading="__('Catalogue')" class="grid" icon="squares-plus">
                 <flux:sidebar.item href="{{ route('admin.categories') }}" wire:navigate lazy>{{ __('Categories') }}</flux:sidebar.item>
                 {{--<flux:sidebar.item href="{{ route('admin.brands') }}" wire:navigate lazy>{{ __('Brands') }}</flux:sidebar.item>--}}
                 <flux:sidebar.item href="{{ route('admin.products') }}" wire:navigate lazy>{{ __('Products') }}</flux:sidebar.item>
