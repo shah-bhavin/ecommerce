@@ -35,19 +35,6 @@ new class extends Component
             $this->qty--;
         }
     }
-
-    // public function submitReview()
-    // {
-    //     $this->validate(['comment' => 'required|min:5']);
-    //     Review::create([
-    //         'user_id' => auth()->id(),
-    //         'product_id' => $this->product->id,
-    //         'rating' => $this->rating,
-    //         'comment' => $this->comment
-    //     ]);
-    //     $this->comment = '';
-    //     $this->dispatch('toast', text: 'Thank you for your review');
-    // }
 };
 ?>
 

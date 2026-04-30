@@ -5,7 +5,6 @@ use App\Models\Category;
 use App\Models\Product;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Illuminate\Support\Str;
 
 new class extends Component
 {
@@ -24,6 +23,8 @@ new class extends Component
     public function mount(){
         $this->slides = Carousel::where('is_active', true)->get();
     }
+
+    
 };
 ?>
 

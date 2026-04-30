@@ -27,11 +27,9 @@ Route::get('/logout', function () {
 
 // --- AUTH CUSTOMERS ---
 Route::middleware('auth', 'customer')->group(function () {
-    Route::livewire('/account/orders-history', 'account.order-history')->name('account.orders');
-
     Route::get('/orders/{order:order_number}/invoice/view', function (Order $order) {
         // Security: Ensure user owns the order
-        if ($order->user_id !== Auth::id()) {
+        if ($order->user_id !== Auth::id() && !Auth::user()->isAdmin()) {
             abort(403);
         }
 

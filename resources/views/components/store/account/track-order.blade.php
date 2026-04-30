@@ -1,5 +1,6 @@
 <?php
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -9,7 +10,7 @@ new class extends Component {
     public Order $order;
 
     public function mount($id) {
-        $this->order = Order::where('user_id', auth()->id())->findOrFail($id);
+        $this->order = Order::where('user_id', Auth::id())->findOrFail($id);
     }
 }; ?>
 

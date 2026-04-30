@@ -1,5 +1,6 @@
 <?php
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component
@@ -11,12 +12,8 @@ new class extends Component
     }
 };
 ?>
-
-<a href="/cart" class="relative group text-white hover:text-amber-400">
-    <span class="material-symbols-outlined h-5" data-icon="shopping_bag">shopping_bag</span>
+<span class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] size-4 rounded-full flex items-center justify-center font-bold shadow-sm border border-white transition-all transform scale-110">
     @if($this->getCount() > 0)
-        <span class="absolute -top-2 -right-2 bg-white text-primary text-[8px] size-4 rounded-full flex items-center justify-center font-bold">
-            {{ $this->getCount() }}
-        </span>
+        {{ $this->getCount() }}
     @endif
-</a>
+</span>

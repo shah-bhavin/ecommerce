@@ -54,20 +54,9 @@ new class extends Component
         }, 0);
     }
 
-    // public function getTax() {
-    //     return array_reduce($this->cart, function($carry, $item) {
-    //         return $carry + ($item['price'] * $item['quantity'] * $item['tax']/100);
-    //     }, 0);
-    // }
-
-    // public function getTotal() {
-    //     return $this->getSubTotal();
-    // }
-
     public function checkout() {
         return redirect('/checkout');
     }
-    
 };
 
 ?>

@@ -19,23 +19,25 @@ new class extends Component {
     public $house_no, $area, $landmark, $pincode, $type, $is_default, $address_id, $fullname, $phone, $street, $city;
     public $isEditing = false;
 
-    public function mount($url=null){
+    public function mount($url = null)
+    {
         $this->user = Auth::user();
         $this->url = $url;
     }
 
-    public function setCategory($type){
+    public function setCategory($type)
+    {
         $this->view = $type;
     }
 
     #[Layout('layouts.store')]
-    public function with() {
-        $user = auth()->user();
+    public function with()
+    {
 
         // Fetch the base collections once
-        $orders = Order::where('user_id', $user->id)->latest()->get();
-        $addresses = Address::where('user_id', $user->id)->latest()->get();
-        $wishlists = Wishlist::with('product')->where('user_id', $user->id)->get();
+        $orders = Order::where('user_id', Auth::id())->latest()->get();
+        $addresses = Address::where('user_id', Auth::id())->latest()->get();
+        $wishlists = Wishlist::with('product')->where('user_id', Auth::id())->get();
 
         return [
             'orders'        => $orders,
@@ -45,19 +47,20 @@ new class extends Component {
             'wishlists'     => $wishlists,
             'wishlistCount' => $wishlists->count(),
         ];
-
     }
 
-    public function updatePassword() {
+    public function updatePassword()
+    {
         $this->validate([
-            'current_password' => 'required|current_password', 
+            'current_password' => 'required|current_password',
             'new_password' => 'required|min:8'
         ]);
 
         Auth::user()->update(['password' => Hash::make($this->new_password)]);
         $this->reset(['current_password', 'new_password']);
-        $this->dispatch('toast', 
-            type: 'success', 
+        $this->dispatch(
+            'toast',
+            type: 'success',
             text: 'Password Changed'
         );
     }
@@ -66,17 +69,20 @@ new class extends Component {
     public $confirmingDelete = false;
     public $addressToDelete = null;
 
-    public function confirmDelete($id) {
+    public function confirmDelete($id)
+    {
         $this->addressToDelete = $id;
         $this->confirmingDelete = true;
     }
-    public function deleteAddress() {
+    public function deleteAddress()
+    {
         Address::where('user_id', auth()->id())->findOrFail($this->addressToDelete)->delete();
         $this->confirmingDelete = false;
         $this->addressToDelete = null;
         $this->dispatch('toast', type: 'success', text: 'Address removed');
     }
-    public function saveAddress() {
+    public function saveAddress()
+    {
         $data = $this->validate([
             'fullname' => 'required|string',
             'phone' => 'required',
@@ -101,7 +107,8 @@ new class extends Component {
         $this->dispatch('toast', type: 'success', text: $text);
     }
 
-    public function editAddress($id) {
+    public function editAddress($id)
+    {
         $address = Address::where('user_id', auth()->id())->findOrFail($id);
         $this->address_id = $address->id;
         $this->fullname = $address->fullname;
@@ -116,7 +123,8 @@ new class extends Component {
         $this->isEditing = true;
     }
 
-    public function resetAddressForm() {
+    public function resetAddressForm()
+    {
         $this->reset(['house_no', 'area', 'landmark', 'pincode', 'type', 'is_default', 'fullname', 'phone', 'street', 'city', 'address_id', 'isEditing']);
     }
 
@@ -152,7 +160,7 @@ new class extends Component {
                     </span>
                     <x-lucide-chevron-right class="w-4 h-4 text-gray-500" />
                 </a>
-                
+
                 <a href="/account/orders" wire:navigate
                     class="flex items-center justify-between w-full p-2 {{ $view === 'orders' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
                     <span class="flex items-center gap-2 body-text">
@@ -178,8 +186,8 @@ new class extends Component {
                         Wishlist
                     </span>
                     <x-lucide-chevron-right class="w-4 h-4 text-gray-500" />
-                </a>   
-                
+                </a>
+
 
                 <a href="/account/profile" wire:navigate
                     class="flex items-center justify-between w-full p-2 {{ $view === 'profile' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-100' }}">
@@ -202,17 +210,32 @@ new class extends Component {
         </aside>
 
         <!-- Right Content Area -->
-        <main class="flex-1">                
+        <main class="flex-1">
             @if($view === 'overview')
-            <x-store.account.overview :orderscount="$orderscount" :user="$user"/>
+            <div class="w-full grid grid-cols-3 gap-4">
+                <div class="p-4 gap-4">
+                    <h3 class="text-[18px] uppercase font-bold mb-4">Details</h3>
+                    <div class="grid gap-2">
+                        <p class="body-text"><b>Name: </b>{{ $user->name }}</p>
+                        <p class="body-text"><b>Email: </b>{{ $user->email }}</p>
+                        <p class="body-text"><b>Phone: </b>{{ $user->phone }}</p>
+                    </div>
+                </div>
+                <div class="p-4 col-span-2">
+                    <h3 class="text-[18px] uppercase font-bold mb-4">Orders</h3>
+                    <p class="body-text">
+                        {{ $orderscount ? 'Total Orders: ' .$orderscount : 'No Orders Yet...' }}
+                    </p>
+                </div>
+            </div>
             @elseif($view === 'orders')
-                <x-store.account.orders :orders="$orders"/>
+            <x-store.account.orders :orders="$orders" />
             @elseif($view === 'addresses')
-                <x-store.account.addresses :addresses="$addresses" :isEditing="$isEditing" :confirmingDelete="$confirmingDelete"/>
+            <x-store.account.addresses :addresses="$addresses" :isEditing="$isEditing" :confirmingDelete="$confirmingDelete" />
             @elseif($view === 'wishlist')
-                <x-store.account.wishlist :wishlists="$wishlists" :wishlistCount="$wishlistCount"/>            
+            <x-store.account.wishlist :wishlists="$wishlists" :wishlistCount="$wishlistCount" />
             @elseif($view === 'profile')
-                <x-store.account.profile />
+            <x-store.account.profile />
             @endif
         </main>
     </div>

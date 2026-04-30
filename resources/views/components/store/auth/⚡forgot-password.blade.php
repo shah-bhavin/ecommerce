@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -11,7 +12,14 @@ new class extends Component {
 
     public function sendResetLink() {
         $this->validate(['email' => 'required|email']);
+
+        // Throttle: Max 3 attempts per minute per IP
+        if (RateLimiter::tooManyAttempts('password-reset:'.$this->email, 3)) {
+            return $this->addError('email', 'Too many attempts. Please try again later.');
+        }
+
         $status = Password::sendResetLink(['email' => $this->email]);
+        RateLimiter::hit('password-reset:'.$this->email);
 
         if ($status === Password::RESET_LINK_SENT) {
             $this->status = __($status);
@@ -21,6 +29,11 @@ new class extends Component {
     }
 };
 ?>
+
+@push('head')
+    <title>Login | Abrari Skincare</title>
+    <meta name="robots" content="noindex, nofollow">
+@endpush
 
 <div class="min-h-[80vh] flex items-center justify-center px-6">
     <div class="w-full max-w-md">

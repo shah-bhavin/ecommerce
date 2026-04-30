@@ -32,6 +32,11 @@ new class extends Component
 };
 ?>
 
+@push('head')
+    <title>Login | Abrari Skincare</title>
+    <meta name="robots" content="noindex, nofollow">
+@endpush
+
 <div class="min-h-[80vh] flex items-center justify-center py-10 px-6">
     <div class="w-full max-w-lg">
         <div class="text-center mb-8">
